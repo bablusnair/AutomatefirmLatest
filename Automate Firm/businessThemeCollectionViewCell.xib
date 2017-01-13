@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Oxygen-Bold.ttf">
+            <string>Oxygen-Bold</string>
+        </mutableArray>
+        <mutableArray key="Oxygen-Regular.ttf">
+            <string>Oxygen-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="themeView" id="gTV-IL-0wX" customClass="businessThemeCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="287" height="221"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="287" height="221"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mainBG-grey.png" id="mUE-v5-0Fd">
+                        <rect key="frame" x="0.0" y="0.0" width="287" height="221"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" id="44U-9x-MlW">
+                        <rect key="frame" x="23" y="47" width="111" height="156"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="Alr-7S-BcJ">
+                                <rect key="frame" x="0.0" y="0.0" width="335" height="156"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="form1.png" id="gK3-LK-gWT">
+                                        <rect key="frame" x="0.0" y="0.0" width="111" height="156"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="id_front.png" id="7bt-dM-KxO">
+                                        <rect key="frame" x="111" y="0.0" width="111" height="156"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bl_frnt.png" id="qoY-s8-V5s">
+                                        <rect key="frame" x="252" y="38" width="55" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="size" keyPath="contentSize">
+                                <size key="value" width="335" height="156"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <outlet property="delegate" destination="gTV-IL-0wX" id="TJE-Le-eAU"/>
+                        </connections>
+                    </scrollView>
+                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mwY-qc-T12">
+                        <rect key="frame" x="153" y="100" width="35" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="Button" image="ic1.png"/>
+                        <connections>
+                            <action selector="colorChangeAction:" destination="-2" eventType="touchUpInside" id="Wq8-Vu-3Ty"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CSf-kF-P7i">
+                        <rect key="frame" x="196" y="100" width="35" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="Button" image="ic2.png"/>
+                        <connections>
+                            <action selector="colorChangeAction:" destination="-2" eventType="touchUpInside" id="m3M-gB-hwV"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Enh-HA-bU5">
+                        <rect key="frame" x="153" y="140" width="35" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="Button" image="ico4.png"/>
+                        <connections>
+                            <action selector="colorChangeAction:" destination="-2" eventType="touchUpInside" id="jcJ-Ta-WWD"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2L3-xb-kzV">
+                        <rect key="frame" x="196" y="140" width="35" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="Button" image="orange.jpg"/>
+                        <connections>
+                            <action selector="colorChangeAction:" destination="-2" eventType="touchUpInside" id="glW-kC-9Wu"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IM2-Up-Eie">
+                        <rect key="frame" x="239" y="100" width="35" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="Button" image="ic3.png"/>
+                        <connections>
+                            <action selector="colorChangeAction:" destination="-2" eventType="touchUpInside" id="cxt-oU-55F"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="50" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="NIf-21-dOu">
+                        <rect key="frame" x="18" y="12" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
+                        <state key="normal" title="Button" image="check_box.png32.png"/>
+                        <connections>
+                            <action selector="checkBoxAction:" destination="-2" eventType="touchUpInside" id="5JT-P8-pdV"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AF Pride" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3Kj-Pc-Jz7">
+                        <rect key="frame" x="50" y="16" width="79" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Bold" family="Oxygen" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose your color from the pallet" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SiI-aQ-r79">
+                        <rect key="frame" x="152" y="68" width="123" height="27"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="vGt-LQ-WYx">
+                        <rect key="frame" x="72" y="205" width="13" height="13"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <inset key="contentEdgeInsets" minX="2" minY="2" maxX="3" maxY="3"/>
+                        <state key="normal" title="Button" image="gry.png"/>
+                    </button>
+                    <button opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WK5-Ta-3DS">
+                        <rect key="frame" x="86" y="205" width="13" height="13"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <inset key="contentEdgeInsets" minX="0.0" minY="2" maxX="5" maxY="3"/>
+                        <state key="normal" title="Button" image="gry.png"/>
+                    </button>
+                    <button opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Va8-1r-VlW">
+                        <rect key="frame" x="57" y="205" width="13" height="13"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <inset key="contentEdgeInsets" minX="5" minY="2" maxX="0.0" maxY="3"/>
+                        <state key="normal" title="Button" image="blu.png"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Letter Head" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nn1-tA-lmB">
+                        <rect key="frame" x="153" y="43" width="121" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <connections>
+                <outlet property="actionButton1" destination="Va8-1r-VlW" id="Asu-3L-eSb"/>
+                <outlet property="actionButton2" destination="vGt-LQ-WYx" id="LDZ-SC-P8j"/>
+                <outlet property="actionButton3" destination="WK5-Ta-3DS" id="Zlh-8J-nUU"/>
+                <outlet property="blueButton" destination="Enh-HA-bU5" id="rUh-1b-f2G"/>
+                <outlet property="brownButton" destination="2L3-xb-kzV" id="6kH-fP-CVo"/>
+                <outlet property="checkButton" destination="NIf-21-dOu" id="gwJ-S4-nIs"/>
+                <outlet property="formImage" destination="gK3-LK-gWT" id="ydm-0Y-Lsw"/>
+                <outlet property="formView" destination="Alr-7S-BcJ" id="BLm-29-Df5"/>
+                <outlet property="greenButton" destination="CSf-kF-P7i" id="TND-yA-kH0"/>
+                <outlet property="greyButton" destination="IM2-Up-Eie" id="vwg-oL-UPv"/>
+                <outlet property="idBackImage" destination="qoY-s8-V5s" id="d8l-ZM-cHS"/>
+                <outlet property="idFrontImage" destination="7bt-dM-KxO" id="aX6-lz-MIw"/>
+                <outlet property="redButton" destination="mwY-qc-T12" id="Dbr-LI-vhv"/>
+                <outlet property="scrollView" destination="44U-9x-MlW" id="4TJ-fa-wyU"/>
+                <outlet property="themeNameLabel" destination="3Kj-Pc-Jz7" id="4uq-gO-1WL"/>
+                <outlet property="themeTypeLabel" destination="Nn1-tA-lmB" id="UYc-tj-BYa"/>
+            </connections>
+            <point key="canvasLocation" x="295.5" y="192.5"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="bl_frnt.png" width="320" height="509"/>
+        <image name="blu.png" width="173" height="173"/>
+        <image name="check_box.png32.png" width="54" height="42"/>
+        <image name="form1.png" width="2480" height="3507"/>
+        <image name="gry.png" width="173" height="173"/>
+        <image name="ic1.png" width="709" height="709"/>
+        <image name="ic2.png" width="709" height="709"/>
+        <image name="ic3.png" width="709" height="709"/>
+        <image name="ico4.png" width="709" height="709"/>
+        <image name="id_front.png" width="509" height="779"/>
+        <image name="mainBG-grey.png" width="815" height="209"/>
+        <image name="orange.jpg" width="3496" height="367"/>
+    </resources>
+</document>

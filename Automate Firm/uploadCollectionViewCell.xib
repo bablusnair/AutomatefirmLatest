@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="uploadImage" id="gTV-IL-0wX" customClass="uploadCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="52" height="47"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="52" height="47"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="add.png" translatesAutoresizingMaskIntoConstraints="NO" id="jF5-fD-k4I">
+                        <rect key="frame" x="0.0" y="0.0" width="52" height="47"/>
+                    </imageView>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqL-NV-TFN">
+                        <rect key="frame" x="21" y="1" width="30" height="25"/>
+                        <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="0.0" maxY="11"/>
+                        <state key="normal" image="Close buttonforgererate.png"/>
+                        <connections>
+                            <action selector="deleteEvidence:" destination="-2" eventType="touchUpInside" id="2sH-Wy-iKh"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <connections>
+                <outlet property="backImage" destination="jF5-fD-k4I" id="q5i-Jf-04J"/>
+                <outlet property="deleteButton" destination="fqL-NV-TFN" id="f9E-cB-gXy"/>
+            </connections>
+            <point key="canvasLocation" x="331.5" y="253"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Close buttonforgererate.png" width="26" height="26"/>
+        <image name="add.png" width="48" height="48"/>
+    </resources>
+</document>

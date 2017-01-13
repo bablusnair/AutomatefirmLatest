@@ -1,0 +1,203 @@
+//
+//  connectionclass.h
+//  Automate Firm
+//
+//  Created by leonine on 19/10/15.
+//  Copyright © 2015 leonine. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "headerprotocol.h"
+#import "AppDelegate.h"
+@interface connectionclass : NSObject<NSURLSessionDelegate,NSURLSessionDataDelegate>
+{
+    AppDelegate *app;
+}
+
+@property(nonatomic,retain) id<headerprotocol> mydelegate;
+@property(nonatomic,retain)UIImage *logoimag;
+@property(nonatomic,retain)NSMutableArray *country;
+@property(nonatomic,retain)NSMutableArray *countryid;
+
+//TIME
+
+-(void)createnewTimerule:(NSString *)office_id : (NSString *)rulename abbrv:(NSString *)abbrv descripton:(NSString *)descripton checkgracetime:(NSString *)checkgracetime checkgracetimetextvalue:(NSString *)checkgracetimetextvalue workfirstdetails:(NSString *)workfirstdetails workfirstdetailstextvalue:(NSString *)workfirstdetailstextvalue worksecondetails:(NSString *)worksecondetails workthirddetails:(NSString *)workthirdetails latearrivaloption:(NSString *)latearrivaloption latearrivalvalue1:(NSString *)latearrivalvalue1 latearrivalvalue2:(NSString *)latearrivalvalue2 latearrivalvalue3:(NSString *)latearrivalvalue3 latearrivalvalue4:(NSString *)latearrivalvalue4 firstpenalty:(NSString *)firstpenalty secondpenalty:(NSString *)secondpenalty thirdpenalty:(NSString *)thirdpenalty  workhoursfirst:(NSString *)workhoursfirst workhourssecond:(NSString *)workhourssecond workhoursthird:(NSString *)workhoursthird  workhoursfourth:(NSString *)workhoursfourth workhoursfifth:(NSString *)workhoursfifth timestatusflag:(NSString *)timestatusflag createdby:(NSString *)createdby : (NSString *)selectedDesignation : (NSMutableDictionary *)designationDict;
+
+-(void)getviewalltimerules:(NSString *)office_id;
+
+-(void)updatesettingsviewrule:(NSString *)ruleid : (NSString *)officeId;
+
+
+-(void)updateTimerule:(NSString *)office_id : (NSString *)id rulename:(NSString *)rulename abbrv:(NSString *)abbrv descripton:(NSString *)descripton checkgracetime:(NSString *)checkgracetime checkgracetimetextvalue:(NSString *)checkgracetimetextvalue workfirstdetails:(NSString *)workfirstdetails workfirstdetailstextvalue:(NSString *)workfirstdetailstextvalue worksecondetails:(NSString *)worksecondetails workthirddetails:(NSString *)workthirdetails latearrivaloption:(NSString *)latearrivaloption latearrivalvalue1:(NSString *)latearrivalvalue1 latearrivalvalue2:(NSString *)latearrivalvalue2 latearrivalvalue3:(NSString *)latearrivalvalue3 latearrivalvalue4:(NSString *)latearrivalvalue4 firstpenalty:(NSString *)firstpenalty secondpenalty:(NSString *)secondpenalty thirdpenalty:(NSString *)thirdpenalty  workhoursfirst:(NSString *)workhoursfirst workhourssecond:(NSString *)workhourssecond workhoursthird:(NSString *)workhoursthird  workhoursfourth:(NSString *)workhoursfourth workhoursfifth:(NSString *)workhoursfifth timestatusflag:(NSString *)timestatusflag createdby:(NSString *)createdby : (NSString *)selectedDesignation : (NSMutableDictionary *)designationDict;
+
+-(void)deleteTimeRule:(NSString *)officeID : (NSString *)rid;
+
+
+//Round Up
+
+-(void)roundUpViewAll:(NSString *)office_id;
+-(void)roundUpUpdate:(NSString *)officeID : (NSString *)roundupName : (NSString *)description : (NSString *)checkinRounding : (NSString *)checkinValue : (NSString *)checkoutRounding : (NSString *)checkoutValue : (NSString *)breakStart : (NSString *)breakEnd;
+
+
+//SHIFT
+
+-(void)createNewShiftRule:(NSString *)shift_name shift_abbrv:(NSString *)shift_abbrv shift_type:(NSString *)shift_type shift_description:(NSString *)shift_description day_punch_start:(NSString *)day_punch_start day_shift_start:(NSString *)day_shift_start day_shift_end:(NSString *)day_shift_end day_working_hours:(NSString *)day_working_hours day_break_type:(NSString *)day_break_type day_break_begin:(NSString *)day_break_begin day_break_end:(NSString *)day_break_end day_break_duration:(NSString *)day_break_duration day_intime_chekbox:(NSString *)day_intime_chekbox day_outtime_checkbox:(NSString *)day_outtime_checkbox day_intime_value:(NSString *)day_intime_value day_outtime_value:(NSString *)day_outtime_value swing_punch_start:(NSString *)swing_punch_start swing_shift_start:(NSString *)swing_shift_start swing_shift_end:(NSString *)swing_shift_end swing_working_hours:(NSString *)swing_working_hours swing_break_type:(NSString *)swing_break_type swing_break_begin:(NSString *)swing_break_begin swing_break_end:(NSString *)swing_break_end swing_break_duration:(NSString *)swing_break_duration swing_inttime_checkbox:(NSString *)swing_inttime_checkbox swing_outtime_checkbox:(NSString *)swing_outtime_checkbox swing_intime_value:(NSString *)swing_intime_value swing_outtime_value:(NSString *)swing_outtime_value night_punch_start:(NSString *)night_punch_start night_shift_start :(NSString *)night_shift_start night_shift_end:(NSString *)night_shift_end night_working_hours:(NSString *)night_working_hours night_break_type:(NSString *)night_break_type night_break_begin:(NSString *)night_break_begin night_break_end:(NSString *)night_break_end night_break_duration:(NSString *)night_break_duration night_intime_checkbox:(NSString *)night_intime_checkbox night_outtime_checkbox:(NSString *)night_outtime_checkbox night_intime_value:(NSString *)night_intime_value night_outtime_value:(NSString *)night_outtime_value shift_status:(NSString *)shift_status shift_created_by:(NSString *)shift_created_by officeID:(NSString *)office_Id :(NSString *)selectedDesig :(NSMutableDictionary *)designationDict ;
+
+-(void)getViewAllShiftRules:(NSString *)officeID;
+
+-(void)displaySelectedShiftRule:(NSString *)officeID : (NSString *)ruleid;
+
+-(void)updateShiftRule:(NSString *)id shift_name:(NSString *)shift_name shift_abbrv:(NSString *)shift_abbrv shift_type:(NSString *)shift_type shift_description:(NSString *)shift_description day_punch_start:(NSString *)day_punch_start day_shift_start:(NSString *)day_shift_start day_shift_end:(NSString *)day_shift_end day_working_hours:(NSString *)day_working_hours day_break_type:(NSString *)day_break_type day_break_begin:(NSString *)day_break_begin day_break_end:(NSString *)day_break_end day_break_duration:(NSString *)day_break_duration day_intime_chekbox:(NSString *)day_intime_chekbox day_outtime_checkbox:(NSString *)day_outtime_checkbox day_intime_value:(NSString *)day_intime_value day_outtime_value:(NSString *)day_outtime_value swing_punch_start:(NSString *)swing_punch_start swing_shift_start:(NSString *)swing_shift_start swing_shift_end:(NSString *)swing_shift_end swing_working_hours:(NSString *)swing_working_hours swing_break_type:(NSString *)swing_break_type swing_break_begin:(NSString *)swing_break_begin swing_break_end:(NSString *)swing_break_end swing_break_duration:(NSString *)swing_break_duration swing_inttime_checkbox:(NSString *)swing_inttime_checkbox swing_outtime_checkbox:(NSString *)swing_outtime_checkbox swing_intime_value:(NSString *)swing_intime_value swing_outtime_value:(NSString *)swing_outtime_value night_punch_start:(NSString *)night_punch_start night_shift_start :(NSString *)night_shift_start night_shift_end:(NSString *)night_shift_end night_working_hours:(NSString *)night_working_hours night_break_type:(NSString *)night_break_type night_break_begin:(NSString *)night_break_begin night_break_end:(NSString *)night_break_end night_break_duration:(NSString *)night_break_duration night_intime_checkbox:(NSString *)night_intime_checkbox night_outtime_checkbox:(NSString *)night_outtime_checkbox night_intime_value:(NSString *)night_intime_value night_outtime_value:(NSString *)night_outtime_value shift_status:(NSString *)shift_status shift_created_by:(NSString *)shift_created_by officeID:(NSString *)officeID :(NSString *)selectedDesig : (NSMutableDictionary *)designationDict;
+
+-(void)deleteShiftRule:(NSString *)officeID : (NSString *)rid;
+
+
+
+//DESIGNATIONS
+
+-(void)createNewDesignations:(NSString *)designation_title : (NSString *)designation_description : (NSString *)job_descriptions : (NSString *)desig_created_by : (NSString *)desig_created_date : (NSString *)desig_modified_date;
+-(void)viewAllDesignations;
+-(void)individualDesignationView:(NSString *)desig_ID;
+-(void)updateDesignation:(NSString *)id : (NSString *)designation_title : (NSString *)designation_description : (NSString *)job_descriptions : (NSString *)desig_created_by : (NSString *)desig_created_date : (NSString *)desig_modified_date;
+-(void)deleteDesignation:(NSString *)desig_id;
+
+//BANK
+
+-(void)createNewBank:(NSString *)bank_name :(NSString *)bank_abbrv :(NSString *)bank_branch :(NSString *)bank_description :(NSString *)bank_holder_name :(NSString *)bank_account_number :(NSString *)bank_iban :(NSString *)bank_switch_code :(NSString *)bank_bic :(NSString *)bank_address :(NSString *)bank_created_date :(NSString *)bank_modifide_date :(NSString *)bank_status;
+-(void)viewAllBank;
+-(void)individualBankView:(NSString *)bank_id;
+-(void)updateBank:(NSString *)bankID : (NSString *)bank_name :(NSString *)bank_abbrv :(NSString *)bank_branch :(NSString *)bank_description :(NSString *)bank_holder_name :(NSString *)bank_account_number :(NSString *)bank_iban :(NSString *)bank_switch_code :(NSString *)bank_bic :(NSString *)bank_address :(NSString *)bank_created_date :(NSString *)bank_modifide_date :(NSString *)bank_status;
+-(void)deleteBank:(NSString *)bankID;
+
+
+
+-(void)displayOfficeDetail:(NSString *)officeid;
+-(void)displayAllCountries;
+-(void)displayNationality;
+-(void)displaySelectedStates:(NSString *)countryid;
+-(void)displayAllCities:(NSString *)stateid;
+-(void)getallBankList;
+
+-(void)Editofficefunction:(NSString *)officename officeId:(NSString *)officeid abbrev:(NSString *)abbrev subtittle:(NSString *)subtittle sector:(NSString *)sector regid:(NSString *)registerid currency:(NSString *)currency financialyear:(NSString *)finanicalyear emailid:(NSString *)emailid telephonenumber:(NSString *)telephone fax:(NSString *)fax website:(NSString *)website building:(NSString *)building block:(NSString *)block street:(NSString *)street country:(NSString *)country state:(NSString *)state city:(NSString *)city postcode:(NSString *)postcode landmark:(NSString *)landmark department_listarray:(NSMutableArray *)deptArray category_listarray:(NSMutableArray *)categoryArray bank_listarray:(NSMutableArray *)bankArray printer_listarray:(NSMutableArray *)printerArray otherdetails_array:(NSMutableArray *)otherdetailsarray;
+
+-(void)updateStorefunction:(NSString *)outletName officeId:(NSString *)officeid storeid:(NSString *)storeid outletType:(NSString *)outlettype abbrev:(NSString *)abbrev subtittle:(NSString *)subtittle sector:(NSString *)sector regid:(NSString *)registerid currency:(NSString *)currency financialyear:(NSString *)finanicalyear emailid:(NSString *)emailid telephonenumber:(NSString *)telephone fax:(NSString *)fax website:(NSString *)website building:(NSString *)building block:(NSString *)block street:(NSString *)street country:(NSString *)country state:(NSString *)state city:(NSString *)city postcode:(NSString *)postcode landmark:(NSString *)landmark  bank_listarray:(NSMutableArray *)bankArray printer_listarray:(NSMutableArray *)printerArray otherdetails_array:(NSMutableArray *)otherdetailsarray;
+
+
+-(void)uploadNewImage:(UIImage *)image :(NSString *)officeId;
+-(void)OfficeStoreView:(NSString *)officeid;
+-(void)StoreViewDetails:(NSString *)storeid;
+-(void)addNewEmployeeOfficeDisplayDetails:(NSString *)officeId;
+-(void)generateEmployeeCode;
+-(void)uploadEmpImage:(UIImage *)image : (NSString *)empID;
+-(void)addNewEmployeeSave:(NSString *)empID :(NSMutableDictionary *)personaleDetailsDict : (NSMutableDictionary *)educationalDict :(NSMutableDictionary *)skillsDict;
+-(void)addNewEmployeeSave2:(NSString *)empID : (NSMutableDictionary *)contactDetailsDict;
+
+//.........WeekRule........//
+
+-(void)createNewweekRule:(NSString *)ruleName abbrev:(NSString *)abbrv description:(NSString *)description weekStarton:(NSString *)weekStarton offday1:(NSString *)offDay1 offday2:(NSString *)offDay2 offday3:(NSString *)offDay3 partialday:(NSString *)partialday beginningTime:(NSString *)beginningTime endingTime:(NSString *)endingTime duration:(NSString *)duration breaktype:(NSString *)breaktype breakstart:(NSString *)breakstart breakend:(NSString *)breakend breakduration:(NSString *)breakduration offficeid:(NSString *)officeid : (NSString *)designation :(NSMutableDictionary *)designationList;
+-(void)updateNewweekRule:(NSString *)ruleName abbrev:(NSString *)abbrv description:(NSString *)description weekStarton:(NSString *)weekStarton offday1:(NSString *)offDay1 offday2:(NSString *)offDay2 offday3:(NSString *)offDay3 partialday:(NSString *)partialday beginningTime:(NSString *)beginningTime endingTime:(NSString *)endingTime duration:(NSString *)duration breaktype:(NSString *)breaktype breakstart:(NSString *)breakstart breakend:(NSString *)breakend breakduration:(NSString *)breakduration offficeid:(NSString *)officeid ruleid:(NSString *)ruleid : (NSString *)designation :(NSMutableDictionary *)designationList;
+-(void)viewOfficeWeekRule:(NSString *)oficeid;
+-(void)viewIndivdualOfficeWeekRule:(NSString *)weekid officeid:(NSString *)officeid;
+-(void)deleteWeekRule:(NSString *)ruleid;
+
+
+//-(void)getOfficeDesignation;
+-(void)LoginService:(NSString *)username paswrd:(NSString *)pasword officeid:(NSString *)officeid ;
+-(void)officeListingService;
+-(void)includeDesignation:(NSString *)officeId :(NSString *)ruleType :(NSString *)ruleID;
+
+
+
+//...Holiday....//
+
+-(void)createMainDoneHolidayService:(NSMutableDictionary *)serviceDict othrDetails:(NSMutableArray *)othrDetailsAray officeid:(NSString *)officeid ruleid:(NSString *)hoidayrule_id;
+-(void)UpdateHolidayRule:(NSMutableDictionary *)serviceDict othrDetails:(NSMutableArray *)othrDetailsAray officeid:(NSString *)officeid ruleid:(NSString *)ruleId;
+
+-(void)mainserviceForOfficeandDepartments:(NSString *)workingPremiseId departmentId:(NSString *)deptid categoryId:(NSString *)categoryId officeId:(NSString *)officeId flagString:(NSString *)flagString fromString:(NSString *)fromString toString:(NSString *)toString duration:(NSString *)durationString payment:(NSString *)paymentstring workingPremise:(NSString *)workingPremiseString departmentName:(NSString *)departmentString categrystring:(NSString *)categoryString catgryText:(NSString *)catgryText ruleid:(NSString *)holidayruleid;
+
+
+-(void)SubserviceForCreation:(NSString *)workingPremiseId departmentId:(NSString *)deptid categoryId:(NSString *)categoryId officeId:(NSString *)officeId flagString:(NSString *)flagString fromString:(NSString *)fromString toString:(NSString *)toString duration:(NSString *)durationString payment:(NSString *)paymentstring workingPremise:(NSString *)workingPremiseString departmentName:(NSString *)departmentString categrystring:(NSString *)categoryString firstPartDetails:(NSMutableDictionary *)firstPartDict catgryText:(NSString *)catgryText;
+
+-(void)getHolidaypageWorkingPremise:(NSString *)offceid;
+-(void)getHolidaypageDepartments:(NSString *)idString flagString:(NSString *)flagstring;
+-(void)getHolidaypageCategory:(NSString *)deptid;
+-(void)viewAllHolidays:(NSString *)officeid;
+-(void)individualHolidayDetails:(NSString *)officeid ruleId:(NSString *)ruleId;
+-(void)deleteHoliday:(NSString *)ruleid;
+
+//...New Holiday setting Service....
+-(void)firstServiceForHolidyWorkingpremiseDeprtmntsAndCategory:(NSString *)officeid;
+-(void)seconddisplayServiceForDeptcatfryOffice:(NSString *)ruleId officeid:(NSString *)officeId;
+-(void)SecondCategoryDoneServiceFunction:(NSString *)workingPremiseId departmentId:(NSString *)deptid categoryId:(NSString *)categoryId officeId:(NSString *)officeId flagString:(NSString *)flagString fromString:(NSString *)fromString toString:(NSString *)toString duration:(NSString *)durationString payment:(NSString *)paymentstring workingPremise:(NSString *)workingPremiseString departmentName:(NSString *)departmentString categrystring:(NSString *)categoryString catgryText:(NSString *)catgryText ruleId:(NSString *)ruleId CatgryTileId:(NSString *)ctgryTileId;
+-(void)individualDisplayHolidayFunction:(NSString *)officeId holidayId:(NSString *)holi_id;
+
+
+
+//<---------------------------Leave Settings---------------------------------->
+
+-(void)viewAllLeaves:(NSString *)officeId;
+-(void)leaveSaveNewTile:(id)leaveData;
+-(void)individualLeaveView:(NSString *)leaveID;
+-(void)individualLeaveConditionView:(NSString *)conditionID;
+-(void)updateLeaveSettings:(id)leaveData;
+-(void)finalUpdateLeaveSettings:(id)leaveData;
+-(void)deleteLeaveCondition:(NSString *)conditionID;
+-(void)deleteLeave:(NSString *)leaveID;
+
+
+
+
+
+//<<---------------------------Include Designation for Tile View Classes----------------->>
+-(void)includeDesignationforTileViewClass:(NSString *)ruleType : (NSString *)ruleID : (NSString *)tileID : (NSString *)officeID;
+
+
+//<<........................Fine Settings.....................................>>//
+
+-(void)CreaateNewFineSettings:(NSString *)fineTextName fineAmount:(NSString *)fineAmountText maxWarning:(NSString *)maxWarningText maxInstalment:(NSString *)maxInstalment description:(NSString *)Description officeid:(NSString *)officeId;
+-(void)viewAllFineRules:(NSString *)officeid;
+-(void)individualFineruleDisplay:(NSString *)officeId ruled:(NSString *)ruleId;
+-(void)updateFineSettings:(NSString *)fineTextName fineAmount:(NSString *)fineAmountText maxWarning:(NSString *)maxWarningText maxInstalment:(NSString *)maxInstalment description:(NSString *)Description officeid:(NSString *)officeId ruleId:(NSString *)ruleId;
+-(void)deleteFineSetingRule:(NSString *)ruleid;
+
+//............................Loan Settings.......................................>>
+//-(void)FirstServiceForLoanCreation:(NSString ;*)
+
+-(void)leaveabbrivationservice:(NSString *)officeid;
+
+
+//Creation of loan service firsttime
+
+-(void)createingloanTile:(NSString *)loantype abbrevation:(NSString *)abbrev description:(NSString *)description annualinterestrate:(NSString *)annualinterestrate maxduration:(NSString *)maxduration maximumlimit:(NSString *)maximumlimit pendingloanamount:(NSString *)pendingloanamount loanmonth:(NSString *)loanmonth lastworkingday:(NSString *)lastworkingday visaduration:(NSString *)visaduration numberofleavedays:(NSString *)numberofleavedays exceptforleave:(NSString *)exceptforleave allowbuttonstring1:(NSString *)allowbuttonstring1 allowbuttonstring2:(NSString *)allowbuttonstring2 allowbuttonstring3:(NSString *)allowbuttonstring3 swichvalue:(NSString *)swichvalue loanruleid:(NSString *)loanruleid loantileid:(NSString *)loantileid officeid:(NSString *)officeid selecteddesignationstring:(NSString *)selecteddesignationstring maindesignationdictionary:(NSMutableDictionary *)maindesignationdictionary;
+
+
+//Creation of loan service alltime
+
+
+-(void)secondtimecreateloanTile:(NSString *)loantype abbrevation:(NSString *)abbrev description:(NSString *)description annualinterestrate:(NSString *)annualinterestrate maxduration:(NSString *)maxduration maximumlimit:(NSString *)maximumlimit pendingloanamount:(NSString *)pendingloanamount loanmonth:(NSString *)loanmonth lastworkingday:(NSString *)lastworkingday visaduration:(NSString *)visaduration numberofleavedays:(NSString *)numberofleavedays exceptforleave:(NSString *)exceptforleave allowbuttonstring1:(NSString *)allowbuttonstring1 allowbuttonstring2:(NSString *)allowbuttonstring2 allowbuttonstring3:(NSString *)allowbuttonstring3 swichvalue:(NSString *)swichvalue loanruleid:(NSString *)loanruleid loantileid:(NSString *)loantileid officeid:(NSString *)officeid selecteddesignationstring:(NSString *)selecteddesignationstring maindesignationdictionary:(NSMutableDictionary *)maindesignationdictionary;
+
+//lastdonebuttonserviceforloanservice
+
+
+
+-(void)lastdonebuttonforcreateloanservice:(NSString *)loantype abbrevation:(NSString *)abbrev description:(NSString *)description loanruleid:(NSString *)loanruldid;
+
+-(void)viewAllloanRules:(NSString *)officeid;
+
+-(void)deleteloanTileid:(NSString *)tileid;
+
+-(void)updationofloanIndividualrules:(NSString *)loanid;
+
+
+
+//.............Advance Settings................................>>>>>
+
+
+-(void)createNewAdvanceRule:(NSString *)percentOfsalary instalment:(NSString *)instalmentLimit visaDuration:(NSString *)visaDuration eligibleMonths:(NSString *)eligibleMonths pendingLoanAmount:(NSString *)pendingLoanAmt leavesTypeAbrvation:(NSString *)leavesType lastwrkingDay:(NSString *)lasttWorkingDay radioButton1:(NSString *)radioButton radioButton2:(NSString *)radioButton2 radioButton3:(NSString *)radioButton3;
+
+
+
+
+
+@end

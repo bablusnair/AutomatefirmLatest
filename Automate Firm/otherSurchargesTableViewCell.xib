@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Oxygen-Regular.ttf">
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="otherSurchargesTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="275" height="35"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="275" height="34"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VIy-5v-gxP">
+                        <rect key="frame" x="266" y="3" width="10" height="13"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="15"/>
+                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="other_charges_left_value.png" translatesAutoresizingMaskIntoConstraints="NO" id="NNg-J3-xWn">
+                        <rect key="frame" x="0.0" y="1" width="265" height="32"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NQU-TK-KBc">
+                        <rect key="frame" x="113" y="3" width="39" height="28"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KcN-bH-9Vt">
+                                <rect key="frame" x="0.0" y="0.0" width="38" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                <connections>
+                                    <action selector="editingforothersurtaxField:" destination="-2" eventType="editingDidBegin" id="eKb-Bd-05R"/>
+                                    <action selector="surchargeEndtaxfield:" destination="-2" eventType="editingDidEnd" id="JgF-6F-7f9"/>
+                                </connections>
+                            </textField>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMs-pq-e1W">
+                                <rect key="frame" x="31" y="0.0" width="10" height="13"/>
+                                <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="15"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bn5-wc-ITQ">
+                        <rect key="frame" x="158" y="2" width="107" height="29"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OS9-Yb-ZBR">
+                                <rect key="frame" x="2" y="0.0" width="105" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                            </textField>
+                            <button opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cv2-wB-mik">
+                                <rect key="frame" x="81" y="7" width="24" height="16"/>
+                                <state key="normal" image="icon_down_arrow.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VmW-59-tF3">
+                        <rect key="frame" x="0.0" y="3" width="108" height="28"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tB1-Xl-9SY">
+                                <rect key="frame" x="1" y="-1" width="105" height="30"/>
+                                <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="other_nameBeginedit:" destination="-2" eventType="editingDidBegin" id="KFE-x0-xBb"/>
+                                    <action selector="surchargeEndnamefield:" destination="-2" eventType="editingDidEnd" id="VwB-LD-Ihl"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </subviews>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="amountText" destination="OS9-Yb-ZBR" id="rJJ-uT-Wuk"/>
+                <outlet property="amountbgview" destination="Bn5-wc-ITQ" id="BOE-H1-gjJ"/>
+                <outlet property="mandatorystar1" destination="NMs-pq-e1W" id="TSb-7h-7Ii"/>
+                <outlet property="mandatorystar2" destination="VIy-5v-gxP" id="vmo-Dc-JBx"/>
+                <outlet property="nameText" destination="tB1-Xl-9SY" id="Cno-Js-oAL"/>
+                <outlet property="namefieldbgView" destination="VmW-59-tF3" id="Pfp-8H-bwo"/>
+                <outlet property="taxText" destination="KcN-bH-9Vt" id="Ood-AB-sv4"/>
+                <outlet property="taxbgview" destination="NQU-TK-KBc" id="lwV-No-rrD"/>
+            </connections>
+            <point key="canvasLocation" x="472.5" y="108.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_down_arrow.png" width="13" height="13"/>
+        <image name="other_charges_left_value.png" width="484" height="49"/>
+    </resources>
+</document>

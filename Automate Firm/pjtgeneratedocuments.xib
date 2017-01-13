@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view tag="12" contentMode="scaleToFill" id="iN0-l3-epB" customClass="pjtgenateviewclass">
+            <rect key="frame" x="0.0" y="0.0" width="855" height="666"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Top_bar_without icons.png" id="Zmh-3z-z10">
+                    <frame key="frameInset" width="855" height="49"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <view contentMode="scaleToFill" id="MUc-kZ-zje">
+                    <frame key="frameInset" minY="49" width="855" height="35"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Second_bar_without icons.png" id="Lix-b1-pH4">
+                            <frame key="frameInset" width="855" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nwv-Zm-xge">
+                            <frame key="frameInset" minX="767" minY="5" width="25" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="Print_icongenerate.png">
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZSc-lf-W6T">
+                            <frame key="frameInset" minX="806" minY="7" width="28" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="Email_icongererate.png">
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="FIx-2W-pZP">
+                            <frame key="frameInset" minX="690" minY="4" width="26" height="26"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="Recent Doc_icon.png">
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3cm-gU-vyr">
+                            <frame key="frameInset" minX="727" minY="3" width="28" height="27"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="reset_white.png">
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="fqm-1z-GoX"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Generate Documents_Icon.png" id="ozM-LV-rk7">
+                    <frame key="frameInset" minX="12" minY="13" width="38" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generate Documents" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m0X-1h-e9J">
+                    <frame key="frameInset" minX="62" minY="18" width="184" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" id="Zxh-yh-eZa">
+                    <frame key="frameInset" minY="84" width="855" height="582"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" id="ISY-lH-9YL">
+                            <rect key="frame" x="0.0" y="0.0" width="855" height="1000"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="main_BG45.png" id="7TC-LS-NlH">
+                                    <frame key="frameInset" minY="1" width="855" height="581"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </view>
+                    </subviews>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="size" keyPath="contentSize">
+                            <size key="value" width="855" height="1000"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="xPE-2f-dGe"/>
+                    </connections>
+                </scrollView>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="tJ2-nY-3jy">
+                    <frame key="frameInset" minX="361" minY="353" width="50" height="41"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="uploadpinIcon.png"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="H4D-rt-5fH">
+                    <frame key="frameInset" minX="491" minY="353" width="53" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="editpen.png"/>
+                </button>
+                <view contentMode="scaleToFill" misplaced="YES" id="dgN-M1-rhW">
+                    <frame key="frameInset" minX="328" minY="95" width="482" height="385"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="outer_box.png" id="jXz-pk-qSU">
+                            <frame key="frameInset" width="482" height="379"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <view contentMode="scaleToFill" id="iY5-BD-JqQ">
+                            <frame key="frameInset" minX="14" minY="29" width="468" height="344"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.66666668650000005" green="0.66666668650000005" blue="0.66666668650000005" alpha="0.28840266050000002" colorSpace="custom" customColorSpace="sRGB"/>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="4fy-58-KjR">
+                            <frame key="frameInset" minX="25" minY="40" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="g79-7W-ScW">
+                            <frame key="frameInset" minX="25" minY="149" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="ohV-1f-1VD">
+                            <frame key="frameInset" minX="136" minY="149" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="d3j-t5-p6R">
+                            <frame key="frameInset" minX="247" minY="149" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="sSH-1f-sqw">
+                            <frame key="frameInset" minX="358" minY="149" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="715-gJ-KAP">
+                            <frame key="frameInset" minX="248" minY="259" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="FBy-QR-no6">
+                            <frame key="frameInset" minX="136" minY="259" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="5Pf-Y2-Epu">
+                            <frame key="frameInset" minX="25" minY="259" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="bOp-ak-a4m">
+                            <frame key="frameInset" minX="136" minY="40" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="gCb-9q-ZV9">
+                            <frame key="frameInset" minX="247" minY="40" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartbox_4.png" id="1Sa-AY-Ecl">
+                            <frame key="frameInset" minX="358" minY="40" width="109" height="106"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6bS-op-60X">
+                            <frame key="frameInset" minX="25" minY="336" width="109" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                            <state key="normal">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="fzT-75-LFa"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retirement Seperation" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HRI-eo-MRU">
+                            <frame key="frameInset" minX="35" minY="334" width="88" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SxN-bQ-BeW">
+                            <frame key="frameInset" minX="141" minY="340" width="87" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <state key="normal" title="List">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="jia-pe-TRe"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8j1-dD-eb1">
+                            <frame key="frameInset" minX="260" minY="340" width="87" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <state key="normal" title="Memorandum">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="e0Q-fY-cdI"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Z3J-xd-G9K">
+                            <frame key="frameInset" minX="48" minY="51" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="leave_active.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="83c-aB-NTa"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lEl-yR-4Om">
+                            <frame key="frameInset" minX="159" minY="51" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="advance_active.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="syc-gn-t7a"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qiC-5j-fZP">
+                            <frame key="frameInset" minX="159" minY="161" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="PEF_active.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="4NP-Gm-Ecv"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZZZ-Kf-kor">
+                            <frame key="frameInset" minX="270" minY="161" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="promotion_active.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchDragInside" id="nVf-DE-bML"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="agw-8t-j7r">
+                            <frame key="frameInset" minX="48" minY="161" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="exp_reimb_active.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="NI6-yV-vR3"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7n5-VF-zmZ">
+                            <frame key="frameInset" minX="272" minY="51" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="loan_active.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="uh9-Px-tip"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dzO-Q6-bkP">
+                            <frame key="frameInset" minX="381" minY="51" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="fine_active.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="SNa-s0-unC"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cZ6-jC-vI5">
+                            <frame key="frameInset" minX="381" minY="161" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="terminate_active.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="Y2T-MW-aUr"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1pY-TK-h2E">
+                            <frame key="frameInset" minX="48" minY="271" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="retirement_active.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="Ly7-6l-SBY"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rn8-lA-UJQ">
+                            <frame key="frameInset" minX="159" minY="271" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="formimg.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="Zou-JY-w92"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JJf-Lq-sYg">
+                            <frame key="frameInset" minX="271" minY="271" width="65" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="memorndm.png"/>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="8aN-mK-jml"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nYt-M0-b5A">
+                            <frame key="frameInset" minX="25" minY="118" width="89" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <state key="normal" title="Leave">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="3lL-dZ-sQm"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="htE-lK-98R">
+                            <frame key="frameInset" minX="148" minY="118" width="89" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <state key="normal" title="Advance">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="sq2-L4-Ytn"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="C04-m8-qpE">
+                            <frame key="frameInset" minX="251" minY="118" width="89" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <state key="normal" title="Loan">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="L33-3G-Qhm"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BQV-lg-jRB">
+                            <frame key="frameInset" minX="358" minY="118" width="89" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <state key="normal" title="Fine">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="nJG-kR-3nT"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wim-P3-FlY">
+                            <frame key="frameInset" minX="25" minY="230" width="109" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                            <state key="normal">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="dA0-hv-ZHe"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UQv-BO-49P">
+                            <frame key="frameInset" minX="136" minY="230" width="109" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <state key="normal" title="Pref.Evaluation">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="2Do-ty-LEx"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vtZ-mU-PxA">
+                            <frame key="frameInset" minX="260" minY="230" width="90" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <state key="normal" title="Promotion">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="va1-Xx-DOH"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="F6A-C2-xa4">
+                            <frame key="frameInset" minX="371" minY="230" width="90" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <state key="normal" title="Termination">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.9067250845" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="presetViewActions:" destination="iN0-l3-epB" eventType="touchUpInside" id="Q5g-Gp-zJW"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expence Reimbursement" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qx9-th-ysC">
+                            <frame key="frameInset" minX="35" minY="228" width="88" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="mainView" destination="ISY-lH-9YL" id="zez-vQ-zDc"/>
+                <outlet property="popUpView" destination="dgN-M1-rhW" id="xua-4a-LoQ"/>
+                <outlet property="scrollView" destination="Zxh-yh-eZa" id="JHT-r2-imz"/>
+            </connections>
+            <point key="canvasLocation" x="61.5" y="318"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Email_icongererate.png" width="53" height="39"/>
+        <image name="Generate Documents_Icon.png" width="72" height="66"/>
+        <image name="PEF_active.png" width="256" height="256"/>
+        <image name="Print_icongenerate.png" width="55" height="47"/>
+        <image name="Recent Doc_icon.png" width="50" height="51"/>
+        <image name="Second_bar_without icons.png" width="1657" height="62"/>
+        <image name="Top_bar_without icons.png" width="1657" height="103"/>
+        <image name="advance_active.png" width="256" height="256"/>
+        <image name="cartbox_4.png" width="699" height="415"/>
+        <image name="editpen.png" width="120" height="120"/>
+        <image name="exp_reimb_active.png" width="256" height="256"/>
+        <image name="fine_active.png" width="256" height="256"/>
+        <image name="formimg.png" width="264" height="249"/>
+        <image name="leave_active.png" width="256" height="256"/>
+        <image name="loan_active.png" width="256" height="256"/>
+        <image name="main_BG45.png" width="2480" height="3507"/>
+        <image name="memorndm.png" width="259" height="245"/>
+        <image name="outer_box.png" width="544" height="897"/>
+        <image name="promotion_active.png" width="256" height="256"/>
+        <image name="reset_white.png" width="40" height="40"/>
+        <image name="retirement_active.png" width="256" height="256"/>
+        <image name="terminate_active.png" width="256" height="256"/>
+        <image name="uploadpinIcon.png" width="256" height="256"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
+</document>

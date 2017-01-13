@@ -1,0 +1,2715 @@
+ //
+//  connectionclass.m
+//  Automate Firm
+//
+//  Created by leonine on 19/10/15.
+//  Copyright © 2015 leonine. All rights reserved.
+//
+
+#import "connectionclass.h"
+#import "settingsViewController.h"
+#define insertTimesettingurl @"http://192.168.1.45/work/automate_new1/index.php/time_rule/insert_time"
+#define getallTimerulesurl @"http://192.168.1.45/work/automate_new1/index.php/time_rule_response/get_time_data?"
+#define getselectedTimerulesurl @"http://192.168.1.45/work/automate_new1/index.php/time_rule/time_edit?"
+#define updateTimeRuleUrl @"http://192.168.1.45/work/automate_new1/index.php/time_rule/time_update_details"
+#define deleteTimeRuleUrl @"http://192.168.1.45/work/automate_new1/index.php/time_rule/time_delete?"
+
+#define getAllRoundUpUrl @"http://192.168.1.45/work/automate_new/index.php/round_up_response/get?"
+#define updateRoundUpUrl @"http://192.168.1.45/work/automate_new/index.php/round_up/update_data?"
+
+#define getalldesignationurl @"http://automatefirm.com/automate/index.php/time_rule/get_designation_all"
+#define passingdesignationurl @"http://automatefirm.com/automate/index.php/time_rule/inc_designation_under_timerule"
+#define createNewShiftUrl @"http://automatefirm.com/automate/index.php/shift_rule/putdata"
+#define getAllShiftDesignationListUrl @"http://automatefirm.com/automate/index.php/shift_rule/get_designation_all?"
+#define getAllShiftRules @"http://automatefirm.com/automate/index.php/shift_rule/get_data"
+#define  getSelectedShiftRule @"http://automatefirm.com/automate/index.php/shift_rule/get_data_by_id?"
+#define updateShiftRuleUrl @"http://automatefirm.com/automate/index.php/shift_rule/update_data?"
+#define deleteShiftRuleUrl @"http://automatefirm.com/automate/index.php/shift_rule/delete_data?"
+#define createNewDesignationUrl @"http://automatefirm.com/automate/index.php/designations/add?"
+#define listAlldesignationUrl @"http://automatefirm.com/automate/index.php/designations/getdata?"
+#define individualDisigViewUrl @"http://automatefirm.com/automate/index.php/designations/getdata?"
+#define updateDesignationURL @"http://automatefirm.com/automate/index.php/designations/edit?"
+#define deleteDesignationUrl  @"http://automatefirm.com/automate/index.php/designations/delete?"
+#define createBankURL @"http://automatefirm.com/automate/index.php/banks/add?"
+#define viewAllBankUrl @"http://automatefirm.com/automate/index.php/banks/getdata?"
+#define viewIndividualBankUrl @"http://automatefirm.com/automate/index.php/banks/getdata?"
+#define updateBankURL @"http://automatefirm.com/automate/index.php/banks/edit?"
+#define deleteBankURL @"http://automatefirm.com/automate/index.php/banks/delete?"
+#define viewIndividualofficeUrl @"http://automatefirm.com/automate/index.php/office/get_office?"
+#define createNewweeekRule @"http://192.168.1.45/work/automate_new/index.php/week_rule/insert_week_rule"
+#define getAllCompanyOfficeUrl @"http://192.168.1.45/work/automate_new/index.php/office/office_list"
+#define loginurl @"http://192.168.1.45/work/automate_new/index.php/login/validate"
+//#define viewIndividualofficeUrl @"http://192.168.1.11/work/automate/automate/index.php/office/get_office?"
+#define logourl @"http://automatefirm.com/automate/af_include_files/office/images/"
+//#define logourl @"http://192.168.1.11/work/automate/automate/af_include_files/office/images/"
+#define viewCreatedWeekRule @"http://192.168.1.45/work/automate_new/index.php/week_rule_list?"
+#define viewUpdatedWeekRule @"http://192.168.1.45/work/automate_new1/index.php/week_rule/update_week_rule"
+
+#define viewIndivdualWeekRule @"http://192.168.1.45/work/automate_new/index.php/week_rule_list/show_week_rule_list?"
+#define viewallcountryurl @"http://automatefirm.com/automate/index.php/welcome/get_country?"
+#define nationalityUrl @"http://automatefirm.com/automate/index.php/welcome/get_nationality"
+#define viewselecedStaes @"http://automatefirm.com/automate/index.php/welcome/get_state?"
+#define viewselecedCity @"http://automatefirm.com/automate/index.php/welcome/get_city?"
+#define viewstoreurl @"http://automatefirm.com/automate/index.php/store/get_store?"
+#define storedetailsurl @"http://automatefirm.com/automate/index.php/store/get_store_details?"
+//#define viewstoreurl @"http://192.168.1.11/work/automate/automate/index.php/store/get_store?"
+//#define storedetailsurl @"http://192.168.1.11/work/automate/automate/index.php/store/get_store_details?"
+//#define updateofficeurl @"http://192.168.1.11/work/automate/automate/index.php/individual_office/edit_office"
+//#define UpdateStoreurl @"http://192.168.1.11/work/automate/automate/index.php/individual_store/update_store"
+#define getbankListUrl @"http://automatefirm.com/automate/index.php/welcome/get_bank?"
+#define updateofficeurl @"http://automatefirm.com/automate/index.php/individual_office/edit_office"
+#define UpdateStoreurl @"http://automatefirm.com/automate/index.php/individual_store/update_store"
+#define addNewEmployeeOfficeDetailsViewUrl @"http://automatefirm.com/automate/index.php/employee?"
+#define generateEmpCodeUrl @"http://automatefirm.com/automate/index.php/employee/emp_pre_reg?"
+#define addNewEmployeeSaveUrl1 @"http://automatefirm.com/automate/index.php/employee/add?"
+#define addNewEmployeeSaveUrl2 @"http://automatefirm.com/automate/index.php/employee/second_page_data?"
+#define designationURL @"http://192.168.1.45/work/automate_new1/index.php/week_rule_list/get_include_designation?"
+
+@implementation connectionclass
+// Login Function
+
+-(void)LoginService:(NSString *)username paswrd:(NSString *)pasword officeid:(NSString *)officeid
+{
+    
+    NSError *error;
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@",loginurl];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys:username,@"username",pasword,@"password",officeid,@"office",nil];
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    [request setHTTPBody:postData];
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([self.mydelegate respondsToSelector:@selector(loginResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate loginResponse:mystring];
+                
+            }
+            
+        }
+        
+    }];
+    
+    
+    [postDataTask resume];
+    
+}
+
+//Office Listing In Login Page
+
+-(void)officeListingService
+{
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@",getAllCompanyOfficeUrl];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(officeListingResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate officeListingResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+    
+
+}
+
+//Create Time Rule
+
+-(void)createnewTimerule:(NSString *)office_id :(NSString *)rulename abbrv:(NSString *)abbrv descripton:(NSString *)descripton checkgracetime:(NSString *)checkgracetime checkgracetimetextvalue:(NSString *)checkgracetimetextvalue workfirstdetails:(NSString *)workfirstdetails workfirstdetailstextvalue:(NSString *)workfirstdetailstextvalue worksecondetails:(NSString *)worksecondetails workthirddetails:(NSString *)workthirdetails latearrivaloption:(NSString *)latearrivaloption latearrivalvalue1:(NSString *)latearrivalvalue1 latearrivalvalue2:(NSString *)latearrivalvalue2 latearrivalvalue3:(NSString *)latearrivalvalue3 latearrivalvalue4:(NSString *)latearrivalvalue4 firstpenalty:(NSString *)firstpenalty secondpenalty:(NSString *)secondpenalty thirdpenalty:(NSString *)thirdpenalty workhoursfirst:(NSString *)workhoursfirst workhourssecond:(NSString *)workhourssecond workhoursthird:(NSString *)workhoursthird workhoursfourth:(NSString *)workhoursfourth workhoursfifth:(NSString *)workhoursfifth timestatusflag:(NSString *)timestatusflag createdby:(NSString *)createdby designationArray:(NSMutableArray *)designationArray
+{
+    
+    
+    
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@",insertTimesettingurl];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    
+    NSDictionary *time_data = [[NSDictionary alloc] initWithObjectsAndKeys:office_id,@"office_id",rulename,@"time_rule_name",abbrv,@"time_abbr",descripton,@"description",checkgracetime,@"grace_time_status",checkgracetimetextvalue,@"grace_time",workfirstdetails,@"calculate_absent_status",workfirstdetailstextvalue,@"calculate_absent_value",worksecondetails,@"ignore_checkout_status",workthirdetails,@"adjust_late_overtime",latearrivaloption,@"late_arrival_option",latearrivalvalue1,@"hours",latearrivalvalue2,@"week",latearrivalvalue3,@"mark",latearrivalvalue4,@"day",firstpenalty,@"penalties_late_duration",secondpenalty,@"penalties_break_duration", thirdpenalty,@"penalties_exit_duration",workhoursfirst,@"deduct_late_working_hours",workhourssecond,@"include_break_working",workhoursthird,@"deduct_prolonged_working",workhoursfourth,@"deduct_early_exit_working",workhoursfifth,@"on_duty_working_hours",timestatusflag,@"time_status",createdby,@"created_by",
+                             nil];
+            
+    NSMutableArray *time_array=[[NSMutableArray alloc]init];
+    [time_array addObject:time_data];
+    
+    //NSDictionary *mapData=[[NSDictionary alloc]initWithObjectsAndKeys:time_data,@"time_details", designationArray,@"designationArray", nil];
+    
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:time_data options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([mystring isEqualToString:@"1"]) {
+                [self getviewalltimerules:@"1"];
+            }
+            else if ([mystring isEqualToString:@"existed"])
+            {
+                if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate showalerviewcontroller:@"Rule Name Already Existed"];
+                    
+                }
+            }
+            else
+            {
+                if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate showalerviewcontroller:@"Failed to Create Time Rule"];
+                    
+                }
+
+            }
+            
+            
+            
+        }
+
+        
+        }];
+    
+    
+    [postDataTask resume];
+    
+
+    
+}
+//List all created Time Rule
+-(void)getviewalltimerules:(NSString *)office_id
+{
+    
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@office_id=%@",getallTimerulesurl,office_id];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+      
+        
+        if (data==Nil) {
+            
+
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+
+            
+        }
+        
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(initiallyruleviewresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate initiallyruleviewresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+
+    
+    
+    
+    
+    
+}
+//Display Selected Time Rule
+-(void)updatesettingsviewrule:(NSString *)ruleid : (NSString *)officeId
+{
+    
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@edit_id=%@&office_id=%@",getselectedTimerulesurl,ruleid,officeId];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+           
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(updateruleviewresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate updateruleviewresponse:json];
+                
+            }
+
+        }
+
+        
+    }];
+    
+    [dataTask resume];
+    
+    
+}
+//Update Time Rule
+-(void)updateTimerule:(NSString *)office_id :(NSString *)id rulename:(NSString *)rulename abbrv:(NSString *)abbrv descripton:(NSString *)descripton checkgracetime:(NSString *)checkgracetime checkgracetimetextvalue:(NSString *)checkgracetimetextvalue workfirstdetails:(NSString *)workfirstdetails workfirstdetailstextvalue:(NSString *)workfirstdetailstextvalue worksecondetails:(NSString *)worksecondetails workthirddetails:(NSString *)workthirdetails latearrivaloption:(NSString *)latearrivaloption latearrivalvalue1:(NSString *)latearrivalvalue1 latearrivalvalue2:(NSString *)latearrivalvalue2 latearrivalvalue3:(NSString *)latearrivalvalue3 latearrivalvalue4:(NSString *)latearrivalvalue4 firstpenalty:(NSString *)firstpenalty secondpenalty:(NSString *)secondpenalty thirdpenalty:(NSString *)thirdpenalty workhoursfirst:(NSString *)workhoursfirst workhourssecond:(NSString *)workhourssecond workhoursthird:(NSString *)workhoursthird workhoursfourth:(NSString *)workhoursfourth workhoursfifth:(NSString *)workhoursfifth timestatusflag:(NSString *)timestatusflag createdby:(NSString *)createdby designationArray:(NSMutableArray *)designationArray
+{
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@",updateTimeRuleUrl];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    
+    NSDictionary *time_data = [[NSDictionary alloc] initWithObjectsAndKeys:id,@"time_edit_id",office_id,@"office_id",rulename,@"time_rule_name",abbrv,@"time_abbr",descripton,@"description",checkgracetime,@"grace_time_status",checkgracetimetextvalue,@"grace_time",workfirstdetails,@"calculate_absent_status",workfirstdetailstextvalue,@"calculate_absent_value",worksecondetails,@"ignore_checkout_status",workthirdetails,@"adjust_late_overtime",latearrivaloption,@"late_arrival_option",latearrivalvalue1,@"hours",latearrivalvalue2,@"week",latearrivalvalue3,@"mark",latearrivalvalue4,@"day",firstpenalty,@"penalties_late_duration",secondpenalty,@"penalties_break_duration", thirdpenalty,@"penalties_exit_duration",workhoursfirst,@"deduct_late_working_hours",workhourssecond,@"include_break_working",workhoursthird,@"deduct_prolonged_working",workhoursfourth,@"deduct_early_exit_working",workhoursfifth,@"on_duty_working_hours",timestatusflag,@"time_status",createdby,@"created_by",nil];
+   // NSMutableArray *time_array=[[NSMutableArray alloc]init];
+   // [time_array addObject:time_data];
+    
+   // NSDictionary *mapData=[[NSDictionary alloc]initWithObjectsAndKeys:time_array,@"time_details", designationArray,@"designationArray", nil];
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:time_data options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if([mystring isEqualToString:@"1"])
+            {
+                [self getviewalltimerules:@"1"];
+            }
+            else if ([mystring isEqualToString:@"existed"])
+            {
+                if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate showalerviewcontroller:@"Rule Name Already Existed"];
+                    
+                }
+            }
+            else
+            {
+                if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate showalerviewcontroller:@"Failed to Update Time Rule"];
+                    
+                }
+            }
+        }
+        
+        
+    }];
+    
+    
+    [postDataTask resume];
+}
+
+//Delete Time Rule
+-(void)deleteTimeRule:(NSString *)officeID : (NSString *)rid
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@delete_id=%@&office_id=%@",deleteTimeRuleUrl,rid,officeID];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([self.mydelegate respondsToSelector:@selector(deleteSettingsRuleResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate deleteSettingsRuleResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+}
+                                                                                                                                                                                                                                                                                                                                                                 
+
+//List All RoundUp Rules && Individual WholeView
+
+-(void)roundUpViewAll:(NSString *)office_id
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@office_id=%@",getAllRoundUpUrl,office_id];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(initiallyRoundupRuleViewResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate initiallyRoundupRuleViewResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+}
+
+//RoundUp Update
+
+-(void)roundUpUpdate:(NSString *)officeID :(NSString *)roundupName :(NSString *)description :(NSString *)checkinRounding :(NSString *)checkinValue :(NSString *)checkoutRounding :(NSString *)checkoutValue :(NSString *)breakStart :(NSString *)breakEnd
+{
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@o_id=%@",updateRoundUpUrl,officeID];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    NSDictionary *roundupDict = [[NSDictionary alloc] initWithObjectsAndKeys:roundupName,@"round_up_name",description,@"round_up_description",checkinRounding,@"round_up_checkbox1",checkinValue,@"round_up_time1",checkoutRounding,@"round_up_checkbox2",checkoutValue,@"round_up_time2",breakStart,@"round_up_checkbox3",breakEnd,@"round_up_checkbox4",nil];
+    
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:roundupDict options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if([mystring isEqualToString:@"1"])
+            {
+                [self roundUpViewAll:@"1"];
+            }
+            else
+            {
+                if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate showalerviewcontroller:@"Failed to Update Time Rule"];
+                    
+                }
+            }
+        }
+        
+        
+    }];
+    
+    
+    [postDataTask resume];
+}
+
+
+
+//List all designation
+-(void)getallDesignationlist
+{
+    
+    
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@",getalldesignationurl];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(designationsGotresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate designationsGotresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+
+    
+    
+    
+}
+//DesignationPassinng
+-(void)designationarraypassing:(NSMutableArray *)passedesiarray
+{
+  
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@",passingdesignationurl];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+
+    NSMutableDictionary *postDict = [[NSMutableDictionary alloc]init];
+    
+    [postDict setValue:passedesiarray forKey:@"designationarray"];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:postDict options:0 error:nil];
+    [request setHTTPBody:jsonData];
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSString *successstring = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(passingarraydesignation:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate passingarraydesignation:successstring];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    
+    [postDataTask resume];
+
+
+}
+
+//Create New Shift Rule
+-(void)createNewShiftRule:(NSString *)shift_name shift_abbrv:(NSString *)shift_abbrv shift_type:(NSString *)shift_type shift_description:(NSString *)shift_description day_punch_start:(NSString *)day_punch_start day_shift_start:(NSString *)day_shift_start day_shift_end:(NSString *)day_shift_end day_working_hours:(NSString *)day_working_hours day_break_type:(NSString *)day_break_type day_break_begin:(NSString *)day_break_begin day_break_end:(NSString *)day_break_end day_break_duration:(NSString *)day_break_duration day_intime_chekbox:(NSString *)day_intime_chekbox day_outtime_checkbox:(NSString *)day_outtime_checkbox day_intime_value:(NSString *)day_intime_value day_outtime_value:(NSString *)day_outtime_value swing_punch_start:(NSString *)swing_punch_start swing_shift_start:(NSString *)swing_shift_start swing_shift_end:(NSString *)swing_shift_end swing_working_hours:(NSString *)swing_working_hours swing_break_type:(NSString *)swing_break_type swing_break_begin:(NSString *)swing_break_begin swing_break_end:(NSString *)swing_break_end swing_break_duration:(NSString *)swing_break_duration swing_inttime_checkbox:(NSString *)swing_inttime_checkbox swing_outtime_checkbox:(NSString *)swing_outtime_checkbox swing_intime_value:(NSString *)swing_intime_value swing_outtime_value:(NSString *)swing_outtime_value night_punch_start:(NSString *)night_punch_start night_shift_start:(NSString *)night_shift_start night_shift_end:(NSString *)night_shift_end night_working_hours:(NSString *)night_working_hours night_break_type:(NSString *)night_break_type night_break_begin:(NSString *)night_break_begin night_break_end:(NSString *)night_break_end night_break_duration:(NSString *)night_break_duration night_intime_checkbox:(NSString *)night_intime_checkbox night_outtime_checkbox:(NSString *)night_outtime_checkbox night_intime_value:(NSString *)night_intime_value night_outtime_value:(NSString *)night_outtime_value shift_status:(NSString *)shift_status shift_created_by:(NSString *)shift_created_by shift_created_date:(NSString *)shift_created_date designationArray:(NSMutableArray *)designationArray
+{
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@",createNewShiftUrl];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    
+    NSDictionary *shift_data = [[NSDictionary alloc] initWithObjectsAndKeys:shift_name,@"shift_name",shift_abbrv,@"shift_abbrv",shift_description,@"shift_description",shift_type,@"shift_type",day_punch_start,@"day_punch_start",day_shift_start,@"day_shift_start",day_shift_end,@"day_shift_end",day_working_hours,@"day_working_hours",day_break_type,@"day_break_type",day_break_begin,@"day_break_begin",day_break_end,@"day_break_end",day_break_duration,@"day_break_duration",day_intime_chekbox,@"day_intime_chekbox",day_outtime_checkbox,@"day_outtime_checkbox",day_intime_value,@"day_intime_value",day_outtime_value,@"day_outtime_value",swing_punch_start,@"swing_punch_start", swing_shift_start,@"swing_shift_start",swing_shift_end,@"swing_shift_end",swing_working_hours,@"swing_working_hours",swing_break_type,@"swing_break_type",swing_break_begin,@"swing_break_begin",swing_break_end,@"swing_break_end",swing_break_duration,@"swing_break_duration",swing_inttime_checkbox,@"swing_inttime_checkbox",swing_outtime_checkbox,@"swing_outtime_checkbox",swing_intime_value,@"swing_intime_value",swing_outtime_value,@"swing_outtime_value",night_punch_start,@"night_punch_start",night_shift_start,@"night_shift_start",night_shift_end,@"night_shift_end",night_working_hours,@"night_working_hours",night_break_type,@"night_break_type",night_break_begin,@"night_break_begin",night_break_end,@"night_break_end",night_break_duration,@"night_break_duration",night_intime_checkbox,@"night_intime_checkbox",night_outtime_checkbox,@"night_outtime_checkbox",night_intime_value,@"night_intime_value",night_outtime_value,@"night_outtime_value",shift_status,@"shift_status",shift_created_by,@"shift_created_by",shift_created_date,@"shift_created_date",
+                             nil];
+    
+        NSMutableArray *shift_Array=[[NSMutableArray alloc]init];
+        [shift_Array addObject:shift_data];
+    
+        NSDictionary *mapData=[[NSDictionary alloc]initWithObjectsAndKeys:shift_Array,@"shift_details", designationArray,@"designationArray", nil];
+    
+        NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+        [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(settingsSavedresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate settingsSavedresponse:json];
+                
+            }
+            
+            
+            
+        }
+        
+        
+    }];
+    
+    
+    [postDataTask resume];
+}
+//Display Shift Designation
+
+-(void)getallShiftDesignationlist:(NSString *)rid
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@shift_id=%@",getAllShiftDesignationListUrl,rid];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(designationsGotresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate designationsGotresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+}
+
+//Display all the created shift rules
+
+-(void)getViewAllShiftRules
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@",getAllShiftRules];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(initiallyShiftRuleViewResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate initiallyShiftRuleViewResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+
+}
+
+
+//Display Selected Shift Rule
+-(void)displaySelectedShiftRule:(NSString *)ruleid
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@id=%@",getSelectedShiftRule,ruleid];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(updateruleviewresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate updateruleviewresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+}
+
+
+//Update Shift Rule
+-(void)updateShiftRule:(NSString *)id shift_name:(NSString *)shift_name shift_abbrv:(NSString *)shift_abbrv shift_type:(NSString *)shift_type shift_description:(NSString *)shift_description day_punch_start:(NSString *)day_punch_start day_shift_start:(NSString *)day_shift_start day_shift_end:(NSString *)day_shift_end day_working_hours:(NSString *)day_working_hours day_break_type:(NSString *)day_break_type day_break_begin:(NSString *)day_break_begin day_break_end:(NSString *)day_break_end day_break_duration:(NSString *)day_break_duration day_intime_chekbox:(NSString *)day_intime_chekbox day_outtime_checkbox:(NSString *)day_outtime_checkbox day_intime_value:(NSString *)day_intime_value day_outtime_value:(NSString *)day_outtime_value swing_punch_start:(NSString *)swing_punch_start swing_shift_start:(NSString *)swing_shift_start swing_shift_end:(NSString *)swing_shift_end swing_working_hours:(NSString *)swing_working_hours swing_break_type:(NSString *)swing_break_type swing_break_begin:(NSString *)swing_break_begin swing_break_end:(NSString *)swing_break_end swing_break_duration:(NSString *)swing_break_duration swing_inttime_checkbox:(NSString *)swing_inttime_checkbox swing_outtime_checkbox:(NSString *)swing_outtime_checkbox swing_intime_value:(NSString *)swing_intime_value swing_outtime_value:(NSString *)swing_outtime_value night_punch_start:(NSString *)night_punch_start night_shift_start:(NSString *)night_shift_start night_shift_end:(NSString *)night_shift_end night_working_hours:(NSString *)night_working_hours night_break_type:(NSString *)night_break_type night_break_begin:(NSString *)night_break_begin night_break_end:(NSString *)night_break_end night_break_duration:(NSString *)night_break_duration night_intime_checkbox:(NSString *)night_intime_checkbox night_outtime_checkbox:(NSString *)night_outtime_checkbox night_intime_value:(NSString *)night_intime_value night_outtime_value:(NSString *)night_outtime_value shift_status:(NSString *)shift_status shift_created_by:(NSString *)shift_created_by shift_created_date:(NSString *)shift_created_date designationArray:(NSMutableArray *)designationArray
+{
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@id=%@",updateShiftRuleUrl,id];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    
+    NSDictionary *shift_data = [[NSDictionary alloc] initWithObjectsAndKeys:shift_name,@"shift_name",shift_abbrv,@"shift_abbrv",shift_description,@"shift_description",shift_type,@"shift_type",day_punch_start,@"day_punch_start",day_shift_start,@"day_shift_start",day_shift_end,@"day_shift_end",day_working_hours,@"day_working_hours",day_break_type,@"day_break_type",day_break_begin,@"day_break_begin",day_break_end,@"day_break_end",day_break_duration,@"day_break_duration",day_intime_chekbox,@"day_intime_chekbox",day_outtime_checkbox,@"day_outtime_checkbox",day_intime_value,@"day_intime_value",day_outtime_value,@"day_outtime_value",swing_punch_start,@"swing_punch_start", swing_shift_start,@"swing_shift_start",swing_shift_end,@"swing_shift_end",swing_working_hours,@"swing_working_hours",swing_break_type,@"swing_break_type",swing_break_begin,@"swing_break_begin",swing_break_end,@"swing_break_end",swing_break_duration,@"swing_break_duration",swing_inttime_checkbox,@"swing_inttime_checkbox",swing_outtime_checkbox,@"swing_outtime_checkbox",swing_intime_value,@"swing_intime_value",swing_outtime_value,@"swing_outtime_value",night_punch_start,@"night_punch_start",night_shift_start,@"night_shift_start",night_shift_end,@"night_shift_end",night_working_hours,@"night_working_hours",night_break_type,@"night_break_type",night_break_begin,@"night_break_begin",night_break_end,@"night_break_end",night_break_duration,@"night_break_duration",night_intime_checkbox,@"night_intime_checkbox",night_outtime_checkbox,@"night_outtime_checkbox",night_intime_value,@"night_intime_value",night_outtime_value,@"night_outtime_value",shift_status,@"shift_status",shift_created_by,@"shift_created_by",shift_created_date,@"shift_created_date",
+                             nil];
+    
+    
+        NSMutableArray *shift_Array=[[NSMutableArray alloc]init];
+        [shift_Array addObject:shift_data];
+    
+        NSDictionary *mapData=[[NSDictionary alloc]initWithObjectsAndKeys:shift_Array,@"shift_details", designationArray,@"designationArray", nil];
+    
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(settingsSavedresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate settingsSavedresponse:json];
+                
+            }
+            
+            
+            
+        }
+        
+        
+    }];
+    
+    
+    [postDataTask resume];
+
+}
+-(void)deleteShiftRule:(NSString *)rid
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@id=%@",deleteShiftRuleUrl,rid];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([self.mydelegate respondsToSelector:@selector(deleteSettingsRuleResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate deleteSettingsRuleResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+}
+
+
+
+//General Settings_ ADD NEW DESIGNATION
+
+-(void)createNewDesignations:(NSString *)designation_title :(NSString *)designation_description :(NSString *)job_descriptions :(NSString *)desig_created_by :(NSString *)desig_created_date :(NSString *)desig_modified_date
+{
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios",createNewDesignationUrl];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    
+    NSDictionary *createdDesignation = [[NSDictionary alloc] initWithObjectsAndKeys:designation_title,@"designation_title",designation_description,@"designation_description",job_descriptions,@"job_description_list",desig_created_by,@"desig_created_by",desig_created_date,@"desig_created_date",desig_modified_date,@"desig_modifide_date",nil];
+    
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:createdDesignation options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            
+            if ([mystring isEqualToString:@"\t\n1"]) {
+                
+                if ([self.mydelegate respondsToSelector:@selector(ShowExistingAlert)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate ShowExistingAlert];
+                    
+                }
+            }
+            else
+            {
+                NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                
+                if ([self.mydelegate respondsToSelector:@selector(settingsSavedresponse:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate settingsSavedresponse:json];
+                    
+                }
+ 
+            }
+            
+        }
+        
+        
+    }];
+    
+    
+    [postDataTask resume];
+
+}
+
+//General Settings_VIEW ALL DESIGNATIONS
+-(void)viewAllDesignations
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios",listAlldesignationUrl];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(designationsGotresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate designationsGotresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+
+}
+
+//General Settings_INDIVIDUAL DESIGNATION VIEW
+
+-(void)individualDesignationView:(NSString *)desig_ID
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&designation_id=%@",individualDisigViewUrl,desig_ID];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            id jsonDict=[json objectAtIndex:0];
+            if ([self.mydelegate respondsToSelector:@selector(updateruleviewresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate updateruleviewresponse:jsonDict];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+
+}
+
+//General Settings_UPDATE DESIGNATION
+-(void)updateDesignation:(NSString *)id :(NSString *)designation_title :(NSString *)designation_description :(NSString *)job_descriptions :(NSString *)desig_created_by :(NSString *)desig_created_date :(NSString *)desig_modified_date
+{
+    
+     NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&designation_id=%@",updateDesignationURL,id];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    
+    NSDictionary *createdDesignation = [[NSDictionary alloc] initWithObjectsAndKeys:designation_title,@"designation_title",designation_description,@"designation_description",job_descriptions,@"job_description_list",desig_created_by,@"desig_created_by",desig_created_date,@"desig_created_date",desig_modified_date,@"desig_modifide_date",nil];
+    
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:createdDesignation options:0 error:&error];
+    [request setHTTPBody:postData];
+
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([mystring isEqualToString:@"\t\n1"]) {
+                
+                if ([self.mydelegate respondsToSelector:@selector(ShowExistingAlert)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate ShowExistingAlert];
+                    
+                }
+            }
+
+            else
+            {
+                NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                
+                if ([self.mydelegate respondsToSelector:@selector(settingsSavedresponse:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate settingsSavedresponse:json];
+                    
+                }
+
+            }
+            
+        }
+        
+        
+    }];
+    
+    
+    [postDataTask resume];
+}
+
+//General Settings_DELETE DESIGNATION
+
+-(void)deleteDesignation:(NSString *)desig_id
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&designation_id=%@",deleteDesignationUrl,desig_id];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(deleteSettingsRuleResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate deleteSettingsRuleResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+
+}
+
+
+//General Settings_CREATE NEW BANK
+
+-(void)createNewBank:(NSString *)bank_name :(NSString *)bank_abbrv :(NSString *)bank_branch :(NSString *)bank_description :(NSString *)bank_holder_name :(NSString *)bank_account_number :(NSString *)bank_iban :(NSString *)bank_switch_code :(NSString *)bank_bic :(NSString *)bank_address :(NSString *)bank_created_date :(NSString *)bank_modifide_date :(NSString *)bank_status
+{
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios",createBankURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    
+    NSDictionary *createdDesignation = [[NSDictionary alloc] initWithObjectsAndKeys:bank_name,@"bank_name",bank_abbrv,@"bank_abbrv",bank_branch,@"bank_branch",bank_description,@"bank_description",bank_holder_name,@"bank_holder_name",bank_account_number,@"bank_account_number",bank_iban,@"bank_iban",bank_switch_code,@"bank_switch_code",bank_bic,@"bank_bic",bank_address,@"bank_address",bank_created_date,@"bank_created_date",bank_modifide_date,@"bank_modifide_date",bank_status,@"bank_status",nil];
+    
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:createdDesignation options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([mystring isEqualToString:@"\t\n1"]) {
+                
+                if ([self.mydelegate respondsToSelector:@selector(ShowExistingAlert)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate ShowExistingAlert];
+                    
+                }
+            }
+
+            else
+            {
+                NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                
+                if ([self.mydelegate respondsToSelector:@selector(settingsSavedresponse:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate settingsSavedresponse:json];
+                    
+                }
+        
+            }
+            
+        }
+        
+    }];
+    
+    [postDataTask resume];
+
+}
+
+//General Settings_LIST ALL BANK
+-(void)viewAllBank
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios",viewAllBankUrl];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(allBankViewResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate allBankViewResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+}
+//General Settings_INDIVIDUAL BANK VIEW
+
+-(void)individualBankView:(NSString *)bank_id
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&bank_id=%@",viewIndividualBankUrl,bank_id];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            id jsonDict=[json objectAtIndex:0];
+            if ([self.mydelegate respondsToSelector:@selector(updateruleviewresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate updateruleviewresponse:jsonDict];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+
+}
+
+
+//General Settings_UPDATE BANK
+
+-(void)updateBank:(NSString *)bankID :(NSString *)bank_name :(NSString *)bank_abbrv :(NSString *)bank_branch :(NSString *)bank_description :(NSString *)bank_holder_name :(NSString *)bank_account_number :(NSString *)bank_iban :(NSString *)bank_switch_code :(NSString *)bank_bic :(NSString *)bank_address :(NSString *)bank_created_date :(NSString *)bank_modifide_date :(NSString *)bank_status
+{
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&bank_id=%@",updateBankURL,bankID];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    NSDictionary *createdDesignation = [[NSDictionary alloc] initWithObjectsAndKeys:bank_name,@"bank_name",bank_abbrv,@"bank_abbrv",bank_branch,@"bank_branch",bank_description,@"bank_description",bank_holder_name,@"bank_holder_name",bank_account_number,@"bank_account_number",bank_iban,@"bank_iban",bank_switch_code,@"bank_switch_code",bank_bic,@"bank_bic",bank_address,@"bank_address",bank_created_date,@"bank_created_date",bank_modifide_date,@"bank_modifide_date",bank_status,@"bank_status",nil];
+    
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:createdDesignation options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([mystring isEqualToString:@"\t\n1"]) {
+                
+                if ([self.mydelegate respondsToSelector:@selector(ShowExistingAlert)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate ShowExistingAlert];
+                    
+                }
+            }
+            
+            else
+            {
+                NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                
+                if ([self.mydelegate respondsToSelector:@selector(settingsSavedresponse:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate settingsSavedresponse:json];
+                    
+                }
+
+            }
+        }
+        
+    }];
+    
+    
+    [postDataTask resume];
+
+}
+//General Settings_DELETE BANK
+
+-(void)deleteBank:(NSString *)bankID
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&bank_id=%@",deleteBankURL,bankID];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (data==Nil) {
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+    
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            
+            
+            NSLog(@"%@",json);
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+
+}
+
+//Office Creation
+
+-(void)displayOfficeDetail:(NSString *)officeid
+{
+   
+  
+
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@id=%@",viewIndividualofficeUrl,officeid];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSString *logostring = [NSString stringWithFormat:@"%@/%@",logourl,[[[json objectForKey:@"office"]objectAtIndex:0]objectForKey:@"logo"]];
+            
+            NSString *secondString = [logostring stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+           
+            NSURLSessionDataTask *dataTask1 = [session dataTaskWithURL:[NSURL URLWithString:secondString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                
+                
+                if (data==Nil) {
+                    
+                    
+                    if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                    {
+                        
+                        [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                        
+                    }
+                    
+                    
+                }
+                
+                else
+                {
+                    self.logoimag = [UIImage imageWithData:data];
+                    
+                    if ([self.mydelegate respondsToSelector:@selector(individualOfficeView::)]&&(self.mydelegate!=NULL))
+                    {
+                        
+                        [self.mydelegate individualOfficeView:json:self.logoimag];
+                        
+                    }
+                    
+                }
+            }];
+            
+            [dataTask1 resume];
+           
+            
+            
+        }
+        
+    }];
+    
+    [dataTask resume];
+          
+    
+}
+
+-(void)displayAllCountries{
+    dispatch_async(dispatch_get_main_queue(), ^{
+   
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@",viewallcountryurl];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(allcountryresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate allcountryresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+     });
+}
+
+-(void)displayNationality{
+    dispatch_async(dispatch_get_main_queue(), ^{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@",nationalityUrl];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(allcountryresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate allcountryresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+    });
+ 
+}
+
+-(void)displaySelectedStates:(NSString *)countryid
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@c_id=%@",viewselecedStaes,countryid];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                        if ([self.mydelegate respondsToSelector:@selector(allstateresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate allstateresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+});
+    
+}
+-(void)displayAllCities:(NSString *)stateid
+{
+dispatch_async(dispatch_get_main_queue(), ^{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@s_id=%@",viewselecedCity,stateid];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+           
+            if ([self.mydelegate respondsToSelector:@selector(allcityresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate allcityresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+    
+  });
+}
+
+-(void)getallBankList
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@",getbankListUrl];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (data==nil) {
+            
+        }
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(serviceGotResponse:)]&&(self.mydelegate!=NULL))
+            {
+                [self.mydelegate serviceGotResponse:json];
+            }
+        }
+        
+    }];
+    
+    [dataTask resume];
+    
+}
+
+-(void)Editofficefunction:(NSString *)officename officeId:(NSString *)officeid abbrev:(NSString *)abbrev subtittle:(NSString *)subtittle sector:(NSString *)sector regid:(NSString *)registerid currency:(NSString *)currency financialyear:(NSString *)finanicalyear emailid:(NSString *)emailid telephonenumber:(NSString *)telephone fax:(NSString *)fax website:(NSString *)website building:(NSString *)building block:(NSString *)block street:(NSString *)street country:(NSString *)country state:(NSString *)state city:(NSString *)city postcode:(NSString *)postcode landmark:(NSString *)landmark department_listarray:(NSMutableArray *)deptArray category_listarray:(NSMutableArray *)categoryArray bank_listarray:(NSMutableArray *)bankArray printer_listarray:(NSMutableArray *)printerArray otherdetails_array:(NSMutableArray *)otherdetailsarray
+{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+    
+
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@",updateofficeurl];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    
+    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys:officename,@"office_name",officeid,@"id",abbrev,@"abrivation",subtittle,@"sub_title",sector,@"sector",registerid,@"reg_id",currency,@"currency",finanicalyear,@"year",emailid,@"email",telephone,@"telephone",fax,@"fax",website,@"website",building,@"building",block,@"block",street,@"street",country,@"country",state,@"state",city,@"city",postcode,@"pincode",landmark,@"landmark",deptArray,@"selected_department",categoryArray,@"selected_category",bankArray,@"selected_bank",printerArray,@"printer_array",otherdetailsarray,@"otherdetails",
+                             nil];
+    
+    
+   
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            
+            //   NSString *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(updateofficeResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate updateofficeResponse:mystring];
+                
+            }
+            
+            
+            
+        }
+        
+        
+    }];
+    
+    
+    [postDataTask resume];
+    
+    });
+   }
+
+-(void)uploadNewImage:(UIImage *)image : (NSString *)officeId
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    
+    
+    NSData *imageData =UIImageJPEGRepresentation(image, 90);
+    NSString *imageString= @"http://192.168.1.11/work/automate/automate/index.php/individual_office/edit_office_image?";
+    NSString *urlString=[NSString stringWithFormat:@"%@oid=%@",imageString,officeId];
+    NSMutableURLRequest *request =[[NSMutableURLRequest alloc]init];
+    [request setURL:[NSURL URLWithString:urlString]];
+    [request setHTTPMethod:@"POST"];
+    NSString *boundary = @"---------------------------14737809831466499882746641449";
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@" ,boundary];
+    [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+    NSMutableData *body= [NSMutableData data];
+    
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n" , boundary]dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Disposition: form-data; name=\"office_img\";filename=\".jpg\"\r\n"
+                      dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [body appendData:[[NSString stringWithFormat:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    //  [body appendData:[@"Content-Type:application/octet-stream\r\n\r\n"dataUsingEncoding:NSUTF8StringEncoding]];
+    [ body appendData:[NSData dataWithData:imageData]];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding :NSUTF8StringEncoding]] ;
+    
+    [request setHTTPBody:body];
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        NSString *returnString =[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",returnString);
+        
+        
+    }];
+    
+    
+    [postDataTask resume];
+       });
+}
+//storview
+-(void)OfficeStoreView:(NSString *)officeid
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@o_id=%@",viewstoreurl,officeid];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                       if ([self.mydelegate respondsToSelector:@selector(storeviewresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate storeviewresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+ });
+}
+//Store Details View
+-(void)StoreViewDetails:(NSString *)storeid
+{
+ dispatch_async(dispatch_get_main_queue(), ^{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@st_id=%@",storedetailsurl,storeid];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(StoreDetailsViewResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate StoreDetailsViewResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+     });
+}
+
+-(void)updateStorefunction:(NSString *)outletName officeId:(NSString *)officeid storeid:(NSString *)storeid outletType:(NSString *)outlettype abbrev:(NSString *)abbrev subtittle:(NSString *)subtittle sector:(NSString *)sector regid:(NSString *)registerid currency:(NSString *)currency financialyear:(NSString *)finanicalyear emailid:(NSString *)emailid telephonenumber:(NSString *)telephone fax:(NSString *)fax website:(NSString *)website building:(NSString *)building block:(NSString *)block street:(NSString *)street country:(NSString *)country state:(NSString *)state city:(NSString *)city postcode:(NSString *)postcode landmark:(NSString *)landmark  bank_listarray:(NSMutableArray *)bankArray printer_listarray:(NSMutableArray *)printerArray otherdetails_array:(NSMutableArray *)otherdetailsarray;
+
+
+    {
+dispatch_async(dispatch_get_main_queue(), ^{
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@",UpdateStoreurl];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+      NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys:outletName,@"store_name",officeid,@"id",storeid,@"store_id",outlettype,@"type",abbrev,@"abrivation",subtittle,@"sub_title",sector,@"sector",registerid,@"reg_id",currency,@"currency",finanicalyear,@"year",emailid,@"email",telephone,@"telephone",fax,@"fax",website,@"website",building,@"building",block,@"block",street,@"street",country,@"country",state,@"state",city,@"city",postcode,@"pincode",landmark,@"landmark",bankArray,@"selected_bank",printerArray,@"printer_array",otherdetailsarray,@"otherdetails",nil];
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    [request setHTTPBody:postData];
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            
+            //   NSString *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(updateStoreResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate updateStoreResponse:mystring];
+                
+            }
+   
+        }
+        
+    }];
+    
+    
+    [postDataTask resume];
+    
+    
+  });
+}
+
+
+-(void)testing
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"http://192.168.1.11/work/automate/automate/index.php/gen_bar_code/index/17/59921"];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (data==Nil) {
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            
+            
+            NSLog(@"%@",json);
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+}
+
+//Display Add New Employee Screen1 WorkingPremise, department, category, all designation and Bank Details
+-(void)addNewEmployeeOfficeDisplayDetails:(NSString *)officeId
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&office_id=%@",addNewEmployeeOfficeDetailsViewUrl,officeId];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(AddNewEmployeeIntitalResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate AddNewEmployeeIntitalResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+}
+-(void)generateEmployeeCode
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios",generateEmpCodeUrl];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([self.mydelegate respondsToSelector:@selector(serviceGotResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate serviceGotResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+}
+
+-(void)uploadEmpImage:(UIImage *)image :(NSString *)empID
+{
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *imageString=[NSString stringWithFormat:@"http://automatefirm.com/automate/index.php/employee/upload_emp_image?"];
+    NSData *imageData =UIImageJPEGRepresentation(image, 90);
+    NSString *urlString=[NSString stringWithFormat:@"%@emp_id=%@&office_id=2",imageString,empID];
+    NSMutableURLRequest *request =[[NSMutableURLRequest alloc]init];
+    [request setURL:[NSURL URLWithString:urlString]];
+    [request setHTTPMethod:@"POST"];
+    NSString *boundary = @"---------------------------14737809831466499882746641449";
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@" ,boundary];
+    [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+    NSMutableData *body= [NSMutableData data];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n" , boundary]dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Disposition: form-data; name=\"emp_image\";filename=\".jpg\"\r\n"
+                      dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [ body appendData:[NSData dataWithData:imageData]];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding :NSUTF8StringEncoding]] ;
+        [request setHTTPBody:body];
+            NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                id returnString =[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"%@",returnString);
+        
+                if ([self.mydelegate respondsToSelector:@selector(serviceGotResponse:)]&&(self.mydelegate!=NULL))
+                {
+                
+                    [self.mydelegate serviceGotResponse:json];
+                
+                }
+        
+            }];
+    
+    
+    [postDataTask resume];
+
+}
+//Add New Employee 1st Save
+
+-(void)addNewEmployeeSave:(NSString *)empID :(NSMutableDictionary *)personaleDetailsDict :(NSMutableDictionary *)educationalDict :(NSMutableDictionary *)skillsDict
+{
+    NSError *error;
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&emp_id=%@",addNewEmployeeSaveUrl1,empID];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys:personaleDetailsDict,@"personal_details",educationalDict,@"educational_details",skillsDict,@"skills_details",nil];
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    [request setHTTPBody:postData];
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([self.mydelegate respondsToSelector:@selector(addNewEmployeeSaveResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate addNewEmployeeSaveResponse:mystring];
+                
+            }
+            
+        }
+        
+    }];
+    
+    
+    [postDataTask resume];
+}
+-(void)addNewEmployeeSave2:(NSString *)empID :(NSMutableDictionary *)contactDetailsDict
+{
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&emp_id=%@",addNewEmployeeSaveUrl2,empID];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    //NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys:contactDetailsDict,@"contact_details",nil];
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:contactDetailsDict options:0 error:&error];
+    [request setHTTPBody:postData];
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+        }
+        
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([self.mydelegate respondsToSelector:@selector(addNewEmployeeSaveResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate addNewEmployeeSaveResponse:mystring];
+                
+            }
+            
+        }
+        
+    }];
+    
+    
+    [postDataTask resume];
+}
+
+//Create NewWeek Rule
+
+-(void)createNewweekRule:(NSString *)ruleName abbrev:(NSString *)abbrv description:(NSString *)description weekStarton:(NSString *)weekStarton offday1:(NSString *)offDay1 offday2:(NSString *)offDay2 offday3:(NSString *)offDay3 partialday:(NSString *)partialday beginningTime:(NSString *)beginningTime endingTime:(NSString *)endingTime duration:(NSString *)duration breaktype:(NSString *)breaktype breakstart:(NSString *)breakstart breakend:(NSString *)breakend breakduration:(NSString *)breakduration offficeid:(NSString *)officeid
+
+{
+    
+    
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@",createNewweeekRule];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+      NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys:ruleName,@"rule_name",abbrv ,@"rule_abr",description,@"rule_description",weekStarton,@"week_start",offDay1,@"app_offday_1",offDay2,@"app_offday_2",offDay3,@"app_offday_3",partialday,@"app_offday_4",beginningTime,@"p_begin",endingTime,@"p_end",duration,@"duration",breaktype,@"breaktype",breakstart,@"break_start",breakend,@"break_stop",breakduration,@"break_duration",officeid,@"o_id",nil];
+    
+    
+    
+   /// NSMutableArray *week_array=[[NSMutableArray alloc]init];
+   // [week_array addObject:@"dictionary"];
+    
+    
+   // NSDictionary *mapData=[[NSDictionary alloc]initWithObjectsAndKeys:week_array,@"week_details", designationArray,@"designationArray", nil];
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        
+                        if (data==Nil) {
+                                  
+                                  
+                                    if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                                    {
+            
+                                    [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+            
+                                    }
+                                
+                                }
+                            else
+                              {
+                                  NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                  NSLog(@"%@",mystring);
+                                  if ([mystring isEqualToString:@"1"]) {
+                                      [self viewOfficeWeekRule:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"]];
+                                  }
+                                  else
+                                  {
+                                      if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                                      {
+                                          
+                                          [self.mydelegate showalerviewcontroller:@"Failed to Create Week Rule"];
+                                          
+                                      }
+                                      
+                                  }
+                                  
+                                  
+                                  
+                              }
+        
+
+        
+    }];
+    
+    
+    [postDataTask resume];
+    
+    
+    
+}
+
+//View Created Rules Under office
+
+-(void)viewOfficeWeekRule:(NSString *)oficeid
+{
+    
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@id=%@",viewCreatedWeekRule,oficeid];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(individualWeekruleViewResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate individualWeekruleViewResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+    
+    
+    
+}
+
+//View Individual Week Rule Details
+
+-(void)viewIndivdualOfficeWeekRule:(NSString *)weekid officeid:(NSString *)officeid
+
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@o_id=%@&&rule_id=%@",viewIndivdualWeekRule,officeid,weekid];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([self.mydelegate respondsToSelector:@selector(individualweekruleDetailsViewResponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate individualweekruleDetailsViewResponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+    
+    
+}
+
+//Update week Rule
+
+-(void)updateNewweekRule:(NSString *)ruleName abbrev:(NSString *)abbrv description:(NSString *)description weekStarton:(NSString *)weekStarton offday1:(NSString *)offDay1 offday2:(NSString *)offDay2 offday3:(NSString *)offDay3 partialday:(NSString *)partialday beginningTime:(NSString *)beginningTime endingTime:(NSString *)endingTime duration:(NSString *)duration breaktype:(NSString *)breaktype breakstart:(NSString *)breakstart breakend:(NSString *)breakend breakduration:(NSString *)breakduration offficeid:(NSString *)officeid ruleid:(NSString *)ruleid
+{
+    
+    
+    
+    
+    
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSString *urlString=[NSString stringWithFormat:@"%@",viewUpdatedWeekRule];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    //    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys:ruleName,@"rule_name",abbrv ,@"rule_abr",description,@"rule_description",weekStarton,@"week_start",offDay1,@"app_offday_1",offDay2,@"app_offday_2",offDay3,@"app_offday_3",partialday,@"app_offday_4",beginningTime,@"p_begin",endingTime,@"p_end",duration,@"duration",breaktype,@"breaktype",breakstart,@"break_start",breakend,@"break_stop",breakduration,@"break_duration",officeid,@"o_id",nil];
+    NSDictionary *mapData=[[NSDictionary alloc]initWithObjectsAndKeys:ruleName,@"rule_name",abbrv,@"rule_abr",description,@"rule_description",weekStarton,@"week_start",offDay1,@"app_offday_1",offDay2,@"app_offday_2",offDay3,@"app_offday_3",partialday,@"app_offday_4",beginningTime,@"p_begin",endingTime,@"p_end",duration,@"duration",breaktype,@"breaktype",breakstart,@"break_start",breakend,@"break_stop",breakduration,@"break_duration",officeid,@"o_id",ruleid,@"rule_id", nil];
+    //
+    
+    
+    /// NSMutableArray *week_array=[[NSMutableArray alloc]init];
+    // [week_array addObject:@"dictionary"];
+    
+    
+    // NSDictionary *mapData=[[NSDictionary alloc]initWithObjectsAndKeys:week_array,@"week_details", designationArray,@"designationArray", nil];
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+        }
+        else
+        {
+            NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            if ([mystring isEqualToString:@"1"]) {
+                [self viewOfficeWeekRule:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"]];
+            }
+            else
+            {
+                if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate showalerviewcontroller:@"Failed to Create Week Rule"];
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }];
+    
+    
+    [postDataTask resume];
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+//Get All Designation for Offfice And Store
+
+-(void)getOfficeDesignation
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString=[NSString stringWithFormat:@"%@",getalldesignationurl];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (data==Nil) {
+            
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+            }
+            
+            
+        }
+        
+        else
+        {
+            NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if ([self.mydelegate respondsToSelector:@selector(designationsGotresponse:)]&&(self.mydelegate!=NULL))
+            {
+                
+                [self.mydelegate designationsGotresponse:json];
+                
+            }
+            
+        }
+        
+        
+    }];
+    
+    [dataTask resume];
+    
+    
+
+}
+
+-(void)includeDesignation:(NSString *)officeId :(NSString *)ruleType :(NSString *)ruleID
+{
+    
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSString *urlString=[NSString stringWithFormat:@"%@oid=%@&&week_rule_id=%@&&type=%@",designationURL,officeId,ruleID,ruleType];
+        NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            
+            
+            
+            if (data==Nil) {
+                
+                
+                if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                    
+                }
+                
+                
+            }
+            
+            else
+            {
+                NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                
+                NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"%@",mystring);
+                
+                
+                if ([self.mydelegate respondsToSelector:@selector(serviceGotResponse:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate serviceGotResponse:json];
+                    
+                }
+                
+            }
+            
+            
+        }];
+        
+        [dataTask resume];
+        
+        
+        
+        
+        
+        
+
+}
+
+@end

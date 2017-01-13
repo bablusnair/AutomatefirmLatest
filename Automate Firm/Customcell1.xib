@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Oxygen-Regular.ttf">
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SimpleTableCell" rowHeight="30" id="zAN-GE-Tmw" customClass="Customcell1">
+            <rect key="frame" x="0.0" y="0.0" width="365" height="30"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zAN-GE-Tmw" id="DAW-9Z-BDs">
+                <rect key="frame" x="0.0" y="0.0" width="365" height="29"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="skill.png" id="QUQ-dG-hdE">
+                        <rect key="frame" x="0.0" y="0.0" width="365" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7/10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SkV-wz-IJw">
+                        <rect key="frame" x="265" y="4" width="78" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Sa5-WU-82P">
+                        <rect key="frame" x="342" y="7" width="24" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" image="icon_down_arrow.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" id="q90-3n-5xO">
+                        <rect key="frame" x="2" y="0.0" width="156" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                        <connections>
+                            <action selector="descriptionEndEditing:" destination="-2" eventType="editingDidEnd" id="za1-mT-I6e"/>
+                            <action selector="textfieldbegininaction:" destination="-2" eventType="editingDidBegin" id="Tmi-n9-TFw"/>
+                            <outlet property="delegate" destination="zAN-GE-Tmw" id="C0G-bG-Ore"/>
+                        </connections>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" id="r5L-DG-6E1">
+                        <rect key="frame" x="164" y="1" width="93" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        <connections>
+                            <action selector="experienceEndEditing:" destination="-2" eventType="editingDidEnd" id="mTq-Nt-lfP"/>
+                            <action selector="textfieldbegininaction2:" destination="-2" eventType="editingDidBegin" id="Q6l-aR-k3K"/>
+                            <outlet property="delegate" destination="zAN-GE-Tmw" id="ly3-bC-rBI"/>
+                        </connections>
+                    </textField>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DMb-zK-77B">
+                        <rect key="frame" x="265" y="0.0" width="100" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <connections>
+                            <action selector="rateingfirstresponderaction:" destination="-2" eventType="touchUpInside" id="YhE-yF-2KH"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descriptiontext" destination="q90-3n-5xO" id="jT2-Ay-qRf"/>
+                <outlet property="experiencetext" destination="r5L-DG-6E1" id="ywQ-dd-s0C"/>
+                <outlet property="ratinglabel" destination="SkV-wz-IJw" id="eC3-pb-SGK"/>
+            </connections>
+            <point key="canvasLocation" x="526.5" y="208"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_down_arrow.png" width="13" height="13"/>
+        <image name="skill.png" width="699" height="58"/>
+    </resources>
+</document>

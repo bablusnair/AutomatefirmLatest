@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Oxygen-Regular.ttf">
+            <string>Oxygen-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="staffingidcardviewclass">
+            <rect key="frame" x="0.0" y="0.0" width="855" height="666"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Second Bar_only.png" translatesAutoresizingMaskIntoConstraints="NO" id="5Rw-do-91R">
+                    <rect key="frame" x="0.0" y="0.0" width="855" height="55"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0do-m3-KYJ">
+                    <rect key="frame" x="785" y="19" width="25" height="25"/>
+                    <state key="normal" image="Print_icon_inactive.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOG-oM-wK7">
+                    <rect key="frame" x="821" y="21" width="25" height="20"/>
+                    <state key="normal" image="Mail_icon_inactive.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gbc-HR-2JQ">
+                    <rect key="frame" x="11" y="15" width="32" height="33"/>
+                    <state key="normal" image="Employee Card Icon.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Identity Cards" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWG-yn-6Di">
+                    <rect key="frame" x="51" y="15" width="129" height="27"/>
+                    <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="grouped" separatorStyle="none" rowHeight="410" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="JYK-Dz-v0E">
+                    <rect key="frame" x="17" y="63" width="820" height="595"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="yKL-cm-giv"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="BPI-He-0Df"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T1m-17-GF6" customClass="filteredview">
+                    <rect key="frame" x="476" y="65" width="375" height="244"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" rowHeight="25" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ksx-h7-6Id">
+                            <rect key="frame" x="49" y="78" width="276" height="125"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <inset key="separatorInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <connections>
+                                <outlet property="dataSource" destination="iN0-l3-epB" id="BCg-rF-FUs"/>
+                                <outlet property="delegate" destination="iN0-l3-epB" id="nXz-FB-6bt"/>
+                            </connections>
+                        </tableView>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1nN-lS-t13">
+                            <rect key="frame" x="114" y="15" width="63" height="55"/>
+                            <state key="normal" image="dept_blue.png"/>
+                            <connections>
+                                <action selector="actionbuttonforfilter:" destination="iN0-l3-epB" eventType="touchUpInside" id="9fl-i0-ayD"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78T-dN-rDA">
+                            <rect key="frame" x="204" y="15" width="63" height="55"/>
+                            <state key="normal" image="category_blue.png"/>
+                            <connections>
+                                <action selector="actionbuttonforfilter:" destination="iN0-l3-epB" eventType="touchUpInside" id="AbN-WV-g0v"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CoC-yf-g6k">
+                            <rect key="frame" x="293" y="15" width="63" height="55"/>
+                            <state key="normal" image="salesman_red.png"/>
+                            <connections>
+                                <action selector="actionbuttonforfilter:" destination="iN0-l3-epB" eventType="touchUpInside" id="Cfu-85-b7C"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQg-tp-hDE">
+                            <rect key="frame" x="23" y="15" width="63" height="55"/>
+                            <state key="normal" image="work_premise_blue.png"/>
+                            <connections>
+                                <action selector="actionbuttonforfilter:" destination="iN0-l3-epB" eventType="touchUpInside" id="S4r-O5-vmg"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dG-6X-EmL">
+                            <rect key="frame" x="157" y="211" width="60" height="30"/>
+                            <state key="normal" image="select.png"/>
+                            <connections>
+                                <action selector="filterdonebuttonaction:" destination="iN0-l3-epB" eventType="touchUpInside" id="dQ5-13-E1z"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Done" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2C-X6-Z9z">
+                            <rect key="frame" x="168" y="215" width="40" height="21"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" rowHeight="25" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HRm-Gy-KQ1">
+                            <rect key="frame" x="49" y="78" width="276" height="125"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <inset key="separatorInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <connections>
+                                <outlet property="dataSource" destination="iN0-l3-epB" id="2AV-jo-0qN"/>
+                                <outlet property="delegate" destination="iN0-l3-epB" id="5fq-z4-Ba1"/>
+                            </connections>
+                        </tableView>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" rowHeight="25" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KYY-9t-qzW">
+                            <rect key="frame" x="49" y="78" width="276" height="125"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <inset key="separatorInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <connections>
+                                <outlet property="dataSource" destination="iN0-l3-epB" id="Jha-mp-Rvi"/>
+                                <outlet property="delegate" destination="iN0-l3-epB" id="iVE-2Z-IKI"/>
+                            </connections>
+                        </tableView>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" rowHeight="25" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8vk-4J-uGF">
+                            <rect key="frame" x="49" y="78" width="276" height="125"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <inset key="separatorInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <connections>
+                                <outlet property="dataSource" destination="iN0-l3-epB" id="Thd-T7-hVM"/>
+                                <outlet property="delegate" destination="iN0-l3-epB" id="EPX-hB-9gq"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LhW-qs-Opy">
+                    <rect key="frame" x="749" y="19" width="25" height="25"/>
+                    <state key="normal" image="filter_whitefortask 2.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="filterbuttonaction:" destination="iN0-l3-epB" eventType="touchUpInside" id="2g7-Vd-mLe"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="search_boxpjt.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tib-EX-nEn">
+                    <rect key="frame" x="513" y="18" width="220" height="29"/>
+                </imageView>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UcG-y4-Do4">
+                    <rect key="frame" x="539" y="19" width="185" height="28"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="guF-iw-kh5"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="categorybutton" destination="78T-dN-rDA" id="4oo-3d-ocz"/>
+                <outlet property="categorytableview" destination="KYY-9t-qzW" id="eUT-lV-G70"/>
+                <outlet property="departmentbutton" destination="1nN-lS-t13" id="dRh-2l-Iss"/>
+                <outlet property="departmenttableview" destination="HRm-Gy-KQ1" id="Tuf-CM-lvA"/>
+                <outlet property="designationbutton" destination="CoC-yf-g6k" id="jjh-d2-U0X"/>
+                <outlet property="filtertableView1" destination="8vk-4J-uGF" id="U1B-1L-0jQ"/>
+                <outlet property="filterview" destination="T1m-17-GF6" id="GnW-L7-YiN"/>
+                <outlet property="searchfield" destination="UcG-y4-Do4" id="dVH-o7-vcU"/>
+                <outlet property="tableView" destination="JYK-Dz-v0E" id="fC6-9A-xDo"/>
+                <outlet property="workingpremisebutton" destination="eQg-tp-hDE" id="MdT-71-q4J"/>
+                <outlet property="workingpremisetableview" destination="Ksx-h7-6Id" id="Yp1-By-8pC"/>
+            </connections>
+            <point key="canvasLocation" x="190.5" y="240"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Employee Card Icon.png" width="72" height="59"/>
+        <image name="Mail_icon_inactive.png" width="53" height="39"/>
+        <image name="Print_icon_inactive.png" width="55" height="47"/>
+        <image name="Second Bar_only.png" width="1657" height="103"/>
+        <image name="category_blue.png" width="256" height="230"/>
+        <image name="dept_blue.png" width="256" height="230"/>
+        <image name="filter_whitefortask 2.png" width="40" height="40"/>
+        <image name="salesman_red.png" width="256" height="230"/>
+        <image name="search_boxpjt.png" width="389" height="49"/>
+        <image name="select.png" width="342" height="112"/>
+        <image name="work_premise_blue.png" width="256" height="230"/>
+    </resources>
+</document>

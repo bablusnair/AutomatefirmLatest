@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Oxygen-Regular.ttf">
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="employeestatsviewclass">
+            <rect key="frame" x="0.0" y="0.0" width="817" height="376"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mainBG-grey.png" translatesAutoresizingMaskIntoConstraints="NO" id="fmw-pG-dOd">
+                    <rect key="frame" x="0.0" y="8" width="827" height="383"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="graph_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="iKW-Gx-UbZ">
+                    <rect key="frame" x="40" y="77" width="345" height="261"/>
+                </imageView>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Jh-jN-eF8">
+                    <rect key="frame" x="523" y="20" width="65" height="28"/>
+                    <state key="normal" image="blue_but.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="netPayAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Lcg-3J-JGr"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzl-uA-BxI">
+                    <rect key="frame" x="587" y="20" width="65" height="28"/>
+                    <state key="normal" image="white_but.png">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="netPayAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="yUJ-ye-AMU"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Zb-9T-JYW">
+                    <rect key="frame" x="651" y="20" width="65" height="28"/>
+                    <state key="normal" title="Button" image="white_but.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="netPayAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="RFT-57-ssz"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NetPay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LgQ-oN-eiP">
+                    <rect key="frame" x="536" y="25" width="42" height="18"/>
+                    <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="GrossPay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVh-Gz-L0W">
+                    <rect key="frame" x="594" y="25" width="55" height="18"/>
+                    <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WQ9-md-ciI">
+                    <rect key="frame" x="141" y="20" width="86" height="28"/>
+                    <state key="normal" image="blue_but.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="workingdayaction:" destination="iN0-l3-epB" eventType="touchUpInside" id="mNk-jV-Ocq"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SxH-32-5PA">
+                    <rect key="frame" x="220" y="20" width="111" height="28"/>
+                    <state key="normal" image="white_bofdx.png">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="overtimeAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="fD6-XT-XML"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="OverTime Hours" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qta-FG-8OQ">
+                    <rect key="frame" x="227" y="25" width="100" height="18"/>
+                    <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="OverTime" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ol5-Mf-Vuo">
+                    <rect key="frame" x="654" y="25" width="58" height="18"/>
+                    <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="graph_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="1K2-cg-siI">
+                    <rect key="frame" x="452" y="77" width="335" height="261"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="WorkingDay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdR-48-3UI">
+                    <rect key="frame" x="151" y="25" width="73" height="18"/>
+                    <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Days" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SY0-MM-ewB">
+                    <rect key="frame" x="55" y="348" width="37" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Kwd" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZSy-xV-zQF">
+                    <rect key="frame" x="472" y="346" width="30" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="firstGraphxlabel" destination="SY0-MM-ewB" id="as0-GU-25u"/>
+                <outlet property="grosspay" destination="jVh-Gz-L0W" id="SKJ-Ya-rmI"/>
+                <outlet property="grosspay1" destination="Tzl-uA-BxI" id="MSZ-P0-wLD"/>
+                <outlet property="myimgview" destination="iKW-Gx-UbZ" id="ina-ER-3iQ"/>
+                <outlet property="myimgview2" destination="1K2-cg-siI" id="WP9-2Z-YqZ"/>
+                <outlet property="netPay" destination="LgQ-oN-eiP" id="CgX-Yf-hej"/>
+                <outlet property="netPay1" destination="9Jh-jN-eF8" id="pan-Uk-KVa"/>
+                <outlet property="overTime" destination="Qta-FG-8OQ" id="Boy-Fy-MGc"/>
+                <outlet property="overTime1" destination="Ol5-Mf-Vuo" id="Lrs-jh-eGc"/>
+                <outlet property="overTime2" destination="SxH-32-5PA" id="OOU-T9-idf"/>
+                <outlet property="overTime3" destination="6Zb-9T-JYW" id="Ovo-kk-J2c"/>
+                <outlet property="secondGraphxlabel" destination="ZSy-xV-zQF" id="OWI-3k-Mgg"/>
+                <outlet property="workingDay" destination="qdR-48-3UI" id="QYI-2l-lHm"/>
+                <outlet property="workingDay1" destination="WQ9-md-ciI" id="yte-zY-YFh"/>
+            </connections>
+            <point key="canvasLocation" x="443.5" y="247"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="blue_but.png" width="76" height="28"/>
+        <image name="graph_2.png" width="364" height="307"/>
+        <image name="mainBG-grey.png" width="815" height="209"/>
+        <image name="white_bofdx.png" width="170" height="28"/>
+        <image name="white_but.png" width="76" height="28"/>
+    </resources>
+</document>

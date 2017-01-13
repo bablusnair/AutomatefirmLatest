@@ -1,0 +1,4493 @@
+//
+//  overtimeSettingsViewsClass.m
+//  Automate Firm
+//
+//  Created by leonine on 12/4/15.
+//  Copyright © 2015 leonine. All rights reserved.
+//
+
+#import "overtimeSettingsViewsClass.h"
+
+#import "groupcollceioncellclass.h"
+#import "settingsViewController.h"
+@implementation overtimeSettingsViewsClass
+@synthesize indexpath,payOTFlag,payOTTextFlag,dropFlag,dropTableFlag,x,y,z,p,q,r,i,j,k,a,b,c,dayFlag,conditionFlag,timeFlag;
+-(void)awakeFromNib
+{
+
+    [self.mycollectionview registerNib:[UINib nibWithNibName:@"Groupcollectioncell" bundle:nil] forCellWithReuseIdentifier:@"simplecell"];
+    timeObj=[[timeConditionsClass alloc]init];
+    
+    self.mycollectionview.hidden=TRUE;
+
+    
+    self.flag=0;
+    payOTFlag=0;
+    payOTTextFlag=0;
+    dropFlag=0;
+    dropTableFlag=0;
+    self.selectedFlag=0;
+    self.selectedFlag1=0;
+    dayFlag=0;conditionFlag=0;timeFlag=0;
+    x=0;y=0;z=0;
+    p=0;q=0;r=0;
+    i=j=k=0;
+    a=b=c=0;
+    
+    self.currentTab=@"Regular";
+    
+    self.overtimeTypeArray=[[NSMutableArray alloc]initWithObjects:@"Daily",@"Weekly", nil];
+    self.payOTArray=[[NSMutableArray alloc]initWithObjects:@"Time & Quarter (1.25X)",@"Time & Half (1.5X)",@"Double Time (2X)",@"Triple Time (3X)",@"Quadruple Time (4X)",@"Custom Rate per Hour", nil];
+    self.payOTDisplayArray=[[NSMutableArray alloc]initWithObjects:@"1.25X",@"1.5X",@"2X",@"3X",@"4X", nil];
+    self.payOTDisplayArray1=[[NSMutableArray alloc]initWithObjects:@"Standard Rate",@"1.25X",@"1.5X",@"2X",@"3X",@"4X", nil];
+    self.payOTArray1=[[NSMutableArray alloc]initWithObjects:@"Standard Rate",@"Time & Quarter (1.25X)",@"Time & Half (1.5X)",@"Double Time (2X)",@"Triple Time (3X)",@"Quadruple Time (4X)",@"Custom Rate per Hour", nil];
+    self.dropArray=[[NSMutableArray alloc]initWithObjects:@"After Standard Working Hours",@"Whole Day",@"First Certain Duration", nil];
+    self.workingHoursArray=[[NSMutableArray alloc]initWithObjects:@" Include hours exceeding stand. working hours",@" Exclude hours exceeding stand. working hours", nil];
+    
+    self.dayArray=[[NSMutableArray alloc]initWithObjects:@"Sunday",@"Monday",@"Tuesday",@"Wednesday",@"Thursday",@"Friday",@"Saturday", nil];
+    self.dummyDayArray=[[NSMutableArray alloc]initWithObjects:@"Sunday",@"Monday",@"Tuesday",@"Wednesday",@"Thursday",@"Friday",@"Saturday", nil];
+    self.conditionsTableView.hidden=true;
+    self.conditionArray=[[NSMutableArray alloc] initWithObjects:@"If OT working hours b/w",@"Whole Day apply rate OT 1", nil];
+    self.grouparray=[[NSMutableArray alloc] init];
+    
+    
+    self.regularButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.offdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.partialdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.holidayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.specificDayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    
+    
+    self.overtimeTypeTC.hidden=true;
+        self.datePickerView.hidden=true;
+    self.datePicker1View.hidden=true;
+    self.payOTTC.hidden=true;
+    
+    self.dropTableView.hidden=true;
+    self.offDayFirstView.hidden=true;
+    self.partialFirstView.hidden=true;
+    self.holidayFirstView.hidden=true;
+    self.weeklyWorkingHoursTC.hidden=true;
+    self.specificDayTC.hidden=true;
+    
+    self.regularMandatoryLabel1.hidden=true;
+    self.regularMandatoryLabel2.hidden=true;
+    self.offdayMandatoryLabel1.hidden=true;
+    self.offdayMandatoryLabel2.hidden=true;
+    self.partialMandatoryLabel1.hidden=true;
+    self.partialMandatoryLabel2.hidden=true;
+    self.holidayMandatoryLabel1.hidden=true;
+    self.holidayMandatoryLabel2.hidden=true;
+    self.weeklyMandatoryLabel1.hidden=true;
+    
+    
+    [self resetRegularDailyLimit];
+    
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    [self.datePicker addTarget:self action:@selector(datePickedValueChanged:)
+               forControlEvents:UIControlEventValueChanged];
+
+    
+    //Set the appearance of uidatepicker
+    
+    [[UITableView appearanceWhenContainedInInstancesOfClasses:@[[UIDatePicker class]]]
+     setBackgroundColor:[UIColor clearColor]];
+  
+    
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [self.grouparray count];
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"simplecell";
+    groupcollceioncellclass *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    if (self.grouparray.count>0) {
+        cell.grouplabel.text=[self.grouparray objectAtIndex:indexPath.row];
+        
+    }
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(tableView==self.overtimeTypeTC)
+    {
+        return self.overtimeTypeArray.count;
+    }
+    else if(tableView==self.payOTTC)
+    {
+        if(dropTableFlag==0)
+        {
+            return  self.payOTArray.count;
+        }
+        else
+        {
+            return self.payOTArray1.count;
+        }
+    }
+    else if(tableView==self.dropTableView)
+    {
+        return self.dropArray.count;
+    }
+    else if(tableView==self.weeklyWorkingHoursTC)
+    {
+        return self.workingHoursArray.count;
+    }
+    else if(tableView==self.specificDayTC)
+    {
+        return  self.dayArray.count;
+    }
+    else
+    {
+        return self.conditionArray.count;
+    }
+    
+    
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView==self.overtimeTypeTC) {
+        UITableViewCell *cell=[[UITableViewCell alloc]init];
+        cell.textLabel.text=[self.overtimeTypeArray objectAtIndex:indexPath.row];
+        cell.textLabel.font=[UIFont systemFontOfSize:12];
+        return  cell;
+    }
+    else if(tableView==self.payOTTC)
+    {
+        UITableViewCell *cell=[[UITableViewCell alloc]init];
+        if (dropTableFlag==0) {
+            cell.textLabel.text=[self.payOTArray objectAtIndex: indexPath.row];
+        }
+        else
+        {
+            cell.textLabel.text=[self.payOTArray1 objectAtIndex: indexPath.row];
+        }
+        cell.textLabel.font=[UIFont systemFontOfSize:12];
+        return  cell;
+    }
+    else if(tableView==self.dropTableView)
+    {
+        UITableViewCell *cell=[[UITableViewCell alloc]init];
+        cell.textLabel.text=[self.dropArray objectAtIndex: indexPath.row];
+        cell.textLabel.font=[UIFont systemFontOfSize:12];
+        return cell;
+    }
+    else if(tableView==self.weeklyWorkingHoursTC)
+    {
+        UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"str"];
+       
+        cell.textLabel.font=[UIFont systemFontOfSize:11];
+        cell.textLabel.text=[self.workingHoursArray objectAtIndex:indexPath.row];
+        return  cell;
+    }
+    else if(tableView==self.specificDayTC)
+    {
+        UITableViewCell *cell=[[UITableViewCell alloc]init];
+        cell.textLabel.text=[self.dayArray objectAtIndex: indexPath.row];
+        cell.textLabel.font=[UIFont systemFontOfSize:12];
+        return cell;
+    }
+    else
+    {
+        UITableViewCell *cell=[[UITableViewCell alloc]init];
+        cell.textLabel.text=[self.conditionArray objectAtIndex: indexPath.row];
+        cell.textLabel.font=[UIFont systemFontOfSize:12];
+        return cell;
+    }
+    
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView==self.overtimeTypeTC) {
+        if (indexPath.row==0) {
+            [self regulardayAction];
+            [self resetWeeklyDailyLimit];
+            [self.contentScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+            self.offdayButton.enabled=YES;
+            self.partialdayButton.enabled=YES;
+            self.holidayButton.enabled=YES;
+            self.specificDayButton.enabled=YES;
+            self.partialdayIcon.image=[UIImage imageNamed:@"partial_day_blue.png"];
+            self.offdayIcon.image=[UIImage imageNamed:@"off_day_blue.png"];
+            self.holidayIcon.image=[UIImage imageNamed:@"holiday_blue.png"];
+            self.specificdayIcon.image=[UIImage imageNamed:@"specific_day_blue.png"];
+        }
+        else if (indexPath.row==1)
+        {
+            [self resetRegularDailyLimit];
+            [self resetOffdayDailyLimit];
+            [self resetPartialDialyLimit];
+            [self resetHolidayDialyLimit];
+            [self resetDay1];
+            
+            self.partialdayIcon.image=[UIImage imageNamed:@"partial_day__grey.png"];
+            self.offdayIcon.image=[UIImage imageNamed:@"off_day_grey.png"];
+            self.holidayIcon.image=[UIImage imageNamed:@"holiday_grey.png"];
+            self.specificdayIcon.image=[UIImage imageNamed:@"specific_day_grey.png"];
+
+            
+            [self resetWeeklyDailyLimit];
+            self.currentTab=@"Weekly";
+            self.regularButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+            self.offdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+            self.partialdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+            self.holidayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+            self.specificDayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+            [self.regularButton setImage:[UIImage imageNamed:@"tab_1_active.png"] forState:UIControlStateNormal];
+            self.offdayButton.enabled=NO;
+            [self.offdayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+            self.partialdayButton.enabled=NO;
+            [self.partialdayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+            self.holidayButton.enabled=NO;
+            [self.holidayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+            self.specificDayButton.enabled=NO;
+            [self.specificDayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+            [self.contentScrollView setContentOffset:CGPointMake(2965, 0) animated:NO];
+        }
+        self.overtimeTypeText.text=[self.overtimeTypeArray objectAtIndex:indexPath.row];
+        self.overtimeTypeTC.hidden=true;
+    }
+    else if (tableView==self.payOTTC)
+    {
+        if (payOTFlag==1) {
+            if (indexPath.row==5) {
+                self.regularPayOTText1.text=@"";
+                payOTTextFlag=1;
+                [self.regularPayOTText1 becomeFirstResponder];
+                self.payOTTC.hidden=true;
+            }
+            else
+            {
+                self.regularPayOTText1.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                self.regularAfterText1.backgroundColor=[UIColor clearColor];
+                self.regularAfterText1.userInteractionEnabled=true;
+                
+                self.payOTTC.hidden=true;
+            }
+        }
+        if (payOTFlag==2) {
+            if (indexPath.row==5) {
+                payOTTextFlag=1;
+                self.regularPayOTText2.text=@"";
+                [self.regularPayOTText2 becomeFirstResponder];
+                self.payOTTC.hidden=true;
+            }
+            else
+            {
+                self.regularAfterText2.backgroundColor=[UIColor clearColor];
+                self.regularAfterText2.userInteractionEnabled=true;
+                self.selectedFlag=0;
+                if (dropTableFlag==0) {
+                    self.regularPayOTText2.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                }
+                else
+                {
+                    self.regularPayOTText2.text=[self.payOTDisplayArray1 objectAtIndex: indexPath.row];
+                }
+                self.payOTTC.hidden=true;
+            }
+        }
+        if (payOTFlag==3) {
+            if (indexPath.row==5) {
+                payOTTextFlag=1;
+                self.regularPayOTText3.text=@"";
+                [self.regularPayOTText3 becomeFirstResponder];
+                self.payOTTC.hidden=true;
+            }
+            else
+            {
+                self.selectedFlag1=0;
+                if (dropTableFlag==0) {
+                    self.regularPayOTText3.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                }
+                else
+                {
+                    self.regularPayOTText3.text=[self.payOTDisplayArray1 objectAtIndex: indexPath.row];
+                }
+                self.payOTTC.hidden=true;
+            }
+        }
+        if (payOTFlag==4) {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.offdayPayOTText1.text=@"";
+                    [self.offdayPayOTText1 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.offdayAfterText1.backgroundColor=[UIColor clearColor];
+                    self.offdayAfterText1.userInteractionEnabled=true;
+                    self.offdayPayOTText1.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.payOTTC.hidden=true;
+                }
+
+            }
+            else
+            {
+                if (indexPath.row==6) {
+                    payOTTextFlag=1;
+                    self.offdayPayOTText1.text=@"";
+                    [self.offdayPayOTText1 becomeFirstResponder];
+                    
+                    
+                    self.offdayAfterText1.backgroundColor=[UIColor lightGrayColor];
+                    self.offdayPayOTText2.userInteractionEnabled=YES;
+                    self.offdayPayOTText2.backgroundColor=[UIColor clearColor];
+                    self.offdayAfterText1.text=self.offDayFirstText.text;
+                    self.offdayAfterText1.userInteractionEnabled=NO;
+                    
+                    
+                    self.payOTTC.hidden=true;
+                }
+                else //if (indexPath.row==0)
+                {
+                    self.offdayAfterText1.backgroundColor=[UIColor lightGrayColor];
+                    self.offdayPayOTText2.userInteractionEnabled=YES;
+                    self.offdayPayOTText2.backgroundColor=[UIColor clearColor];
+                    
+                    self.offdayPayOTText1.text=[self.payOTDisplayArray1 objectAtIndex:indexPath.row];
+                    self.offdayAfterText1.text=self.offDayFirstText.text;
+                    self.offdayAfterText1.userInteractionEnabled=NO;
+                    self.payOTTC.hidden=true;
+                }
+            }
+            
+        }
+        if (payOTFlag==5) {
+            if(dropTableFlag==0)
+            {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.offdayPayOTText2.text=@"";
+                    [self.offdayPayOTText2 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.selectedFlag=0;
+                    self.offdayAfterText2.backgroundColor=[UIColor clearColor];
+                    self.offdayAfterText2.userInteractionEnabled=true;
+                    self.offdayPayOTText2.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.payOTTC.hidden=true;
+                }
+
+            }
+            else
+            {
+                if (indexPath.row==6) {
+                    payOTTextFlag=1;
+                    self.offdayPayOTText2.text=@"";
+                    [self.offdayPayOTText2 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.selectedFlag=0;
+                    self.offdayAfterText2.backgroundColor=[UIColor clearColor];
+                    self.offdayAfterText2.userInteractionEnabled=true;
+                    self.offdayPayOTText2.text=[self.payOTDisplayArray1 objectAtIndex: indexPath.row];
+                    self.payOTTC.hidden=true;
+                }
+
+            }
+        }
+        if (payOTFlag==6) {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.offdayPayOTText3.text=@"";
+                    [self.offdayPayOTText3 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.selectedFlag1=0;
+                    self.offdayPayOTText3.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.payOTTC.hidden=true;
+                }
+
+            }
+            else
+            {
+                if (indexPath.row==6) {
+                    payOTTextFlag=1;
+                    self.offdayPayOTText3.text=@"";
+                    [self.offdayPayOTText3 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.selectedFlag1=0;
+                    self.offdayPayOTText3.text=[self.payOTDisplayArray1 objectAtIndex: indexPath.row];
+                    self.payOTTC.hidden=true;
+                }
+            }
+        }
+        
+        
+        if (payOTFlag==7) {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.partialPayOTText1.text=@"";
+                    [self.partialPayOTText1 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.partialAfterText1.backgroundColor=[UIColor clearColor];
+                    self.partialAfterText1.userInteractionEnabled=true;
+                    self.partialPayOTText1.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.payOTTC.hidden=true;
+                }
+                
+            }
+            else
+            {
+                if (indexPath.row==6) {
+                    payOTTextFlag=1;
+                    self.partialPayOTText1.text=@"";
+                    [self.partialPayOTText1 becomeFirstResponder];
+                    
+                    self.partialAfterText1.text=self.partialFirstText.text;
+                    self.partialAfterText1.backgroundColor=[UIColor lightGrayColor];
+                    self.partialAfterText1.userInteractionEnabled=NO;
+                    self.partialPayOTText2.backgroundColor=[UIColor clearColor];
+                    self.partialPayOTText2.userInteractionEnabled=YES;
+                    
+                    self.payOTTC.hidden=true;
+                }
+                else //if (indexPath.row==0)
+                {
+                    self.partialPayOTText1.text=[self.payOTDisplayArray1 objectAtIndex:indexPath.row];
+                    self.partialAfterText1.text=self.partialFirstText.text;
+                    self.partialAfterText1.backgroundColor=[UIColor lightGrayColor];
+                    self.partialAfterText1.userInteractionEnabled=NO;
+                    self.partialPayOTText2.backgroundColor=[UIColor clearColor];
+                    self.partialPayOTText2.userInteractionEnabled=YES;
+                    self.payOTTC.hidden=true;
+                }
+            }
+            
+        }
+        
+        if (payOTFlag==8) {
+            if(dropTableFlag==0)
+            {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.partialPayOTText2.text=@"";
+                    [self.partialPayOTText2 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.partialPayOTText2.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag=0;
+                    self.partialAfterText2.backgroundColor=[UIColor clearColor];
+                    self.partialAfterText2.userInteractionEnabled=true;
+                    self.payOTTC.hidden=true;
+                }
+                
+            }
+            else
+            {
+                if (indexPath.row==6) {
+                    payOTTextFlag=1;
+                    self.partialPayOTText2.text=@"";
+                    [self.partialPayOTText2 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.partialPayOTText2.text=[self.payOTDisplayArray1 objectAtIndex: indexPath.row];
+                    self.selectedFlag=0;
+                    self.partialAfterText2.backgroundColor=[UIColor clearColor];
+                    self.partialAfterText2.userInteractionEnabled=true;
+                    self.payOTTC.hidden=true;
+                }
+                
+            }
+
+        }
+        if (payOTFlag==9) {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.partialPayOTText3.text=@"";
+                    [self.partialPayOTText3 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.partialPayOTText3.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag1=0;
+                    self.payOTTC.hidden=true;
+                }
+                
+            }
+            else
+            {
+                if (indexPath.row==6) {
+                    payOTTextFlag=1;
+                    self.partialPayOTText3.text=@"";
+                    [self.partialPayOTText3 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.partialPayOTText3.text=[self.payOTDisplayArray1 objectAtIndex: indexPath.row];
+                    self.selectedFlag1=0;
+                    self.payOTTC.hidden=true;
+                }
+            }
+
+        }
+        if (payOTFlag==10) {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.holidayPayOTText1.text=@"";
+                    [self.holidayPayOTText1 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.holidayPayOTText1.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.holidayAfterText1.backgroundColor=[UIColor clearColor];
+                    self.holidayAfterText1.userInteractionEnabled=true;
+                    self.payOTTC.hidden=true;
+                }
+                
+            }
+            else
+            {
+                if (indexPath.row==6) {
+                    payOTTextFlag=1;
+                    self.holidayPayOTText1.text=@"";
+                    [self.holidayPayOTText1 becomeFirstResponder];
+                    self.holidayAfterText1.text=self.holidayFirstText.text;
+                    self.holidayAfterText1.userInteractionEnabled=NO;
+                    
+                    self.holidayAfterText1.backgroundColor=[UIColor lightGrayColor];
+                    self.holidayPayOTText2.backgroundColor=[UIColor clearColor];
+                    self.holidayPayOTText2.userInteractionEnabled=true;
+                    
+                    self.payOTTC.hidden=true;
+                }
+                else //if (indexPath.row==0)
+                {
+                    self.holidayPayOTText1.text=[self.payOTDisplayArray1 objectAtIndex:indexPath.row];
+                    self.holidayAfterText1.text=self.holidayFirstText.text;
+                    self.holidayAfterText1.userInteractionEnabled=NO;
+                    
+                    self.holidayAfterText1.backgroundColor=[UIColor lightGrayColor];
+                    self.holidayPayOTText2.backgroundColor=[UIColor clearColor];
+                    self.holidayPayOTText2.userInteractionEnabled=true;
+                    self.payOTTC.hidden=true;
+                }
+            }
+            
+        }
+        if (payOTFlag==11) {
+            if(dropTableFlag==0)
+            {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.holidayPayOTText2.text=@"";
+                    [self.holidayPayOTText2 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.holidayPayOTText2.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.holidayAfterText2.backgroundColor=[UIColor clearColor];
+                    self.holidayAfterText2.userInteractionEnabled=true;
+                    self.selectedFlag=0;
+                    self.payOTTC.hidden=true;
+                }
+                
+            }
+            else
+            {
+                if (indexPath.row==6) {
+                    payOTTextFlag=1;
+                    self.holidayPayOTText2.text=@"";
+                    [self.holidayPayOTText2 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.holidayPayOTText2.text=[self.payOTDisplayArray1 objectAtIndex: indexPath.row];
+                    self.holidayAfterText2.backgroundColor=[UIColor clearColor];
+                    self.holidayAfterText2.userInteractionEnabled=true;
+                    self.selectedFlag=0;
+                    self.payOTTC.hidden=true;
+                }
+                
+            }
+            
+        }
+        if (payOTFlag==12) {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.holidayPayOTText3.text=@"";
+                    [self.holidayPayOTText3 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.holidayPayOTText3.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag1=0;
+                    self.payOTTC.hidden=true;
+                }
+                
+            }
+            else
+            {
+                if (indexPath.row==6) {
+                    payOTTextFlag=1;
+                    self.holidayPayOTText3.text=@"";
+                    [self.holidayPayOTText3 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.holidayPayOTText3.text=[self.payOTDisplayArray1 objectAtIndex: indexPath.row];
+                    self.selectedFlag1=0;
+                    self.payOTTC.hidden=true;
+                }
+            }
+            
+        }
+        else if (payOTFlag==13)
+        {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.weeklyPayOTText1.text=@"";
+                    [self.weeklyPayOTText1 becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.weeklyPayOTText1.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag=0;
+                    
+                    self.payOTTC.hidden=true;
+                }
+                
+            }
+
+        }
+        else if (payOTFlag==14)
+        {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    
+                    self.selectedFlag1=0;
+                    self.payOTTC.hidden=true;
+                }
+                
+            }
+
+        }
+        else if (payOTFlag==15)
+        {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.specificPayOT1Text.text=@"";
+                    [self.specificPayOT1Text becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.specificPayOT1Text.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag=0;
+                    self.secondView.hidden=false;
+                    [self resetDay2];
+                    self.payOTTC.hidden=true;
+                    self.doneButton.enabled=YES;
+                }
+                
+            }
+
+        }
+        else if (payOTFlag==16)
+        {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.specificPayOT2Text.text=@"";
+                    [self.specificPayOT2Text becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.specificPayOT2Text.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag=0;
+                    self.thirdView.hidden=false;
+                    [self resetDay3];
+                    self.payOTTC.hidden=true;
+                    self.doneButton.enabled=YES;
+                }
+                
+            }
+            
+        }
+        else if (payOTFlag==17)
+        {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.specificPayOT3Text.text=@"";
+                    [self.specificPayOT3Text becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.specificPayOT3Text.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag=0;
+                    self.fourthView.hidden=false;
+                    [self resetDay4];
+                    self.payOTTC.hidden=true;
+                    self.doneButton.enabled=YES;
+                }
+                
+            }
+            
+        }
+        else if (payOTFlag==18)
+        {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.specificPayOT4Text.text=@"";
+                    [self.specificPayOT4Text becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.specificPayOT4Text.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag=0;
+                    self.fifthView.hidden=false;
+                    [self resetDay5];
+                    self.payOTTC.hidden=true;
+                    self.doneButton.enabled=YES;
+                }
+                
+            }
+            
+        }
+        else if (payOTFlag==19)
+        {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.specificPayOT5Text.text=@"";
+                    [self.specificPayOT5Text becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.specificPayOT5Text.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag=0;
+                    self.sixthView.hidden=false;
+                    [self resetDay6];
+                    self.payOTTC.hidden=true;
+                    self.doneButton.enabled=YES;
+                }
+                
+            }
+            
+        }
+        else if (payOTFlag==20)
+        {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.specificPayOT6Text.text=@"";
+                    [self.specificPayOT6Text becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.specificPayOT6Text.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag=0;
+                    self.seventhView.hidden=false;
+                    [self resetDay7];
+                    self.payOTTC.hidden=true;
+                    self.doneButton.enabled=YES;
+                }
+                
+            }
+            
+        }
+        else if (payOTFlag==21)
+        {
+            if (dropTableFlag==0) {
+                if (indexPath.row==5) {
+                    payOTTextFlag=1;
+                    self.specificPayOT7Text.text=@"";
+                    [self.specificPayOT7Text becomeFirstResponder];
+                    self.payOTTC.hidden=true;
+                }
+                else
+                {
+                    self.specificPayOT7Text.text=[self.payOTDisplayArray objectAtIndex: indexPath.row];
+                    self.selectedFlag=0;
+                    
+                    self.payOTTC.hidden=true;
+                    self.doneButton.enabled=YES;
+                }
+                
+            }
+            
+        }
+       
+    }
+    else if(tableView==self.dropTableView)
+    {
+        if (dropFlag==1) {
+            if (indexPath.row==1) {
+                dropTableFlag=0;
+                [self.payOTTC reloadData];
+                [self resetOffdayFirstText];
+                self.offDayDropView.hidden=false;
+                self.offDayFirstView.hidden=true;
+                self.offDaywholeView.hidden=true;
+                self.offdayPayOTText1.backgroundColor=[UIColor clearColor];
+                self.offdayPayOTText1.userInteractionEnabled=true;
+                
+            }
+            else if (indexPath.row==0)
+            {
+                dropTableFlag=0;
+                [self.payOTTC reloadData];
+                
+                self.offDayDropView.hidden=false;
+                self.offDayFirstView.hidden=true;
+                self.offDaywholeView.hidden=false;
+                self.offdayPayOTText1.backgroundColor=[UIColor clearColor];
+                self.offdayPayOTText1.userInteractionEnabled=true;
+            }
+            else if (indexPath.row==2)
+            {
+                dropTableFlag=1;
+                [self.payOTTC reloadData];
+                [self resetOffdayFirstText];
+                self.offDayDropView.hidden=true;
+                self.offDayFirstView.hidden=false;
+                self.offDaywholeView.hidden=false;
+                self.offdayPayOTText1.backgroundColor=[UIColor lightGrayColor];
+                self.offdayPayOTText1.userInteractionEnabled=false;
+                self.offDayFirstView.frame=CGRectMake(600, 120, self.offDayFirstView.frame.size.width, self.offDayFirstView.frame.size.height);
+            }
+            self.dropLabel1.text=[self.dropArray objectAtIndex:indexPath.row];
+            self.dropTableView.hidden=true;
+        }
+        else if(dropFlag==2)
+        {
+            if (indexPath.row==1) {
+                dropTableFlag=0;
+                [self.payOTTC reloadData];
+                self.partialDropView.hidden=false;
+                self.partialFirstView.hidden=true;
+                self.partialWholeView.hidden=true;
+                self.partialPayOTText1.backgroundColor=[UIColor clearColor];
+                self.partialPayOTText1.userInteractionEnabled=true;
+                
+            }
+            else if (indexPath.row==0)
+            {
+                dropTableFlag=0;
+                [self.payOTTC reloadData];
+                self.partialDropView.hidden=false;
+                self.partialFirstView.hidden=true;
+                self.partialWholeView.hidden=false;
+                self.partialPayOTText1.backgroundColor=[UIColor clearColor];
+                self.partialPayOTText1.userInteractionEnabled=true;
+            }
+            else if (indexPath.row==2)
+            {
+                dropTableFlag=1;
+                [self.payOTTC reloadData];
+                self.partialDropView.hidden=true;
+                self.partialFirstView.hidden=false;
+                self.partialWholeView.hidden=false;
+                self.partialPayOTText1.backgroundColor=[UIColor lightGrayColor];
+                self.partialPayOTText1.userInteractionEnabled=false;
+                self.partialFirstView.frame=CGRectMake(1193, 120, self.partialFirstView.frame.size.width, self.partialFirstView.frame.size.height);
+            }
+            self.dropLabel2.text=[self.dropArray objectAtIndex:indexPath.row];
+            self.dropTableView.hidden=true;
+
+        }
+        else if (dropFlag==3)
+        {
+            if (indexPath.row==1) {
+                dropTableFlag=0;
+                [self.payOTTC reloadData];
+                self.holidayDropView.hidden=false;
+                self.holidayFirstView.hidden=true;
+                self.holidayWholeView.hidden=true;
+                self.holidayPayOTText1.backgroundColor=[UIColor clearColor];
+                self.holidayPayOTText1.userInteractionEnabled=true;
+                
+            }
+            else if (indexPath.row==0)
+            {
+                dropTableFlag=0;
+                [self.payOTTC reloadData];
+                self.holidayDropView.hidden=false;
+                self.holidayFirstView.hidden=true;
+                self.holidayWholeView.hidden=false;
+                self.holidayPayOTText1.backgroundColor=[UIColor clearColor];
+                self.holidayPayOTText1.userInteractionEnabled=true;
+            }
+            else if (indexPath.row==2)
+            {
+                dropTableFlag=1;
+                [self.payOTTC reloadData];
+                self.holidayDropView.hidden=true;
+                self.holidayFirstView.hidden=false;
+                self.holidayWholeView.hidden=false;
+                self.holidayPayOTText1.backgroundColor=[UIColor lightGrayColor];
+                self.holidayPayOTText1.userInteractionEnabled=false;
+                self.holidayFirstView.frame=CGRectMake(1786, 120, self.holidayFirstView.frame.size.width, self.holidayFirstView.frame.size.height);
+            }
+            self.dropLabel3.text=[self.dropArray objectAtIndex:indexPath.row];
+            self.dropTableView.hidden=true;
+        }
+    }
+    else if (tableView==self.weeklyWorkingHoursTC)
+    {
+        self.weeklyWorkingHoursText.text=[self.workingHoursArray objectAtIndex: indexPath.row];
+        self.weeklyWorkingHoursTC.hidden=true;
+    }
+    else if (tableView==self.specificDayTC)
+    {
+        if (dayFlag==1) {
+            self.specificDay1Text.text=[self.dayArray objectAtIndex: indexPath.row];
+            [self.dayArray removeObject:self.specificDay1Text.text];
+            self.specificCondition1Text.backgroundColor=[UIColor clearColor];
+            self.specificCondition1Text.userInteractionEnabled=YES;
+            self.doneButton.enabled=NO;
+            
+        }
+        else if (dayFlag==2)
+        {
+            self.specificDay2Text.text=[self.dayArray objectAtIndex: indexPath.row];
+            [self.dayArray removeObject:self.specificDay2Text.text];
+            self.specificCondition2Text.backgroundColor=[UIColor clearColor];
+            self.specificCondition2Text.userInteractionEnabled=YES;
+            self.doneButton.enabled=NO;
+        }
+        else if (dayFlag==3)
+        {
+            self.specificDay3Text.text=[self.dayArray objectAtIndex: indexPath.row];
+            [self.dayArray removeObject:self.specificDay3Text.text];
+            self.specificCondition3Text.backgroundColor=[UIColor clearColor];
+            self.specificCondition3Text.userInteractionEnabled=YES;
+            self.doneButton.enabled=NO;
+        }
+        else if (dayFlag==4)
+        {
+            self.specificDay4Text.text=[self.dayArray objectAtIndex: indexPath.row];
+            [self.dayArray removeObject:self.specificDay4Text.text];
+            self.specificCondition4Text.backgroundColor=[UIColor clearColor];
+            self.specificCondition4Text.userInteractionEnabled=YES;
+            self.doneButton.enabled=NO;
+        }
+        else if (dayFlag==5)
+        {
+            self.specificDay5Text.text=[self.dayArray objectAtIndex: indexPath.row];
+            [self.dayArray removeObject:self.specificDay5Text.text];
+            self.specificCondition5Text.backgroundColor=[UIColor clearColor];
+            self.specificCondition5Text.userInteractionEnabled=YES;
+            self.doneButton.enabled=NO;
+        }
+        else if (dayFlag==6)
+        {
+            self.specificDay6Text.text=[self.dayArray objectAtIndex: indexPath.row];
+            [self.dayArray removeObject:self.specificDay6Text.text];
+            self.specificCondition6Text.backgroundColor=[UIColor clearColor];
+            self.specificCondition6Text.userInteractionEnabled=YES;
+            self.doneButton.enabled=NO;
+        }
+        else if (dayFlag==7)
+        {
+            self.specificDay7Text.text=[self.dayArray objectAtIndex: indexPath.row];
+            [self.dayArray removeObject:self.specificDay7Text.text];
+            self.specificCondition7Text.backgroundColor=[UIColor clearColor];
+            self.specificCondition7Text.userInteractionEnabled=YES;
+            self.doneButton.enabled=NO;
+        }
+        self.specificDayTC.hidden=true;
+    }
+    else if (tableView==self.conditionsTableView)
+    {
+        if (conditionFlag==1) {
+            if (indexPath.row==0) {
+                self.specificFromTime1Text.text=@"";
+                self.specificFromTime1Text.backgroundColor=[UIColor clearColor];
+                self.specificFromTime1Text.userInteractionEnabled=YES;
+                self.specificPayOT1Text.text=@"";
+                self.specificPayOT1Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificPayOT1Text.userInteractionEnabled=NO;
+            }
+            else
+            {
+                self.specificFromTime1Text.text=@"";
+                self.specificFromTime1Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificFromTime1Text.userInteractionEnabled=NO;
+                self.specificToTime1Text.text=@"";
+                self.specificToTime1Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificToTime1Text.userInteractionEnabled=NO;
+                self.specificPayOT1Text.text=@"";
+                self.specificPayOT1Text.backgroundColor=[UIColor clearColor];
+                self.specificPayOT1Text.userInteractionEnabled=YES;
+            }
+            self.specificCondition1Text.text=[self.conditionArray objectAtIndex:indexPath.row];
+            self.conditionsTableView.hidden=true;
+        }
+        if (conditionFlag==2) {
+            if (indexPath.row==0) {
+                self.specificFromTime2Text.text=@"";
+                self.specificFromTime2Text.backgroundColor=[UIColor clearColor];
+                self.specificFromTime2Text.userInteractionEnabled=YES;
+                self.specificPayOT2Text.text=@"";
+                self.specificPayOT2Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificPayOT2Text.userInteractionEnabled=NO;
+            }
+            else
+            {
+                self.specificFromTime2Text.text=@"";
+                self.specificFromTime2Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificFromTime2Text.userInteractionEnabled=NO;
+                self.specificToTime2Text.text=@"";
+                self.specificToTime2Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificToTime2Text.userInteractionEnabled=NO;
+                self.specificPayOT2Text.text=@"";
+                self.specificPayOT2Text.backgroundColor=[UIColor clearColor];
+                self.specificPayOT2Text.userInteractionEnabled=YES;
+            }
+            self.specificCondition2Text.text=[self.conditionArray objectAtIndex:indexPath.row];
+            self.conditionsTableView.hidden=true;
+        }
+        if (conditionFlag==3) {
+            if (indexPath.row==0) {
+                self.specificFromTime3Text.text=@"";
+                self.specificFromTime3Text.backgroundColor=[UIColor clearColor];
+                self.specificFromTime3Text.userInteractionEnabled=YES;
+                self.specificPayOT3Text.text=@"";
+                self.specificPayOT3Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificPayOT3Text.userInteractionEnabled=NO;
+            }
+            else
+            {
+                self.specificFromTime3Text.text=@"";
+                self.specificFromTime3Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificFromTime3Text.userInteractionEnabled=NO;
+                self.specificToTime3Text.text=@"";
+                self.specificToTime3Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificToTime3Text.userInteractionEnabled=NO;
+                self.specificPayOT3Text.text=@"";
+                self.specificPayOT3Text.backgroundColor=[UIColor clearColor];
+                self.specificPayOT3Text.userInteractionEnabled=YES;
+            }
+            self.specificCondition3Text.text=[self.conditionArray objectAtIndex:indexPath.row];
+            self.conditionsTableView.hidden=true;
+        }
+        if (conditionFlag==4) {
+            if (indexPath.row==0) {
+                self.specificFromTime4Text.text=@"";
+                self.specificFromTime4Text.backgroundColor=[UIColor clearColor];
+                self.specificFromTime4Text.userInteractionEnabled=YES;
+                self.specificPayOT4Text.text=@"";
+                self.specificPayOT4Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificPayOT4Text.userInteractionEnabled=NO;
+            }
+            else
+            {
+                self.specificFromTime4Text.text=@"";
+                self.specificFromTime4Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificFromTime4Text.userInteractionEnabled=NO;
+                self.specificToTime4Text.text=@"";
+                self.specificToTime4Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificToTime4Text.userInteractionEnabled=NO;
+                self.specificPayOT4Text.text=@"";
+                self.specificPayOT4Text.backgroundColor=[UIColor clearColor];
+                self.specificPayOT4Text.userInteractionEnabled=YES;
+            }
+            self.specificCondition4Text.text=[self.conditionArray objectAtIndex:indexPath.row];
+            self.conditionsTableView.hidden=true;
+        }
+        if (conditionFlag==4) {
+            if (indexPath.row==0) {
+                self.specificFromTime4Text.text=@"";
+                self.specificFromTime4Text.backgroundColor=[UIColor clearColor];
+                self.specificFromTime4Text.userInteractionEnabled=YES;
+                self.specificPayOT4Text.text=@"";
+                self.specificPayOT4Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificPayOT4Text.userInteractionEnabled=NO;
+            }
+            else
+            {
+                self.specificFromTime4Text.text=@"";
+                self.specificFromTime4Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificFromTime4Text.userInteractionEnabled=NO;
+                self.specificToTime4Text.text=@"";
+                self.specificToTime4Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificToTime4Text.userInteractionEnabled=NO;
+                self.specificPayOT4Text.text=@"";
+                self.specificPayOT4Text.backgroundColor=[UIColor clearColor];
+                self.specificPayOT4Text.userInteractionEnabled=YES;
+            }
+            self.specificCondition4Text.text=[self.conditionArray objectAtIndex:indexPath.row];
+            self.conditionsTableView.hidden=true;
+        }
+        if (conditionFlag==5) {
+            if (indexPath.row==0) {
+                self.specificFromTime5Text.text=@"";
+                self.specificFromTime5Text.backgroundColor=[UIColor clearColor];
+                self.specificFromTime5Text.userInteractionEnabled=YES;
+                self.specificPayOT5Text.text=@"";
+                self.specificPayOT5Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificPayOT5Text.userInteractionEnabled=NO;
+            }
+            else
+            {
+                self.specificFromTime5Text.text=@"";
+                self.specificFromTime5Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificFromTime5Text.userInteractionEnabled=NO;
+                self.specificToTime5Text.text=@"";
+                self.specificToTime5Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificToTime5Text.userInteractionEnabled=NO;
+                self.specificPayOT5Text.text=@"";
+                self.specificPayOT5Text.backgroundColor=[UIColor clearColor];
+                self.specificPayOT5Text.userInteractionEnabled=YES;
+            }
+            self.specificCondition5Text.text=[self.conditionArray objectAtIndex:indexPath.row];
+            self.conditionsTableView.hidden=true;
+        }
+        if (conditionFlag==6) {
+            if (indexPath.row==0) {
+                self.specificFromTime6Text.text=@"";
+                self.specificFromTime6Text.backgroundColor=[UIColor clearColor];
+                self.specificFromTime6Text.userInteractionEnabled=YES;
+                self.specificPayOT6Text.text=@"";
+                self.specificPayOT6Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificPayOT6Text.userInteractionEnabled=NO;
+            }
+            else
+            {
+                self.specificFromTime6Text.text=@"";
+                self.specificFromTime6Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificFromTime6Text.userInteractionEnabled=NO;
+                self.specificToTime6Text.text=@"";
+                self.specificToTime6Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificToTime6Text.userInteractionEnabled=NO;
+                self.specificPayOT6Text.text=@"";
+                self.specificPayOT6Text.backgroundColor=[UIColor clearColor];
+                self.specificPayOT6Text.userInteractionEnabled=YES;
+            }
+            self.specificCondition6Text.text=[self.conditionArray objectAtIndex:indexPath.row];
+            self.conditionsTableView.hidden=true;
+        }
+        if (conditionFlag==7) {
+            if (indexPath.row==0) {
+                self.specificFromTime7Text.text=@"";
+                self.specificFromTime7Text.backgroundColor=[UIColor clearColor];
+                self.specificFromTime7Text.userInteractionEnabled=YES;
+                self.specificPayOT7Text.text=@"";
+                self.specificPayOT7Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificPayOT7Text.userInteractionEnabled=NO;
+            }
+            else
+            {
+                self.specificFromTime7Text.text=@"";
+                self.specificFromTime7Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificFromTime7Text.userInteractionEnabled=NO;
+                self.specificToTime7Text.text=@"";
+                self.specificToTime7Text.backgroundColor=[UIColor lightGrayColor];
+                self.specificToTime7Text.userInteractionEnabled=NO;
+                self.specificPayOT7Text.text=@"";
+                self.specificPayOT7Text.backgroundColor=[UIColor clearColor];
+                self.specificPayOT7Text.userInteractionEnabled=YES;
+            }
+            self.specificCondition7Text.text=[self.conditionArray objectAtIndex:indexPath.row];
+            self.conditionsTableView.hidden=true;
+        }
+
+
+    }
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField==self.overtimeTypeText) {
+        self.overtimeTypeTC.hidden=false;
+        return  NO;
+    }
+    else if (textField==self.regularDailyLimitText)
+    {
+        if (self.regularDailyLimitText.text.length > 0) {
+            [self resetRegularDailyLimit];
+            return NO;
+        }
+        else
+        {
+            self.datePickerView.frame=CGRectMake(0, 367, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+            [self datePickedIntialValueChanged];
+            
+            self.datePickerView.hidden=false;
+            self.flag=1;
+            return  NO;
+            
+        }
+    }
+    
+    else if (textField==self.regularAfterText1)
+    {
+        if (self.regularAfterText1.text.length > 0) {
+            [self resetRegularAfter1];
+            return NO;
+        }
+        else
+        {
+            if(self.regularPayOTText1.text.length > 0)
+            {
+                self.regularAfterText1.userInteractionEnabled=true;
+                self.flag=3;
+                self.datePickerView.frame=CGRectMake(278, 400, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                [self datePickedIntialValueChanged];
+                
+                self.datePickerView.hidden=false;
+                return  NO;
+            }
+            else
+            {
+                return  NO;
+            }
+            
+        }
+    }
+    else if (textField==self.regularAfterText2)
+    {
+        if (self.regularAfterText2.text.length > 0) {
+            [self resetRegularAfter2];
+            return  NO;
+        }
+        else
+        {
+            if (self.regularPayOTText2.text.length > 0) {
+                self.regularAfterText2.userInteractionEnabled=true;
+                self.flag=4;
+                self.datePickerView.frame=CGRectMake(0, 383, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                [self datePickedIntialValueChanged];
+                self.datePickerView.hidden=false;
+                return  NO;
+            }
+            else
+            {
+                return  NO;
+            }
+        }
+        
+    }
+    else if (textField==self.regularPayOTText1)
+    {
+        if (self.regularDailyLimitText.text.length > 0) {
+            self.regularPayOTText1.userInteractionEnabled=true;
+            if (payOTTextFlag==0) {
+                payOTFlag=1;
+                self.payOTTC.frame=CGRectMake(148, 433, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return  YES;
+        }
+        else
+        {
+            return  NO;
+        }
+    }
+    else if (textField==self.regularPayOTText2)
+    {
+        if (self.regularAfterText1.text.length > 0) {
+            self.regularPayOTText2.userInteractionEnabled=true;
+            if (payOTTextFlag==0) {
+                payOTFlag=2;
+                self.payOTTC.frame=CGRectMake(434, 433, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return  YES;
+        }
+        else
+        {
+            return  NO;
+        }
+    }
+    else if (textField==self.regularPayOTText3)
+    {
+        if (self.regularAfterText2.text.length > 0) {
+            self.regularPayOTText3.userInteractionEnabled=true;
+            if (payOTTextFlag==0) {
+                payOTFlag=3;
+                self.payOTTC.frame=CGRectMake(148, 474, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return YES;
+        }
+        else
+        {
+            return  NO;
+        }
+    }
+    else if (textField==self.offDayFirstText)
+    {
+        if (self.offDayFirstText.text.length > 0) {
+            [self resetOffdayFirstText];
+            return  NO;
+        }
+        else
+        {
+            if (self.offdayDailyLimitText.text.length > 0) {
+                [self datePickedIntialValueChanged];
+                self.flag=5;
+                self.datePickerView.frame=CGRectMake(0, 383, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                self.datePickerView.hidden=false;
+                return  NO;
+            }
+            else
+            {
+                return  NO;
+            }
+            
+        }
+    }
+    else if (textField==self.offdayDailyLimitText)
+    {
+        if (self.offdayDailyLimitText.text.length > 0) {
+            [self resetOffdayDailyLimit];
+            return  NO;
+        }
+        else
+        {
+            [self datePickedIntialValueChanged];
+            self.datePickerView.frame=CGRectMake(0, 367, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+            self.datePickerView.hidden=false;
+            self.flag=6;
+            return  NO;
+            
+        }
+    }
+    
+    else if (textField==self.offdayAfterText1)
+    {
+        if (self.offdayAfterText1.text.length > 0) {
+            [self resetOffdayAfter1];
+            return  NO;
+        }
+        else
+            
+        {
+            if (self.offdayPayOTText1.text.length > 0) {
+                [self datePickedIntialValueChanged];
+                self.flag=7;
+                self.datePickerView.frame=CGRectMake(278, 400, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                self.datePickerView.hidden=false;
+                return  NO;
+            }
+            else
+            {
+                return  NO;
+            }
+        }
+        
+    }
+    else if (textField==self.offdayAfterText2)
+    {
+        if (self.offdayAfterText2.text.length > 0) {
+            [self resetOffdayAfter2];
+            return NO;
+        }
+        else
+        {
+            if (self.offdayPayOTText2.text.length > 0) {
+                [self datePickedIntialValueChanged];
+                self.flag=8;
+                self.datePickerView.frame=CGRectMake(0, 400, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                self.datePickerView.hidden=false;
+                return  NO;
+            }
+            else
+            {
+                return  NO;
+            }
+        }
+        
+    }
+    else if (textField==self.offdayPayOTText1)
+    {
+        if (self.offdayDailyLimitText.text.length > 0) {
+            if (payOTTextFlag==0) {
+                payOTFlag=4;
+                self.payOTTC.frame=CGRectMake(158, 433, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return  YES;
+        }
+        else
+        {
+            return  NO;
+        }
+    }
+    else if (textField==self.offdayPayOTText2)
+    {
+        if (self.offdayAfterText1.text.length > 0) {
+            if (payOTTextFlag==0) {
+                payOTFlag=5;
+                self.payOTTC.frame=CGRectMake(438, 433, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return  YES;
+        }
+        else
+        {
+            return  NO;
+        }
+    }
+    else if (textField==self.offdayPayOTText3)
+    {
+        if (self.offdayAfterText2.text.length > 0) {
+            if (payOTTextFlag==0) {
+                payOTFlag=6;
+                self.payOTTC.frame=CGRectMake(158, 474, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return YES;
+        }
+        else
+        {
+            return  NO;
+        }
+        
+        
+    }
+    else if (textField==self.partialDailyLimitText)
+    {
+        if (self.partialDailyLimitText.text.length > 0) {
+            [self resetPartialDialyLimit];
+            return  NO;
+        }
+        else
+        {
+            [self datePickedIntialValueChanged];
+            self.datePickerView.frame=CGRectMake(0 , 367, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+            self.datePickerView.hidden=false;
+            self.flag=9;
+            return  NO;
+        }
+        
+    }
+    else if (textField==self.partialFirstText)
+    {
+        if (self.partialFirstText.text.length > 0) {
+            [self resetPartialFirstText];
+            return  NO;
+        }
+        else
+        {
+            if (self.partialDailyLimitText.text.length > 0) {
+                [self datePickedIntialValueChanged];
+                self.flag=10;
+                self.datePickerView.frame=CGRectMake(0, 383, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                self.datePickerView.hidden=false;
+                return  NO;
+                
+            }
+            else
+            {
+                return  NO;
+            }
+        }
+        
+    }
+    else if (textField==self.partialAfterText1)
+    {
+        if (self.partialAfterText1.text.length > 0) {
+            [self resetPartialAfter1];
+            return  NO;
+        }
+        else
+        {
+            if (self.partialPayOTText1.text.length > 0) {
+                [self datePickedIntialValueChanged];
+                self.flag=11;
+                self.datePickerView.frame=CGRectMake(278, 400, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                self.datePickerView.hidden=false;
+                return  NO;
+            }
+            else
+            {
+                return  NO;
+            }
+        }
+        
+    }
+    else if (textField==self.partialAfterText2)
+    {
+        if (self.partialAfterText2.text.length > 0) {
+            [self resetPartialAfter2];
+            return  NO;
+        }
+        else
+        {
+            [self datePickedIntialValueChanged];
+            if (self.partialPayOTText2.text.length > 0) {
+                self.flag=12;
+                self.datePickerView.frame=CGRectMake(0, 400, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                self.datePickerView.hidden=false;
+                return  NO;
+            }
+            else
+            {
+                return  NO;
+            }
+        }
+        
+    }
+    else if (textField==self.partialPayOTText1)
+    {
+        if (self.partialDailyLimitText.text.length > 0) {
+            if (payOTTextFlag==0) {
+                payOTFlag=7;
+                self.payOTTC.frame=CGRectMake(158, 433, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return  YES;
+        }
+        else
+        {
+            return  NO;
+        }
+    }
+    else if (textField==self.partialPayOTText2)
+    {
+        if (self.partialAfterText1.text.length > 0) {
+            if (payOTTextFlag==0) {
+                payOTFlag=8;
+                self.payOTTC.frame=CGRectMake(438, 433, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return  YES;
+        }
+        else
+        {
+            return  NO;
+        }
+        
+    }
+    else if (textField==self.partialPayOTText3)
+    {
+        if (self.partialAfterText2.text.length > 0) {
+            if (payOTTextFlag==0) {
+                payOTFlag=9;
+                self.payOTTC.frame=CGRectMake(158, 474                                                                   , self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return YES;
+        }
+        else
+        {
+            return  NO;
+        }
+    }
+    else if (textField==self.holidayDailyLimitText)
+    {
+        if (self.holidayDailyLimitText.text.length > 0) {
+            [self resetHolidayDialyLimit];
+        }
+        else
+        {
+            [self datePickedIntialValueChanged];
+            self.datePickerView.frame=CGRectMake(0, 367, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+            self.datePickerView.hidden=false;
+            self.flag=13;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.holidayFirstText)
+    {
+        if (self.holidayFirstText.text.length > 0) {
+            [self resetHolidayFirstText];
+            return  NO;
+        }
+        else
+        {
+            if (self.holidayDailyLimitText.text.length > 0) {
+                [self datePickedIntialValueChanged];
+                self.flag=14;
+                self.datePickerView.frame=CGRectMake(0, 383, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                self.datePickerView.hidden=false;
+                return  NO;
+            }
+            else
+            {
+                return  NO;
+            }
+            
+        }
+    }
+    else if (textField==self.holidayAfterText1)
+    {
+        if (self.holidayAfterText1.text.length > 0) {
+            [self resetHolidayAfter1];
+            return  NO;
+        }
+        else
+        {
+            if (self.holidayPayOTText1.text.length > 0) {
+                [self datePickedIntialValueChanged];
+                self.flag=15;
+                self.datePickerView.frame=CGRectMake(278, 400, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                self.datePickerView.hidden=false;
+                return  NO;
+            }
+            else
+            {
+                return  NO;
+            }
+        }
+        
+    }
+    else if (textField==self.holidayAfterText2)
+    {
+        if (self.holidayAfterText2.text.length > 0) {
+            [self resetHolidayAfter2];
+            return  NO;
+        }
+        else
+        {
+            if (self.holidayPayOTText2.text.length > 0) {
+                [self datePickedIntialValueChanged];
+                self.flag=16;
+                self.datePickerView.frame=CGRectMake(0, 400, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+                self.datePickerView.hidden=false;
+                return  NO;
+                
+            }
+            else
+            {
+                return  NO;
+            }
+        }
+        
+    }
+    else if (textField==self.holidayPayOTText1)
+    {
+        if (self.holidayDailyLimitText.text.length > 0) {
+            if (payOTTextFlag==0) {
+                payOTFlag=10;
+                self.payOTTC.frame=CGRectMake(158, 433, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return  YES;
+        }
+        else
+        {
+            return  NO;
+        }
+        
+    }
+    else if (textField==self.holidayPayOTText2)
+    {
+        if (self.holidayAfterText1.text.length > 0) {
+            if (payOTTextFlag==0) {
+                payOTFlag=11;
+                self.payOTTC.frame=CGRectMake(438, 433, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return  YES;
+        }
+        else
+        {
+            return  NO;
+        }
+        
+    }
+    else if (textField==self.holidayPayOTText3)
+    {
+        if (self.holidayAfterText2.text.length > 0) {
+            if (payOTTextFlag==0) {
+                payOTFlag=12;
+                self.payOTTC.frame=CGRectMake(158, 474, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return YES;
+        }
+        else
+        {
+            return  NO;
+        }
+        
+    }
+    else if (textField==self.weeklyDailyLimitText)
+    {
+        if (self.weeklyDailyLimitText.text.length > 0) {
+            [self resetWeeklyDailyLimit];
+        }
+        else
+        {
+            [self datePickedIntialValueChanged];
+            self.datePickerView.frame=CGRectMake(0, 368, self.datePickerView.frame.size.width, self.datePickerView.frame.size.height);
+            self.datePickerView.hidden=false;
+            self.flag=17;
+        }
+        
+        return  NO;
+        
+    }
+    else if (textField==self.weeklyAfterText1)
+    {
+        if (self.weeklyAfterText1.text.length > 0) {
+            [self resetWeeklyAfter1];
+            return  NO;
+        }
+        else
+            return  YES;
+    }
+    else if (textField==self.weeklyPayOTText1)
+    {
+        if (self.weeklyAfterText1.text.length > 0) {
+            if (payOTTextFlag==0) {
+                payOTFlag=13;
+                self.payOTTC.frame=CGRectMake(45, 436, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+                self.payOTTC.hidden=false;
+                return  NO;
+            }
+            else
+                return YES;
+        }
+        else
+        {
+            return  NO;
+        }
+        
+        
+        
+    }
+    else if (textField==self.weeklyCheckText1)
+    {
+        if (p%2==0) {
+            [self.weeklyCheckButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            p++;
+        }
+        else
+        {
+            [self.weeklyCheckButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            p++;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.weeklyCheckText2)
+    {
+        if (q%2==0) {
+            [self.weeklyCheckButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            q++;
+        }
+        else
+        {
+            [self.weeklyCheckButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            q++;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.weeklyCheckText3)
+    {
+        if (r%2==0) {
+            [self.weeklyCheckButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            r++;
+        }
+        else
+        {
+            [self.weeklyCheckButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            r++;
+        }
+        
+        return  NO;
+    }
+    
+    else if (textField==self.weeklyCheckText4)
+    {
+        if (i%2==0) {
+            [self.weeklyCheckButton4 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            i++;
+        }
+        else
+        {
+            [self.weeklyCheckButton4 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            i++;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.weeklyCheckText5)
+    {
+        if (j%2==0) {
+            [self.weeklyCheckButton5 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            j++;
+        }
+        else
+        {
+            [self.weeklyCheckButton5 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            j++;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.weeklyCheckText6)
+    {
+        if (k%2==0) {
+            [self.weeklyCheckButton6 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            k++;
+        }
+        else
+        {
+            [self.weeklyCheckButton6 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            k++;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.checkText1)
+    {
+        if (a%2==0) {
+            [self.checkButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            a++;
+        }
+        else
+        {
+            [self.checkButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            a++;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.checkText2)
+    {
+        if (b%2==0) {
+            [self.checkButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            b++;
+        }
+        else
+        {
+            [self.checkButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            b++;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.checkText3)
+    {
+        if (c%2==0) {
+            [self.checkButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            c++;
+        }
+        else
+        {
+            [self.checkButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            c++;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.weeklyWorkingHoursText)
+    {
+        self.weeklyWorkingHoursTC.hidden=false;
+        return  NO;
+    }
+    else if (textField==self.specificDay1Text)
+    {
+        
+        if (self.specificDay1Text.text.length > 0) {
+            [self resetDay1];
+            [self resetDay2];
+            [self resetDay3];
+            [self resetDay4];
+            [self resetDay5];
+            [self resetDay6];
+            [self resetDay7];
+        }
+        else
+        {
+            dayFlag=1;
+            self.specificDayTC.frame=CGRectMake(25, 361, self.specificDayTC.frame.size.width, self.specificDayTC.frame.size.height);
+            self.specificDayTC.hidden=false;
+            
+        }
+        [self.specificDayTC reloadData];
+        return  NO;
+    }
+    else if (textField==self.specificDay2Text)
+    {
+        if (self.specificDay2Text.text.length > 0) {
+            [self resetDay2];
+            [self resetDay3];
+            [self resetDay4];
+            [self resetDay5];
+            [self resetDay6];
+            [self resetDay7];
+        }
+        else
+        {
+            dayFlag=2;
+            self.specificDayTC.frame=CGRectMake(25, 389, self.specificDayTC.frame.size.width, self.specificDayTC.frame.size.height);
+            self.specificDayTC.hidden=false;
+        }
+        [self.specificDayTC reloadData];
+        return  NO;
+    }
+    else if (textField==self.specificDay3Text)
+    {
+        if (self.specificDay3Text.text.length > 0) {
+            [self resetDay3];
+            [self resetDay4];
+            [self resetDay5];
+            [self resetDay6];
+            [self resetDay7];
+        }
+        else
+        {
+            dayFlag=3;
+            self.specificDayTC.frame=CGRectMake(25, 420, self.specificDayTC.frame.size.width, self.specificDayTC.frame.size.height);
+            self.specificDayTC.hidden=false;
+        }
+        [self.specificDayTC reloadData];
+        return  NO;
+    }
+    else if (textField==self.specificDay4Text)
+    {
+        if (self.specificDay4Text.text.length > 0) {
+            [self resetDay4];
+            [self resetDay5];
+            [self resetDay6];
+            [self resetDay7];
+        }
+        else
+        {
+            dayFlag=4;
+            self.specificDayTC.frame=CGRectMake(25, 439, self.specificDayTC.frame.size.width, self.specificDayTC.frame.size.height);
+            self.specificDayTC.hidden=false;
+        }
+        [self.specificDayTC reloadData];
+        return  NO;
+    }
+    else if (textField==self.specificDay5Text)
+    {
+        if (self.specificDay5Text.text.length > 0) {
+            [self resetDay5];
+            [self resetDay6];
+            [self resetDay7];
+        }
+        else
+        {
+            dayFlag=5;
+            self.specificDayTC.frame=CGRectMake(25, 439, self.specificDayTC.frame.size.width, self.specificDayTC.frame.size.height);
+            self.specificDayTC.hidden=false;
+        }
+        [self.specificDayTC reloadData];
+        return  NO;
+    }
+    else if (textField==self.specificDay6Text)
+    {
+        if (self.specificDay6Text.text.length > 0) {
+            [self resetDay6];
+            [self resetDay7];
+            
+        }
+        else
+        {
+            dayFlag=6;
+            self.specificDayTC.frame=CGRectMake(25, 439, self.specificDayTC.frame.size.width, self.specificDayTC.frame.size.height);
+            self.specificDayTC.hidden=false;
+        }
+        [self.specificDayTC reloadData];
+        return  NO;
+    }
+    else if (textField==self.specificDay7Text)
+    {
+        if (self.specificDay7Text.text.length > 0) {
+            [self resetDay7];
+        }
+        else
+        {
+            dayFlag=7;
+            self.specificDayTC.frame=CGRectMake(25, 439, self.specificDayTC.frame.size.width, self.specificDayTC.frame.size.height);
+            self.specificDayTC.hidden=false;
+        }
+        [self.specificDayTC reloadData];
+        return  YES;
+    }
+    else if (textField==self.specificCondition1Text)
+    {
+        conditionFlag=1;
+        self.conditionsTableView.hidden=false;
+        self.conditionsTableView.frame=CGRectMake(119, 361, self.conditionsTableView.frame.size.width, self.conditionsTableView.frame.size.height);
+        return  NO;
+    }
+    else if (textField==self.specificCondition2Text)
+    {
+        conditionFlag=2;
+        self.conditionsTableView.hidden=false;
+        self.conditionsTableView.frame=CGRectMake(119, 390, self.conditionsTableView.frame.size.width, self.conditionsTableView.frame.size.height);
+        return  NO;
+    }
+    else if (textField==self.specificCondition3Text)
+    {
+        conditionFlag=3;
+        self.conditionsTableView.hidden=false;
+        self.conditionsTableView.frame=CGRectMake(119, 418, self.conditionsTableView.frame.size.width, self.conditionsTableView.frame.size.height);
+        return  NO;
+    }
+    else if (textField==self.specificCondition4Text)
+    {
+        conditionFlag=4;
+        self.conditionsTableView.hidden=false;
+        self.conditionsTableView.frame=CGRectMake(119, 448, self.conditionsTableView.frame.size.width, self.conditionsTableView.frame.size.height);
+        return  NO;
+    }
+    else if (textField==self.specificCondition5Text)
+    {
+        conditionFlag=5;
+        self.conditionsTableView.hidden=false;
+        self.conditionsTableView.frame=CGRectMake(119, 477, self.conditionsTableView.frame.size.width, self.conditionsTableView.frame.size.height);
+        return  NO;
+    }
+    else if (textField==self.specificCondition6Text)
+    {
+        conditionFlag=6;
+        self.conditionsTableView.hidden=false;
+        self.conditionsTableView.frame=CGRectMake(119, 499, self.conditionsTableView.frame.size.width, self.conditionsTableView.frame.size.height);
+        return  NO;
+    }
+    else if (textField==self.specificCondition7Text)
+    {
+        conditionFlag=7;
+        self.conditionsTableView.hidden=false;
+        self.conditionsTableView.frame=CGRectMake(119, 499, self.conditionsTableView.frame.size.width, self.conditionsTableView.frame.size.height);
+        return  NO;
+    }
+    else if (textField==self.specificFromTime1Text)
+    {
+        if (self.specificFromTime1Text.text.length > 0) {
+        }
+        else
+        {
+            [self timeInitialSettings];
+            self.datePicker1View.frame=CGRectMake(299, 361, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            timeFlag=1;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificToTime1Text)
+    {
+        if (self.specificToTime1Text.text.length > 0) {
+        }
+        else
+        {
+            timeFlag=2;
+            [self timeMaxSettings:self.specificFromTime1Text.text];
+            self.datePicker1View.frame=CGRectMake(384, 361, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificFromTime2Text)
+    {
+        if (self.specificFromTime2Text.text.length > 0) {
+        }
+        else
+        {
+            [self timeInitialSettings];
+            self.datePicker1View.frame=CGRectMake(299, 383, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            timeFlag=3;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificToTime2Text)
+    {
+        if (self.specificToTime2Text.text.length > 0) {
+        }
+        else
+        {
+            timeFlag=4;
+            [self timeMaxSettings:self.specificFromTime2Text.text];
+            self.datePicker1View.frame=CGRectMake(384, 383, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificFromTime3Text)
+    {
+        if (self.specificFromTime3Text.text.length > 0) {
+        }
+        else
+        {
+            [self timeInitialSettings];
+            self.datePicker1View.frame=CGRectMake(299, 400, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            timeFlag=5;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificToTime3Text)
+    {
+        if (self.specificToTime3Text.text.length > 0) {
+        }
+        else
+        {
+            timeFlag=6;
+            [self timeMaxSettings:self.specificFromTime3Text.text];
+            self.datePicker1View.frame=CGRectMake(384, 400, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificFromTime4Text)
+    {
+        if (self.specificFromTime4Text.text.length > 0) {
+        }
+        else
+        {
+            [self timeInitialSettings];
+            self.datePicker1View.frame=CGRectMake(299, 400, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            timeFlag=7;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificToTime4Text)
+    {
+        if (self.specificToTime4Text.text.length > 0) {
+        }
+        else
+        {
+            timeFlag=8;
+            [self timeMaxSettings:self.specificFromTime4Text.text];
+            self.datePicker1View.frame=CGRectMake(384, 400, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificFromTime5Text)
+    {
+        if (self.specificFromTime5Text.text.length > 0) {
+        }
+        else
+        {
+            [self timeInitialSettings];
+            self.datePicker1View.frame=CGRectMake(299, 400, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            timeFlag=9;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificToTime5Text)
+    {
+        if (self.specificToTime5Text.text.length > 0) {
+        }
+        else
+        {
+            timeFlag=10;
+            [self timeMaxSettings:self.specificFromTime5Text.text];
+            self.datePicker1View.frame=CGRectMake(384, 400, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificFromTime6Text)
+    {
+        if (self.specificFromTime6Text.text.length > 0) {
+        }
+        else
+        {
+            [self timeInitialSettings];
+            self.datePicker1View.frame=CGRectMake(299, 400, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            timeFlag=11;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificToTime6Text)
+    {
+        if (self.specificToTime6Text.text.length > 0) {
+        }
+        else
+        {
+            timeFlag=12;
+            [self timeMaxSettings:self.specificFromTime6Text.text];
+            self.datePicker1View.frame=CGRectMake(384, 400, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificFromTime7Text)
+    {
+        if (self.specificFromTime7Text.text.length > 0) {
+        }
+        else
+        {
+            [self timeInitialSettings];
+            self.datePicker1View.frame=CGRectMake(299, 400, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            timeFlag=13;
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificToTime7Text)
+    {
+        if (self.specificToTime7Text.text.length > 0) {
+        }
+        else
+        {
+            timeFlag=14;
+            [self timeMaxSettings:self.specificFromTime7Text.text];
+            self.datePicker1View.frame=CGRectMake(384, 400, self.datePicker1View.frame.size.width, self.datePicker1View.frame.size.height);
+            self.datePicker1View.hidden=false;
+            
+        }
+        
+        return  NO;
+    }
+    else if (textField==self.specificPayOT1Text)
+    {
+        if (payOTTextFlag==0) {
+            payOTFlag=15;
+            self.payOTTC.frame=CGRectMake(445, 361, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+            self.payOTTC.hidden=false;
+            return  NO;
+        }
+        else
+            return YES;
+        
+    }
+    else if (textField==self.specificPayOT2Text)
+    {
+        if (payOTTextFlag==0) {
+            payOTFlag=16;
+            self.payOTTC.frame=CGRectMake(445, 390, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+            self.payOTTC.hidden=false;
+            return  NO;
+        }
+        else
+            return YES;
+        
+    }
+    else if (textField==self.specificPayOT3Text)
+    {
+        if (payOTTextFlag==0) {
+            payOTFlag=17;
+            self.payOTTC.frame=CGRectMake(445, 419, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+            self.payOTTC.hidden=false;
+            return  NO;
+        }
+        else
+            return YES;
+        
+    }
+    else if (textField==self.specificPayOT4Text)
+    {
+        if (payOTTextFlag==0) {
+            payOTFlag=18;
+            self.payOTTC.frame=CGRectMake(445, 448, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+            self.payOTTC.hidden=false;
+            return  NO;
+        }
+        else
+            return YES;
+        
+    }
+    else if (textField==self.specificPayOT5Text)
+    {
+        if (payOTTextFlag==0) {
+            payOTFlag=19;
+            self.payOTTC.frame=CGRectMake(445, 475, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+            self.payOTTC.hidden=false;
+            return  NO;
+        }
+        else
+            return YES;
+        
+    }
+    else if (textField==self.specificPayOT6Text)
+    {
+        if (payOTTextFlag==0) {
+            payOTFlag=20;
+            self.payOTTC.frame=CGRectMake(445, 475, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+            self.payOTTC.hidden=false;
+            return  NO;
+        }
+        else
+            return YES;
+        
+    }
+    else if (textField==self.specificPayOT7Text)
+    {
+        if (payOTTextFlag==0) {
+            payOTFlag=21;
+            self.payOTTC.frame=CGRectMake(445, 475, self.payOTTC.frame.size.width, self.payOTTC.frame.size.height);
+            self.payOTTC.hidden=false;
+            return  NO;
+        }
+        else
+            return YES;
+    }
+    
+    
+    
+    else
+        return  YES;
+}
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    if (textField==self.regularPayOTText1) {
+        payOTTextFlag=0;
+        if (self.regularPayOTText1.text.length > 0) {
+            if (self.regularPayOTText1.text.length < 7) {
+                float amount=[self.regularPayOTText1.text floatValue];
+                self.regularPayOTText1.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.regularAfterText1.backgroundColor=[UIColor clearColor];
+                self.regularAfterText1.userInteractionEnabled=true;
+            }
+        }
+        return  YES;
+    }
+    else if (textField==self.regularPayOTText2)
+    {
+        payOTTextFlag=0;
+        if (self.regularPayOTText2.text.length > 0) {
+            if (self.regularPayOTText2.text.length < 7) {
+                float amount=[self.regularPayOTText2.text floatValue];
+                self.regularPayOTText2.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.regularAfterText2.backgroundColor=[UIColor clearColor];
+                self.regularAfterText2.userInteractionEnabled=true;
+                self.selectedFlag=0;
+            }
+        }
+        return  YES;
+    }
+    else if (textField==self.regularPayOTText3)
+    {
+        payOTTextFlag=0;
+        if (self.regularPayOTText3.text.length > 0) {
+            if (self.regularPayOTText3.text.length < 7) {
+                float amount=[self.regularPayOTText3.text floatValue];
+                self.regularPayOTText3.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                
+                self.selectedFlag1=0;
+            }
+        }
+        return  YES;
+    }
+    if (textField==self.offdayPayOTText1) {
+        payOTTextFlag=0;
+        if (self.offdayPayOTText1.text.length > 0) {
+            if (self.offdayPayOTText1.text.length < 7) {
+                float amount=[self.offdayPayOTText1.text floatValue];
+                self.offdayPayOTText1.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.offdayAfterText1.backgroundColor=[UIColor clearColor];
+                self.offdayAfterText1.userInteractionEnabled=true;
+            }
+        }
+        return  YES;
+    }
+    else if (textField==self.offdayPayOTText2)
+    {
+        payOTTextFlag=0;
+        if (self.offdayPayOTText2.text.length > 0) {
+            if (self.offdayPayOTText2.text.length < 7) {
+                float amount=[self.offdayPayOTText2.text floatValue];
+                self.offdayPayOTText2.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag=0;
+                self.offdayAfterText2.backgroundColor=[UIColor clearColor];
+                self.offdayAfterText2.userInteractionEnabled=true;
+            }
+        }
+        return  YES;
+    }
+    else if (textField==self.offdayPayOTText3)
+    {
+        payOTTextFlag=0;
+        if (self.offdayPayOTText3.text.length > 0) {
+            if (self.offdayPayOTText3.text.length < 7) {
+                float amount=[self.offdayPayOTText3.text floatValue];
+                self.offdayPayOTText3.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag1=0;
+            }
+        }
+        return  YES;
+    }
+    else if (textField==self.partialPayOTText1)
+    {
+        payOTTextFlag=0;
+        if (self.partialPayOTText1.text.length > 0) {
+            if (self.partialPayOTText1.text.length < 7) {
+                float amount=[self.partialPayOTText1.text floatValue];
+                self.partialPayOTText1.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.partialAfterText1.backgroundColor=[UIColor clearColor];
+                self.partialAfterText1.userInteractionEnabled=YES;
+            }
+        }
+        return  YES;
+    }
+    else if (textField==self.partialPayOTText2)
+    {
+        payOTTextFlag=0;
+        if (self.partialPayOTText2.text.length > 0) {
+            if (self.partialPayOTText2.text.length < 7) {
+                float amount=[self.partialPayOTText2.text floatValue];
+                self.partialPayOTText2.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag=0;
+                self.partialAfterText2.backgroundColor=[UIColor clearColor];
+                self.partialAfterText2.userInteractionEnabled=true;
+            }
+        }
+        return  YES;
+    }
+    else if(textField==self.partialPayOTText3)
+    {
+        payOTTextFlag=0;
+        if (self.partialPayOTText3.text.length > 0) {
+            if (self.partialPayOTText3.text.length < 7) {
+                float amount=[self.partialPayOTText3.text floatValue];
+                self.partialPayOTText3.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag1=0;
+            }
+        }
+        return  YES;
+    }
+    else if (textField==self.holidayPayOTText1)
+    {
+        payOTTextFlag=0;
+        if (self.holidayPayOTText1.text.length > 0) {
+            if (self.holidayPayOTText1.text.length < 7) {
+                float amount=[self.holidayPayOTText1.text floatValue];
+                self.holidayPayOTText1.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.holidayAfterText1.backgroundColor=[UIColor clearColor];
+                self.holidayAfterText1.userInteractionEnabled=YES;
+            }
+        }
+        return  YES;
+    }
+    else if (textField==self.holidayPayOTText2)
+    {
+        payOTTextFlag=0;
+        if (self.holidayPayOTText2.text.length > 0) {
+            if (self.holidayPayOTText2.text.length < 7) {
+                float amount=[self.holidayPayOTText2.text floatValue];
+                self.holidayPayOTText2.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag=0;
+                self.holidayAfterText2.backgroundColor=[UIColor clearColor];
+                self.holidayAfterText2.userInteractionEnabled=true;
+            }
+        }
+        return  YES;
+        
+    }
+    else if (textField==self.holidayPayOTText3)
+    {
+        payOTTextFlag=0;
+        if (self.holidayPayOTText3.text.length > 0) {
+            if (self.holidayPayOTText3.text.length < 7) {
+                float amount=[self.holidayPayOTText3.text floatValue];
+                self.holidayPayOTText3.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag1=0;
+            }
+        }
+        return  YES;
+        
+    }
+    else if (textField==self.weeklyPayOTText1)
+    {
+        payOTTextFlag=0;
+        if (self.weeklyPayOTText1.text.length > 0) {
+            if (self.weeklyPayOTText1.text.length < 7) {
+                float amount=[self.weeklyPayOTText1.text floatValue];
+                self.weeklyPayOTText1.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag=0;
+                
+            }
+        }
+        return  YES;
+    }
+    else if (textField==self.specificPayOT1Text)
+    {
+        payOTTextFlag=0;
+        if (self.specificPayOT1Text.text.length > 0) {
+            if (self.specificPayOT1Text.text.length < 7) {
+                float amount=[self.specificPayOT1Text.text floatValue];
+                self.specificPayOT1Text.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag1=0;
+                self.secondView.hidden=false;
+                self.doneButton.enabled=YES;
+                [self resetDay2];
+            }
+        }
+        return  YES;
+    }
+    
+    else if (textField==self.specificPayOT2Text)
+    {
+        payOTTextFlag=0;
+        if (self.specificPayOT2Text.text.length > 0) {
+            if (self.specificPayOT2Text.text.length < 7) {
+                float amount=[self.specificPayOT2Text.text floatValue];
+                self.specificPayOT2Text.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag1=0;
+                self.thirdView.hidden=false;
+                self.doneButton.enabled=YES;
+                [self resetDay3];
+            }
+        }
+        return  YES;
+    }
+    
+    else if (textField==self.specificPayOT3Text)
+    {
+        payOTTextFlag=0;
+        if (self.specificPayOT3Text.text.length > 0) {
+            if (self.specificPayOT3Text.text.length < 7) {
+                float amount=[self.specificPayOT3Text.text floatValue];
+                self.specificPayOT3Text.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag1=0;
+                self.fourthView.hidden=false;
+                self.doneButton.enabled=YES;
+                [self resetDay4];
+            }
+        }
+        return  YES;
+    }
+    else if (textField==self.specificPayOT4Text)
+    {
+        payOTTextFlag=0;
+        if (self.specificPayOT4Text.text.length > 0) {
+            if (self.specificPayOT4Text.text.length < 7) {
+                float amount=[self.specificPayOT4Text.text floatValue];
+                self.specificPayOT4Text.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag1=0;
+                self.fifthView.hidden=false;
+                self.doneButton.enabled=YES;
+                [self resetDay5];
+            }
+        }
+        return  YES;
+    }
+    
+    else if (textField==self.specificPayOT5Text)
+    {
+        payOTTextFlag=0;
+        if (self.specificPayOT5Text.text.length > 0) {
+            if (self.specificPayOT5Text.text.length < 7) {
+                float amount=[self.specificPayOT5Text.text floatValue];
+                self.specificPayOT5Text.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag1=0;
+                self.sixthView.hidden=false;
+                self.doneButton.enabled=YES;
+                [self resetDay6];
+            }
+        }
+        return  YES;
+    }
+    
+    else if (textField==self.specificPayOT6Text)
+    {
+        payOTTextFlag=0;
+        if (self.specificPayOT6Text.text.length > 0) {
+            if (self.specificPayOT6Text.text.length < 7) {
+                float amount=[self.specificPayOT6Text.text floatValue];
+                self.specificPayOT6Text.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag1=0;
+                self.seventhView.hidden=false;
+                self.doneButton.enabled=YES;
+                [self resetDay7];
+            }
+        }
+        return  YES;
+    }
+    
+    else if (textField==self.specificPayOT7Text)
+    {
+        payOTTextFlag=0;
+        if (self.specificPayOT7Text.text.length > 0) {
+            if (self.specificPayOT7Text.text.length < 7) {
+                float amount=[self.specificPayOT7Text.text floatValue];
+                self.specificPayOT7Text.text=[NSString stringWithFormat:@"%.1f/hr",amount];
+                self.selectedFlag1=0;
+                self.doneButton.enabled=YES;
+                
+            }
+        }
+        return  YES;
+    }
+    
+    
+    else if (textField==self.weeklyAfterText1)
+    {
+        self.weeklyPayOTText1.backgroundColor=[UIColor clearColor];
+        self.weeklyPayOTText1.userInteractionEnabled=TRUE;
+        self.weeklyMandatoryLabel1.hidden=false;
+        return  YES;
+    }
+    
+    else
+        return  YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField==self.overtimeNameText) {
+        if ([string isEqualToString:@""]) {
+            return YES;
+        }
+        if (textField.text.length<=49) {
+            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "];
+            unichar u = [string characterAtIndex:0];
+            if ([myCharSet characterIsMember:u])
+            {
+                return YES;
+            }
+            else{
+                return NO;
+            }
+            return YES;
+        }
+        
+    }
+    else if (textField==self.abbrvText)
+    {
+        if ([string isEqualToString:@""]) {
+            return YES;
+        }
+        if (textField.text.length<=4) {
+            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"];
+            unichar u = [string characterAtIndex:0];
+            if ([myCharSet characterIsMember:u])
+            {
+                return YES;
+            }
+            else{
+                return NO;
+            }
+            return YES;
+        }
+        
+    }
+    else if ((textField==self.regularPayOTText1) || (textField==self.regularPayOTText2) || (textField==self.regularPayOTText3) || (textField==self.offdayPayOTText1) || (textField==self.offdayPayOTText2) || (textField==self.offdayPayOTText3) || (textField==self.partialPayOTText1) || (textField==self.partialPayOTText2) || (textField==self.partialPayOTText3) || (textField==self.holidayPayOTText1) || (textField==self.holidayPayOTText2) || (textField==self.holidayPayOTText3) || (textField==self.specificPayOT1Text) || (textField==self.specificPayOT2Text) || (textField==self.specificPayOT3Text) || (textField==self.specificPayOT4Text) || (textField==self.specificPayOT5Text) || (textField==self.specificPayOT6Text) || (textField==self.specificPayOT7Text) || (textField==self.weeklyPayOTText1) )
+    {
+        if ([string isEqualToString:@""]) {
+            return YES;
+        }
+        if (textField.text.length<=4) {
+            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789."];
+            unichar u = [string characterAtIndex:0];
+            if ([myCharSet characterIsMember:u])
+            {
+                return YES;
+            }
+            else{
+                return NO;
+            }
+            return YES;
+        }
+        
+    }
+    else if(textField==self.weeklyAfterText1)
+    {
+        if ([string isEqualToString:@""]) {
+            return YES;
+        }
+        if (textField.text.length<=4) {
+            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+            unichar u = [string characterAtIndex:0];
+            if ([myCharSet characterIsMember:u])
+            {
+                return YES;
+            }
+            else{
+                return NO;
+            }
+            return YES;
+        }
+        
+    }
+    else
+    {
+        return YES;
+    }
+    return false;
+}
+
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if (textView==self.descriptionTextView) {
+        if ([text isEqualToString:@""]) {
+            return YES;
+        }
+        if (textView.text.length<=149) {
+            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "];
+            unichar u = [text characterAtIndex:0];
+            if ([myCharSet characterIsMember:u])
+            {
+                return YES;
+            }
+            else{
+                return NO;
+            }
+            return YES;
+        }
+        
+    }
+    else
+    {
+        return  YES;
+    }
+    return  false;
+}
+
+
+-(IBAction)groupselectionaction:(id)sender
+{
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"grouppopupview" owner:self options:nil];
+    [self addSubview:[nib objectAtIndex:0]];
+}
+
+-(void)willRemoveSubview:(UIView *)subview
+{
+    self.mycollectionview.hidden=FALSE;
+    NSMutableArray *selectedGropupArray=[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedDesig"];
+    //NSMutableArray *selectedGroupIdArray=[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedGroupsID"];
+    [self.grouparray removeAllObjects];
+    //[self.groupIDArray removeAllObjects];
+    [self.grouparray addObjectsFromArray:selectedGropupArray];
+    //[self.groupIDArray addObjectsFromArray:selectedGroupIdArray];
+    [self.mycollectionview reloadData];
+}
+-(IBAction)removegroupfromcollectionview:(id)sender
+{
+    groupcollceioncellclass *clickedCell = (groupcollceioncellclass *)[[sender superview] superview];
+    indexpath = [self.mycollectionview indexPathForCell:clickedCell];
+    [self.grouparray removeObjectAtIndex:indexpath.row];
+    [self.mycollectionview reloadData];
+}
+
+-(IBAction)tabButtonAction:(id)sender{
+    UIButton *button=(UIButton *)sender;
+    if (button.tag==1) {
+        
+        
+        if ([self.currentTab isEqualToString:@"Offday"]) {
+            if ((self.offdayDailyLimitText.text.length >0) && (self.offdayPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self regulardayAction];
+                
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        
+        if ([self.currentTab isEqualToString:@"Partialday"]) {
+            if ((self.partialDailyLimitText.text.length >0) && (self.partialPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self regulardayAction];
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        
+        
+        if ([self.currentTab isEqualToString:@"Holiday"]) {
+            if ((self.holidayDailyLimitText.text.length >0) && (self.holidayPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self regulardayAction];
+                
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        if ([self.currentTab isEqualToString:@"Specificday"]) {
+            [self regulardayAction];
+        }
+        
+        
+
+        
+    }
+    else if (button.tag==2)
+    {
+        if ([self.currentTab isEqualToString:@"Regular"]) {
+            if ((self.regularDailyLimitText.text.length >0) && (self.regularPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                if ([self.regularCheckButton1.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                    [self offdayRegularView];
+                }
+                
+                [self offdayAction];
+                
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        
+        if ([self.currentTab isEqualToString:@"Partialday"]) {
+            if ((self.partialDailyLimitText.text.length >0) && (self.partialPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+               
+                if ([self.regularCheckButton1.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                    [self offdayRegularView];
+                }
+                [self offdayAction];
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        
+        
+        if ([self.currentTab isEqualToString:@"Holiday"]) {
+            if ((self.holidayDailyLimitText.text.length >0) && (self.holidayPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                if ([self.regularCheckButton1.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                    [self offdayRegularView];
+                }
+                [self offdayAction];
+                
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+
+        if ([self.currentTab isEqualToString:@"Specificday"]) {
+            [self offdayAction];
+            [self offdayRegularView];
+            
+            if ([self.regularCheckButton1.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                [self offdayRegularView];
+            }
+        }
+        
+        
+        
+    }
+    else if (button.tag==3)
+    {
+        if ([self.currentTab isEqualToString:@"Offday"]) {
+            if ((self.offdayDailyLimitText.text.length >0) && (self.offdayPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self partialdayAction];
+                if ([self.regularCheckButton2.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                    [self partialdayRegularView];
+                };
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        
+        if ([self.currentTab isEqualToString:@"Regular"]) {
+            if ((self.regularDailyLimitText.text.length >0) && (self.regularPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self partialdayAction];
+                
+                if ([self.regularCheckButton2.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                    [self partialdayRegularView];
+                };
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        
+        
+        if ([self.currentTab isEqualToString:@"Holiday"]) {
+            if ((self.holidayDailyLimitText.text.length >0) && (self.holidayPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self partialdayAction];
+               
+                if ([self.regularCheckButton2.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                    [self partialdayRegularView];
+                };
+                
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        if ([self.currentTab isEqualToString:@"Specificday"]) {
+            [self partialdayAction];
+            
+            if ([self.regularCheckButton2.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                [self partialdayRegularView];
+            };
+        }
+
+        
+    }
+    else if (button.tag==4)
+    {
+        if ([self.currentTab isEqualToString:@"Offday"]) {
+            if ((self.offdayDailyLimitText.text.length >0) && (self.offdayPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self holidayAction];
+                if ([self.regularCheckButton3.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                    [self holidayRegularView];
+                };
+                
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        
+        if ([self.currentTab isEqualToString:@"Regular"]) {
+            if ((self.regularDailyLimitText.text.length >0) && (self.regularPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self holidayAction];
+                if ([self.regularCheckButton3.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                    [self holidayRegularView];
+                };
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        
+        
+        if ([self.currentTab isEqualToString:@"Partialday"]) {
+            if ((self.partialDailyLimitText.text.length >0) && (self.partialPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self holidayAction];
+                if ([self.regularCheckButton3.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                    [self holidayRegularView];
+                };
+                
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+
+        if ([self.currentTab isEqualToString:@"Specificday"]) {
+            [self holidayAction];
+            if ([self.regularCheckButton3.currentImage isEqual:[UIImage imageNamed:@"check_box.png32.png"]]) {
+                [self holidayRegularView];
+            };
+        }
+        
+    }
+    else
+    {
+        self.dropTableFlag=0;
+        if ([self.currentTab isEqualToString:@"Offday"]) {
+            if ((self.offdayDailyLimitText.text.length >0) && (self.offdayPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self specificdayAction];
+                
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        
+        if ([self.currentTab isEqualToString:@"Regular"]) {
+            if ((self.regularDailyLimitText.text.length >0) && (self.regularPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self specificdayAction];
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        
+        
+        
+        if ([self.currentTab isEqualToString:@"Partialday"]) {
+            if ((self.partialDailyLimitText.text.length >0) && (self.partialPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self specificdayAction];
+                
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+        if ([self.currentTab isEqualToString:@"Holiday"]) {
+            if ((self.holidayDailyLimitText.text.length >0) && (self.holidayPayOTText1.text.length >0) && (self.selectedFlag==0) && (self.selectedFlag1==0)) {
+                
+                [self specificdayAction];
+                
+            }
+            else
+            {
+                [self alertAction];
+            }
+        }
+
+        
+        
+    }
+}
+-(IBAction)doneButtonAction:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"enableCollectionView" object:Nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"enabletable" object:Nil];
+    [self removeFromSuperview];
+}
+-(IBAction)cancelButtonAction:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"enableCollectionView" object:Nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"enabletable" object:Nil];
+    [self removeFromSuperview];
+}
+
+-(IBAction)doneTimerAction:(id)sender
+{
+    NSDate *myDate = self.datePicker.date;
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"HH :mm"];
+    NSString *prettyVersion = [dateFormat stringFromDate:myDate];
+    NSArray *timeArray=[prettyVersion componentsSeparatedByString:@":"];
+    NSString *selectedTime=[NSString stringWithFormat:@" %@Hrs %@ Mins",[timeArray objectAtIndex:0],[timeArray objectAtIndex:1]];
+    if (self.flag==1) {
+        self.regularDailyLimitText.text=selectedTime;
+        self.regularPayOTText1.backgroundColor=[UIColor clearColor];
+        self.regularPayOTText1.userInteractionEnabled=true;
+    }
+    if (self.flag==3) {
+        self.regularAfterText1.text=selectedTime;
+        self.regularMandatoryLabel1.hidden=false;
+        self.regularPayOTText2.backgroundColor=[UIColor clearColor];
+        self.regularPayOTText2.userInteractionEnabled=true;
+        self.selectedFlag=1;
+    }
+    if (self.flag==4) {
+        self.regularAfterText2.text=selectedTime;
+        self.regularMandatoryLabel2.hidden=false;
+        self.regularPayOTText3.backgroundColor=[UIColor clearColor];
+        self.regularPayOTText3.userInteractionEnabled=true;
+        self.selectedFlag1=1;
+    }
+    if (self.flag==5) {
+        self.offDayFirstText.text=selectedTime;
+        self.offdayPayOTText1.backgroundColor=[UIColor clearColor];
+        self.offdayPayOTText1.userInteractionEnabled=true;
+    }
+    if (self.flag==6) {
+        self.offdayDailyLimitText.text=selectedTime;
+        self.offDayFirstText.backgroundColor=[UIColor clearColor];
+        self.offDayFirstText.userInteractionEnabled=true;
+        self.offdayPayOTText1.backgroundColor=[UIColor clearColor];
+        self.offdayPayOTText1.userInteractionEnabled=true;
+
+    }
+    if (self.flag==7) {
+        self.offdayAfterText1.text=selectedTime;
+        self.selectedFlag=1;
+        self.offdayPayOTText2.backgroundColor=[UIColor clearColor];
+        self.offdayPayOTText2.userInteractionEnabled=true;
+        self.offdayMandatoryLabel1.hidden=false;
+        
+    }
+    if (self.flag==8) {
+        self.offdayAfterText2.text=selectedTime;
+        self.selectedFlag1=1;
+        self.offdayPayOTText3.backgroundColor=[UIColor clearColor];
+        self.offdayPayOTText3.userInteractionEnabled=true;
+        self.offdayMandatoryLabel2.hidden=false;
+    }
+    if (self.flag==9) {
+        self.partialDailyLimitText.text=selectedTime;
+        self.partialFirstText.backgroundColor=[UIColor clearColor];
+        self.partialFirstText.userInteractionEnabled=true;
+        self.partialPayOTText1.backgroundColor=[UIColor clearColor];
+        self.partialPayOTText1.userInteractionEnabled=true;
+    }
+    if (self.flag==10) {
+        self.partialFirstText.text=selectedTime;
+        self.partialPayOTText1.backgroundColor=[UIColor clearColor];
+        self.partialPayOTText1.userInteractionEnabled=true;
+    }
+    if (self.flag==11) {
+        self.partialAfterText1.text=selectedTime;
+        self.selectedFlag=1;
+        self.partialPayOTText2.backgroundColor=[UIColor clearColor];
+        self.partialPayOTText2.userInteractionEnabled=true;
+        self.partialMandatoryLabel1.hidden=false;
+    }
+    if (self.flag==12) {
+        self.partialAfterText2.text=selectedTime;
+        self.selectedFlag1=1;
+        self.partialPayOTText3.backgroundColor=[UIColor clearColor];
+        self.partialPayOTText3.userInteractionEnabled=true;
+        self.partialMandatoryLabel2.hidden=false;
+        
+    }
+    if (self.flag==13) {
+        self.holidayDailyLimitText.text=selectedTime;
+        self.holidayFirstText.backgroundColor=[UIColor clearColor];
+        self.holidayFirstText.userInteractionEnabled=true;
+        self.holidayPayOTText1.backgroundColor=[UIColor clearColor];
+        self.holidayPayOTText1.userInteractionEnabled=true;
+
+        
+    }
+    if (self.flag==14) {
+        self.holidayFirstText.text=selectedTime;
+        self.holidayPayOTText1.backgroundColor=[UIColor clearColor];
+        self.holidayPayOTText1.userInteractionEnabled=true;
+    }
+    if (self.flag==15) {
+        self.holidayAfterText1.text=selectedTime;
+        self.selectedFlag=1;
+        self.holidayPayOTText2.backgroundColor=[UIColor clearColor];
+        self.holidayPayOTText2.userInteractionEnabled=true;
+        self.holidayMandatoryLabel1.hidden=false;
+        
+    }
+    if (self.flag==16) {
+        self.holidayAfterText2.text=selectedTime;
+        self.selectedFlag1=1;
+        self.holidayPayOTText3.backgroundColor=[UIColor clearColor];
+        self.holidayPayOTText3.userInteractionEnabled=true;
+        self.holidayMandatoryLabel2.hidden=false;
+    }
+    if (self.flag==17) {
+        self.weeklyDailyLimitText.text=selectedTime;
+        
+        self.weeklyAfterText1.backgroundColor=[UIColor clearColor];
+        self.weeklyAfterText1.userInteractionEnabled=true;
+        
+    }
+    self.datePickerView.hidden=TRUE;
+}
+
+
+
+-(IBAction)regularCheckButtonAction:(id)sender
+{
+    if (self.regularDailyLimitText.text.length > 0) {
+        UIButton *button=(UIButton *)sender;
+        if (button.tag==1) {
+            if (x%2==0) {
+                [self.regularCheckButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                [self resetOffdayDailyLimit];
+                self.offdayDailyLimitText.backgroundColor=[UIColor whiteColor];
+                self.offdayDailyLimitText.text=@"";
+                self.offdayAfterText1.text=@"";
+                self.offdayAfterText2.text=@"";
+                self.offdayPayOTText1.text=@"";
+                self.offdayPayOTText2.text =@"";
+                self.offdayPayOTText3.text=@"";
+                
+                self.offdayDailyLimitText.userInteractionEnabled=YES;
+                self.offdayAfterText1.userInteractionEnabled=YES;
+                self.offdayAfterText2.userInteractionEnabled=YES;
+                self.offdayPayOTText1.userInteractionEnabled=YES;
+                self.offdayPayOTText2.userInteractionEnabled=YES;
+                self.offdayPayOTText3.userInteractionEnabled=YES;
+                self.dropButton1.userInteractionEnabled=YES;
+                self.x++;
+
+            }
+            else
+            {
+                
+                [self offdayRegularView];
+                
+                
+                self.x++;
+
+                
+                
+            }
+            
+            
+            
+        }
+        else if (button.tag==2)
+        {
+            if (y%2==0) {
+                
+                [self.regularCheckButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                [self resetPartialDialyLimit];
+                self.partialDailyLimitText.backgroundColor=[UIColor whiteColor];
+                self.partialDailyLimitText.text=@"";
+                self.partialAfterText1.text=@"";
+                self.partialAfterText2.text=@"";
+                self.partialPayOTText1.text=@"";
+                self.partialPayOTText2.text =@"";
+                self.partialPayOTText3.text=@"";
+                
+                self.partialDailyLimitText.userInteractionEnabled=YES;
+                self.partialAfterText1.userInteractionEnabled=YES;
+                self.partialAfterText2.userInteractionEnabled=YES;
+                self.partialPayOTText1.userInteractionEnabled=YES;
+                self.partialPayOTText2.userInteractionEnabled=YES;
+                self.partialPayOTText3.userInteractionEnabled=YES;
+                self.dropButton2.userInteractionEnabled=YES;
+                self.y++;
+                
+            }
+            else
+            {
+                [self partialdayRegularView];
+                 y++;
+                
+            }
+        }
+        else if (button.tag==3)
+        {
+            if (z%2==0) {
+                [self.regularCheckButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                [self resetHolidayDialyLimit];
+                self.holidayDailyLimitText.backgroundColor=[UIColor clearColor];
+                self.holidayDailyLimitText.text=@"";
+                self.holidayAfterText1.text=@"";
+                self.holidayAfterText2.text=@"";
+                self.holidayPayOTText1.text=@"";
+                self.holidayPayOTText2.text =@"";
+                self.holidayPayOTText3.text=@"";
+                
+                self.holidayDailyLimitText.userInteractionEnabled=YES;
+                self.holidayAfterText1.userInteractionEnabled=YES;
+                self.holidayAfterText2.userInteractionEnabled=YES;
+                self.holidayPayOTText1.userInteractionEnabled=YES;
+                self.holidayPayOTText2.userInteractionEnabled=YES;
+                self.holidayPayOTText3.userInteractionEnabled=YES;
+                self.dropButton3.userInteractionEnabled=YES;
+                self.z++;
+
+
+            }
+            else
+            {
+                [self holidayRegularView];
+                z++;
+                
+                
+            }
+        }
+
+    }
+    else
+    {
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Warning"
+                                   message:@"You must fill Regular Days to Continue"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action){
+                                                       //Do Some action here
+                                                   }];
+        [alert addAction:ok];
+       
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [(settingsViewController *)[self.superview.superview.superview.superview nextResponder] presentViewController:alert animated:YES completion:nil];
+        });
+
+    }
+}
+-(IBAction)dropButtonAction:(id)sender
+{
+    UIButton *button=(UIButton *)sender;
+    if (button.tag==1) {
+        dropFlag=1;
+        self.dropTableView.hidden=false;
+    }
+    else if (button.tag==2)
+    {
+        dropFlag=2;
+        self.dropTableView.hidden=false;
+    }
+    else if (button.tag==3)
+    {
+        dropFlag=3;
+        self.dropTableView.hidden=false;
+    }
+    
+}
+
+
+
+
+- (void) keyboardDidShow:(NSNotification *)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    kbRect = [self convertRect:kbRect fromView:nil];
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbRect.size.height, 0.0);
+
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    
+    CGRect aRect = self.frame;
+    aRect.size.height -= kbRect.size.height;
+    
+    if (!CGRectContainsPoint(aRect, self.activeField.frame.origin)) {
+        
+        [self.scrollView scrollRectToVisible:self.activeField.frame animated:YES];
+        
+    }
+    
+}
+
+
+
+
+
+- (void) keyboardWillBeHidden:(NSNotification *)notification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+}
+
+
+-(void)resetRegularDailyLimit
+{
+    self.regularDailyLimitText.text=@"";
+    self.regularPayOTText1.text=@"";
+    self.regularPayOTText1.userInteractionEnabled=false;
+    self.regularPayOTText1.backgroundColor=[UIColor lightGrayColor];
+    self.regularAfterText1.text=@"";
+    self.regularAfterText1.userInteractionEnabled=false;
+    self.regularAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.regularPayOTText2.text=@"";
+    self.regularPayOTText2.userInteractionEnabled=false;
+    self.regularPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.regularAfterText2.text=@"";
+    self.regularAfterText2.userInteractionEnabled=false;
+    self.regularAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.regularPayOTText3.text=@"";
+    self.regularPayOTText3.userInteractionEnabled=false;
+    self.regularPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.regularMandatoryLabel1.hidden=true;
+    self.regularMandatoryLabel2.hidden=true;
+    
+}
+-(void)resetRegularAfter1
+{
+    self.regularAfterText1.text=@"";
+    self.regularPayOTText2.text=@"";
+    self.regularPayOTText2.userInteractionEnabled=false;
+    self.regularPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.regularAfterText2.text=@"";
+    self.regularAfterText2.userInteractionEnabled=false;
+    self.regularAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.regularPayOTText3.text=@"";
+    self.regularPayOTText3.userInteractionEnabled=false;
+    self.regularPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.regularMandatoryLabel1.hidden=true;
+    self.regularMandatoryLabel2.hidden=true;
+}
+-(void)resetRegularAfter2
+{
+    self.regularAfterText2.text=@"";
+    self.regularPayOTText3.text=@"";
+    self.regularPayOTText3.userInteractionEnabled=false;
+    self.regularPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.regularMandatoryLabel2.hidden=true;
+}
+-(void)resetOffdayDailyLimit
+{
+    self.offdayDailyLimitText.text=@"";
+    self.offDayFirstText.text=@"";
+    self.offDayFirstText.backgroundColor=[UIColor lightGrayColor];
+    self.offDayFirstText.userInteractionEnabled=NO;
+    self.offdayPayOTText1.text=@"";
+    self.offdayPayOTText1.userInteractionEnabled=false;
+    self.offdayPayOTText1.backgroundColor=[UIColor lightGrayColor];
+    self.offdayAfterText1.text=@"";
+    self.offdayAfterText1.userInteractionEnabled=false;
+    self.offdayAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.offdayPayOTText2.text=@"";
+    self.offdayPayOTText2.userInteractionEnabled=false;
+    self.offdayPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.offdayAfterText2.text=@"";
+    self.offdayAfterText2.userInteractionEnabled=false;
+    self.offdayAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.offdayPayOTText3.text=@"";
+    self.offdayPayOTText3.userInteractionEnabled=false;
+    self.offdayPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.offdayMandatoryLabel1.hidden=true;
+    self.offdayMandatoryLabel2.hidden=true;
+    
+}
+-(void)resetOffdayFirstText
+{
+    self.offDayFirstText.text=@"";
+    self.offdayPayOTText1.text=@"";
+    self.offdayAfterText1.text=@"";
+    self.offdayAfterText1.userInteractionEnabled=false;
+    self.offdayAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.offdayPayOTText2.text=@"";
+    self.offdayPayOTText2.userInteractionEnabled=false;
+    self.offdayPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.offdayAfterText2.text=@"";
+    self.offdayAfterText2.userInteractionEnabled=false;
+    self.offdayAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.offdayPayOTText3.text=@"";
+    self.offdayPayOTText3.userInteractionEnabled=false;
+    self.offdayPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.offdayMandatoryLabel1.hidden=true;
+    self.offdayMandatoryLabel2.hidden=true;
+}
+-(void)resetOffdayAfter1
+{
+    self.offdayAfterText1.text=@"";
+    self.offdayPayOTText2.text=@"";
+    self.offdayPayOTText2.userInteractionEnabled=false;
+    self.offdayPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.offdayAfterText2.text=@"";
+    self.offdayAfterText2.userInteractionEnabled=false;
+    self.offdayAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.offdayPayOTText3.text=@"";
+    self.offdayPayOTText3.userInteractionEnabled=false;
+    self.offdayPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.offdayMandatoryLabel1.hidden=true;
+    self.offdayMandatoryLabel2.hidden=true;
+}
+-(void)resetOffdayAfter2
+{
+    self.offdayAfterText2.text=@"";
+    self.offdayPayOTText3.text=@"";
+    self.offdayPayOTText3.userInteractionEnabled=false;
+    self.offdayPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.offdayMandatoryLabel2.hidden=true;
+}
+-(void)resetPartialDialyLimit
+{
+    self.partialDailyLimitText.text=@"";
+    self.partialFirstText.text=@"";
+    self.partialFirstText.backgroundColor=[UIColor lightGrayColor];
+    self.partialFirstText.userInteractionEnabled=NO;
+    self.partialPayOTText1.text=@"";
+    self.partialPayOTText1.userInteractionEnabled=false;
+    self.partialPayOTText1.backgroundColor=[UIColor lightGrayColor];
+    self.partialAfterText1.text=@"";
+    self.partialAfterText1.userInteractionEnabled=false;
+    self.partialAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.partialPayOTText2.text=@"";
+    self.partialPayOTText2.userInteractionEnabled=false;
+    self.partialPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.partialAfterText2.text=@"";
+    self.partialAfterText2.userInteractionEnabled=false;
+    self.partialAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.partialPayOTText3.text=@"";
+    self.partialPayOTText3.userInteractionEnabled=false;
+    self.partialPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.partialMandatoryLabel1.hidden=true;
+    self.partialMandatoryLabel2.hidden=true;
+
+}
+-(void)resetPartialFirstText
+{
+    self.partialFirstText.text=@"";
+    self.partialPayOTText1.text=@"";
+    self.partialAfterText1.text=@"";
+    self.partialAfterText1.userInteractionEnabled=false;
+    self.partialAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.partialPayOTText2.text=@"";
+    self.partialPayOTText2.userInteractionEnabled=false;
+    self.partialPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.partialAfterText2.text=@"";
+    self.partialAfterText2.userInteractionEnabled=false;
+    self.partialAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.partialPayOTText3.text=@"";
+    self.partialPayOTText3.userInteractionEnabled=false;
+    self.partialPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.partialMandatoryLabel1.hidden=true;
+    self.partialMandatoryLabel2.hidden=true;
+}
+-(void)resetPartialAfter1
+{
+    self.partialAfterText1.text=@"";
+    self.partialPayOTText2.text=@"";
+    self.partialPayOTText2.userInteractionEnabled=false;
+    self.partialPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.partialAfterText2.text=@"";
+    self.partialAfterText2.userInteractionEnabled=false;
+    self.partialAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.partialPayOTText3.text=@"";
+    self.partialPayOTText3.userInteractionEnabled=false;
+    self.partialPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.partialMandatoryLabel1.hidden=true;
+    self.partialMandatoryLabel2.hidden=true;
+}
+-(void)resetPartialAfter2
+{
+    self.partialAfterText2.text=@"";
+    self.partialPayOTText3.text=@"";
+    self.partialPayOTText3.userInteractionEnabled=false;
+    self.partialPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.partialMandatoryLabel2.hidden=true;
+}
+-(void)resetHolidayDialyLimit
+{
+    self.holidayDailyLimitText.text=@"";
+    self.holidayFirstText.text=@"";
+    self.holidayFirstText.backgroundColor=[UIColor lightGrayColor];
+    self.holidayFirstText.userInteractionEnabled=NO;
+    self.holidayPayOTText1.text=@"";
+    self.holidayPayOTText1.userInteractionEnabled=false;
+    self.holidayPayOTText1.backgroundColor=[UIColor lightGrayColor];
+    self.holidayAfterText1.text=@"";
+    self.holidayAfterText1.userInteractionEnabled=false;
+    self.holidayAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.holidayPayOTText2.text=@"";
+    self.holidayPayOTText2.userInteractionEnabled=false;
+    self.holidayPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.holidayAfterText2.text=@"";
+    self.holidayAfterText2.userInteractionEnabled=false;
+    self.holidayAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.holidayPayOTText3.text=@"";
+    self.holidayPayOTText3.userInteractionEnabled=false;
+    self.holidayPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.holidayMandatoryLabel1.hidden=true;
+    
+    self.holidayMandatoryLabel2.hidden=true;
+    
+}
+-(void)resetHolidayFirstText
+{
+    self.holidayFirstText.text=@"";
+    self.holidayPayOTText1.text=@"";
+    self.holidayAfterText1.text=@"";
+    self.holidayAfterText1.userInteractionEnabled=false;
+    self.holidayAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.holidayPayOTText2.text=@"";
+    self.holidayPayOTText2.userInteractionEnabled=false;
+    self.holidayPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.holidayAfterText2.text=@"";
+    self.holidayAfterText2.userInteractionEnabled=false;
+    self.holidayAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.holidayPayOTText3.text=@"";
+    self.holidayPayOTText3.userInteractionEnabled=false;
+    self.holidayPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.holidayMandatoryLabel1.hidden=true;
+    self.holidayMandatoryLabel2.hidden=true;
+}
+-(void)resetHolidayAfter1
+{
+    self.holidayAfterText1.text=@"";
+    self.holidayPayOTText2.text=@"";
+    self.holidayPayOTText2.userInteractionEnabled=false;
+    self.holidayPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.holidayAfterText2.text=@"";
+    self.holidayAfterText2.userInteractionEnabled=false;
+    self.holidayAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.holidayPayOTText3.text=@"";
+    self.holidayPayOTText3.userInteractionEnabled=false;
+    self.holidayPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.holidayMandatoryLabel1.hidden=true;
+    self.holidayMandatoryLabel2.hidden=true;
+}
+-(void)resetHolidayAfter2
+{
+    self.holidayAfterText2.text=@"";
+    self.holidayPayOTText3.text=@"";
+    self.holidayPayOTText3.userInteractionEnabled=false;
+    self.holidayPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.holidayMandatoryLabel2.hidden=true;
+}
+
+-(void)resetWeeklyDailyLimit
+{
+    self.weeklyDailyLimitText.text=@"";
+    self.weeklyAfterText1.text=@"";
+    self.weeklyAfterText1.userInteractionEnabled=FALSE;
+    self.weeklyAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.weeklyPayOTText1.text=@"";
+    self.weeklyPayOTText1.userInteractionEnabled=FALSE;
+    self.weeklyPayOTText1.backgroundColor=[UIColor lightGrayColor];
+    
+   
+    
+    self.weeklyMandatoryLabel1.hidden=true;
+}
+-(void)resetWeeklyAfter1
+{
+    self.weeklyAfterText1.text=@"";
+    self.weeklyPayOTText1.text=@"";
+    self.weeklyPayOTText1.userInteractionEnabled=FALSE;
+    self.weeklyPayOTText1.backgroundColor=[UIColor lightGrayColor];
+    self.weeklyMandatoryLabel1.hidden=true;
+}
+
+-(void)resetDay1
+{
+    self.specificDay1Text.text=@"";
+    
+    self.specificCondition1Text.text=@"";
+    self.specificCondition1Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificCondition1Text.userInteractionEnabled=NO;
+    
+    self.specificFromTime1Text.text=@"";
+    self.specificFromTime1Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificFromTime1Text.userInteractionEnabled=NO;
+    
+    self.specificToTime1Text.text=@"";
+    self.specificToTime1Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificToTime1Text.userInteractionEnabled=NO;
+    
+    self.specificPayOT1Text.text=@"";
+    self.specificPayOT1Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificPayOT1Text.userInteractionEnabled=NO;
+    
+    [self.dayArray removeAllObjects];
+    [self.dayArray addObjectsFromArray:self.dummyDayArray];
+    self.secondView.hidden=true;
+    self.thirdView.hidden=true;
+    self.fourthView.hidden=true;
+    self.fifthView.hidden=true;
+    self.sixthView.hidden=true;
+    self.seventhView.hidden=true;
+    
+}
+-(void)resetDay2
+{
+    self.specificDay2Text.text=@"";
+    
+    self.specificCondition2Text.text=@"";
+    self.specificCondition2Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificCondition2Text.userInteractionEnabled=NO;
+    
+    self.specificFromTime2Text.text=@"";
+    self.specificFromTime2Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificFromTime2Text.userInteractionEnabled=NO;
+    
+    self.specificToTime2Text.text=@"";
+    self.specificToTime2Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificToTime2Text.userInteractionEnabled=NO;
+    
+    self.specificPayOT2Text.text=@"";
+    self.specificPayOT2Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificPayOT2Text.userInteractionEnabled=NO;
+    
+    
+    [self.dayArray removeAllObjects];
+    [self.dayArray addObjectsFromArray:self.dummyDayArray];
+    [self.dayArray removeObject:self.specificDay1Text.text];
+    
+    self.thirdView.hidden=true;
+    self.fourthView.hidden=true;
+    self.fifthView.hidden=true;
+    self.sixthView.hidden=true;
+    self.seventhView.hidden=true;
+    
+}
+-(void)resetDay3
+{
+    self.specificDay3Text.text=@"";
+    
+    self.specificCondition3Text.text=@"";
+    self.specificCondition3Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificCondition3Text.userInteractionEnabled=NO;
+    
+    self.specificFromTime3Text.text=@"";
+    self.specificFromTime3Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificFromTime3Text.userInteractionEnabled=NO;
+    
+    self.specificToTime3Text.text=@"";
+    self.specificToTime3Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificToTime3Text.userInteractionEnabled=NO;
+    
+    self.specificPayOT3Text.text=@"";
+    self.specificPayOT3Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificPayOT3Text.userInteractionEnabled=NO;
+    
+    [self.dayArray removeAllObjects];
+    [self.dayArray addObjectsFromArray:self.dummyDayArray];
+    [self.dayArray removeObject:self.specificDay1Text.text];
+    [self.dayArray removeObject:self.specificDay2Text.text];
+    
+    self.fourthView.hidden=true;
+    self.fifthView.hidden=true;
+    self.sixthView.hidden=true;
+    self.seventhView.hidden=true;
+
+    
+}
+-(void)resetDay4
+{
+    self.specificDay4Text.text=@"";
+    
+    self.specificCondition4Text.text=@"";
+    self.specificCondition4Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificCondition4Text.userInteractionEnabled=NO;
+    
+    self.specificFromTime4Text.text=@"";
+    self.specificFromTime4Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificFromTime4Text.userInteractionEnabled=NO;
+    
+    self.specificToTime4Text.text=@"";
+    self.specificToTime4Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificToTime4Text.userInteractionEnabled=NO;
+    
+    self.specificPayOT4Text.text=@"";
+    self.specificPayOT4Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificPayOT4Text.userInteractionEnabled=NO;
+    
+    [self.dayArray removeAllObjects];
+    [self.dayArray addObjectsFromArray:self.dummyDayArray];
+    [self.dayArray removeObject:self.specificDay1Text.text];
+    [self.dayArray removeObject:self.specificDay2Text.text];
+    [self.dayArray removeObject:self.specificDay3Text.text];
+    
+    self.fifthView.hidden=true;
+    self.sixthView.hidden=true;
+    self.seventhView.hidden=true;
+}
+-(void)resetDay5
+{
+    self.specificDay5Text.text=@"";
+    
+    self.specificCondition5Text.text=@"";
+    self.specificCondition5Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificCondition5Text.userInteractionEnabled=NO;
+    
+    self.specificFromTime5Text.text=@"";
+    self.specificFromTime5Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificFromTime5Text.userInteractionEnabled=NO;
+    
+    self.specificToTime5Text.text=@"";
+    self.specificToTime5Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificToTime5Text.userInteractionEnabled=NO;
+    
+    self.specificPayOT5Text.text=@"";
+    self.specificPayOT5Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificPayOT5Text.userInteractionEnabled=NO;
+    
+    
+    [self.dayArray removeAllObjects];
+    [self.dayArray addObjectsFromArray:self.dummyDayArray];
+    [self.dayArray removeObject:self.specificDay1Text.text];
+    [self.dayArray removeObject:self.specificDay2Text.text];
+    [self.dayArray removeObject:self.specificDay3Text.text];
+    [self.dayArray removeObject:self.specificDay4Text.text];
+    
+    self.sixthView.hidden=true;
+    self.seventhView.hidden=true;
+}
+-(void)resetDay6
+{
+    self.specificDay6Text.text=@"";
+    
+    self.specificCondition6Text.text=@"";
+    self.specificCondition6Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificCondition6Text.userInteractionEnabled=NO;
+    
+    self.specificFromTime6Text.text=@"";
+    self.specificFromTime6Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificFromTime6Text.userInteractionEnabled=NO;
+    
+    self.specificToTime6Text.text=@"";
+    self.specificToTime6Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificToTime6Text.userInteractionEnabled=NO;
+    
+    self.specificPayOT6Text.text=@"";
+    self.specificPayOT6Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificPayOT6Text.userInteractionEnabled=NO;
+    
+    [self.dayArray removeAllObjects];
+    [self.dayArray addObjectsFromArray:self.dummyDayArray];
+    [self.dayArray removeObject:self.specificDay1Text.text];
+    [self.dayArray removeObject:self.specificDay2Text.text];
+    [self.dayArray removeObject:self.specificDay3Text.text];
+    [self.dayArray removeObject:self.specificDay4Text.text];
+    [self.dayArray removeObject:self.specificDay5Text.text];
+    
+    self.seventhView.hidden=true;
+}
+-(void)resetDay7
+{
+    self.specificDay7Text.text=@"";
+    
+    self.specificCondition7Text.text=@"";
+    self.specificCondition7Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificCondition7Text.userInteractionEnabled=NO;
+    
+    self.specificFromTime7Text.text=@"";
+    self.specificFromTime7Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificFromTime7Text.userInteractionEnabled=NO;
+    
+    self.specificToTime7Text.text=@"";
+    self.specificToTime7Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificToTime7Text.userInteractionEnabled=NO;
+    
+    self.specificPayOT7Text.text=@"";
+    self.specificPayOT7Text.backgroundColor=[UIColor lightGrayColor];
+    self.specificPayOT7Text.userInteractionEnabled=NO;
+    
+    [self.dayArray removeAllObjects];
+    [self.dayArray addObjectsFromArray:self.dummyDayArray];
+    [self.dayArray removeObject:self.specificDay1Text.text];
+    [self.dayArray removeObject:self.specificDay2Text.text];
+    [self.dayArray removeObject:self.specificDay3Text.text];
+    [self.dayArray removeObject:self.specificDay4Text.text];
+    [self.dayArray removeObject:self.specificDay5Text.text];
+    [self.dayArray removeObject:self.specificDay6Text.text];
+}
+-(void)datePickedIntialValueChanged
+{
+    NSDate *date4 = [NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: date4];
+    [components setHour: 0];
+    [components setMinute: 5];
+    NSDate *startDate = [gregorian dateFromComponents: components];
+        
+    [components setHour: 23];
+    [components setMinute: 55];
+    NSDate *endDate = [gregorian dateFromComponents: components];
+        
+    [self.datePicker setDatePickerMode:UIDatePickerModeCountDownTimer];
+    [self.datePicker setMinimumDate:startDate];
+    [self.datePicker setMaximumDate:endDate];
+    [self.datePicker setDate:startDate animated:YES];
+    [self.datePicker reloadInputViews];
+    
+}
+-(void)datePickedValueChanged:(id)sender
+{
+    if (self.flag==3)
+    {
+        
+        float totalSeconds=[timeObj timerGotValueChanged:self.regularDailyLimitText.text];
+        if (self.datePicker.countDownDuration > totalSeconds) { //5400 seconds = 1h30min
+            [self.datePicker setCountDownDuration: totalSeconds]; //Defaults to 1 minute
+            
+        }
+
+    }
+    else if (self.flag==4)
+    {
+        NSString *str=self.regularAfterText1.text;
+        NSString *str1=self.regularDailyLimitText.text;
+        
+        float totalSeconds= [timeObj timerGetRemainingValue:str :str1];
+        if (self.datePicker.countDownDuration > totalSeconds) { //5400 seconds = 1h30min
+            [self.datePicker setCountDownDuration: totalSeconds]; //Defaults to 1 minute
+            
+        }
+
+
+    }
+    else if ((self.flag==5) || (self.flag==7))
+    {
+        NSString *str=self.offdayDailyLimitText.text;
+
+        float totalSeconds=[timeObj timerGotValueChanged:str];
+        if (self.datePicker.countDownDuration > totalSeconds) { //5400 seconds = 1h30min
+            [self.datePicker setCountDownDuration: totalSeconds]; //Defaults to 1 minute
+            
+        }
+
+    }
+    else if (self.flag==8)
+    {
+        NSString *str=self.offdayAfterText1.text;
+        NSString *str1=self.offdayDailyLimitText.text;
+        float totalSeconds=[timeObj timerGetRemainingValue:str :str1];
+        if (self.datePicker.countDownDuration > totalSeconds) { //5400 seconds = 1h30min
+            [self.datePicker setCountDownDuration: totalSeconds]; //Defaults to 1 minute
+            
+        }
+
+    }
+    else if ((self.flag==10) || (self.flag==11))
+    {
+        NSString *str=self.partialDailyLimitText.text;
+        float totalSeconds=[timeObj timerGotValueChanged:str];
+        if (self.datePicker.countDownDuration > totalSeconds) { //5400 seconds = 1h30min
+            [self.datePicker setCountDownDuration: totalSeconds]; //Defaults to 1 minute
+            
+        }
+
+    }
+    else if (self.flag==12)
+    {
+        NSString *str=self.partialAfterText1.text;
+        NSString *str1=self.partialDailyLimitText.text;
+        float totalSeconds=[timeObj timerGetRemainingValue:str :str1];
+        if (self.datePicker.countDownDuration > totalSeconds) { //5400 seconds = 1h30min
+            [self.datePicker setCountDownDuration: totalSeconds]; //Defaults to 1 minute
+            
+        }
+
+    }
+    else if ((self.flag==14) || (self.flag==15))
+    {
+        NSString *str=self.holidayDailyLimitText.text;
+
+        float totalSeconds=[timeObj timerGotValueChanged:str];
+        if (self.datePicker.countDownDuration > totalSeconds) { //5400 seconds = 1h30min
+            [self.datePicker setCountDownDuration: totalSeconds]; //Defaults to 1 minute
+            
+        }
+
+    }
+    else if (self.flag==16)
+    {
+        NSString *str=self.holidayAfterText1.text;
+        NSString *str1=self.holidayDailyLimitText.text;
+        float totalSeconds=[timeObj timerGetRemainingValue:str :str1];
+        if (self.datePicker.countDownDuration > totalSeconds) { //5400 seconds = 1h30min
+            [self.datePicker setCountDownDuration: totalSeconds]; //Defaults to 1 minute
+            
+        }
+
+    }
+}
+-(void)regulardayAction
+{
+    self.currentTab=@"Regular";
+    self.regularButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.offdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.partialdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.holidayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.specificDayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    [self.regularButton setImage:[UIImage imageNamed:@"tab_1_active.png"] forState:UIControlStateNormal];
+    [self.offdayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.partialdayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.holidayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.specificDayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.contentScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+-(void)offdayAction
+{
+    self.currentTab=@"Offday";
+    self.offdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.regularButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.partialdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.holidayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.specificDayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    [self.offdayButton setImage:[UIImage imageNamed:@"tab_1_active.png"] forState:UIControlStateNormal];
+    [self.regularButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.partialdayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.holidayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.specificDayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.contentScrollView setContentOffset:CGPointMake(593, 0) animated:YES];
+}
+-(void)partialdayAction
+{
+    self.currentTab=@"Partialday";
+    self.partialdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.regularButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.offdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.holidayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.specificDayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    [self.partialdayButton setImage:[UIImage imageNamed:@"tab_1_active.png"] forState:UIControlStateNormal];
+    [self.regularButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.offdayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.holidayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.specificDayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.contentScrollView setContentOffset:CGPointMake(1186, 0) animated:YES];
+
+}
+-(void)holidayAction
+{
+    self.currentTab=@"Holiday";
+    self.holidayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.regularButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.offdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.partialdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.specificDayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    [self.holidayButton setImage:[UIImage imageNamed:@"tab_1_active.png"] forState:UIControlStateNormal];
+    [self.regularButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.offdayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.partialdayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.specificDayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.contentScrollView setContentOffset:CGPointMake(1779, 0) animated:YES];
+}
+-(void)specificdayAction
+{
+    self.currentTab=@"Specificday";
+    self.specificDayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.regularButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.offdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.partialdayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.holidayButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0);
+    [self.specificDayButton setImage:[UIImage imageNamed:@"tab_1_active.png"] forState:UIControlStateNormal];
+    [self.regularButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.offdayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.partialdayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.holidayButton setImage:[UIImage imageNamed:@"tab_1.png"] forState:UIControlStateNormal];
+    [self.contentScrollView setContentOffset:CGPointMake(2372, 0) animated:YES];
+    
+    [self resetDay1];
+    
+    self.secondView.hidden=true;
+    self.thirdView.hidden=true;
+    self.fourthView.hidden=true;
+    self.fifthView.hidden=true;
+    self.sixthView.hidden=true;
+    self.seventhView.hidden=true;
+}
+-(void)alertAction
+{
+    UIAlertController *alert= [UIAlertController
+                               alertControllerWithTitle:@"Warning"
+                               message:@"Please input all mandatory fields"
+                               preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                               handler:^(UIAlertAction * action){
+                                                   //Do Some action here
+                                               }];
+    [alert addAction:ok];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [(settingsViewController *)[self.superview.superview.superview.superview nextResponder] presentViewController:alert animated:YES completion:nil];
+    });
+    
+
+
+}
+
+-(void)offdayRegularView
+{
+    [self.regularCheckButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+    self.offdayDailyLimitText.text=self.regularDailyLimitText.text;
+    self.offdayAfterText1.text=self.regularAfterText1.text;
+    self.offdayAfterText2.text=self.regularAfterText2.text;
+    self.offdayPayOTText1.text=self.regularPayOTText1.text;
+    self.offdayPayOTText2.text = self.regularPayOTText2.text;
+    self.offdayPayOTText3.text=self.regularPayOTText3.text;
+    self.dropLabel1.text=@"After Standard Working Hours";
+    self.offDayFirstView.hidden=true;
+    self.offDayDropView.hidden=false;
+    self.offDaywholeView.hidden=false;
+    
+    
+    self.offdayDailyLimitText.backgroundColor=[UIColor lightGrayColor];
+    self.offdayDailyLimitText.userInteractionEnabled=NO;
+    
+    self.offDayFirstText.backgroundColor=[UIColor lightGrayColor];
+    self.offDayFirstText.userInteractionEnabled=NO;
+    self.offdayPayOTText1.userInteractionEnabled=false;
+    self.offdayPayOTText1.backgroundColor=[UIColor lightGrayColor];
+    self.offdayAfterText1.userInteractionEnabled=false;
+    self.offdayAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.offdayPayOTText2.userInteractionEnabled=false;
+    self.offdayPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.offdayAfterText2.userInteractionEnabled=false;
+    self.offdayAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.offdayPayOTText3.userInteractionEnabled=false;
+    self.offdayPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.dropButton1.userInteractionEnabled=NO;
+}
+-(void)partialdayRegularView
+{
+    [self.regularCheckButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+    
+    self.partialDailyLimitText.text=self.regularDailyLimitText.text;
+    self.partialAfterText1.text=self.regularAfterText1.text;
+    self.partialAfterText2.text=self.regularAfterText2.text;
+    self.partialPayOTText1.text=self.regularPayOTText1.text;
+    self.partialPayOTText2.text = self.regularPayOTText2.text;
+    self.partialPayOTText3.text=self.regularPayOTText3.text;
+    self.dropLabel2.text=@"After Standard Working Hours";
+    self.partialFirstView.hidden=true;
+    self.partialDropView.hidden=false;
+    self.partialWholeView.hidden=false;
+    
+    
+    self.partialDailyLimitText.backgroundColor=[UIColor lightGrayColor];
+    self.partialDailyLimitText.userInteractionEnabled=NO;
+    
+    self.partialFirstText.backgroundColor=[UIColor lightGrayColor];
+    self.partialFirstText.userInteractionEnabled=NO;
+    self.partialPayOTText1.userInteractionEnabled=false;
+    self.partialPayOTText1.backgroundColor=[UIColor lightGrayColor];
+    self.partialAfterText1.userInteractionEnabled=false;
+    self.partialAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.partialPayOTText2.userInteractionEnabled=false;
+    self.partialPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.partialAfterText2.userInteractionEnabled=false;
+    self.partialAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.partialPayOTText3.userInteractionEnabled=false;
+    self.partialPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.dropButton2.userInteractionEnabled=NO;
+
+   
+
+}
+
+-(void)holidayRegularView
+{
+    [self.regularCheckButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+    
+    self.holidayDailyLimitText.text=self.regularDailyLimitText.text;
+    self.holidayAfterText1.text=self.regularAfterText1.text;
+    self.holidayAfterText2.text=self.regularAfterText2.text;
+    self.holidayPayOTText1.text=self.regularPayOTText1.text;
+    self.holidayPayOTText2.text = self.regularPayOTText2.text;
+    self.holidayPayOTText3.text=self.regularPayOTText3.text;
+    self.dropLabel3.text=@"After Standard Working Hours";
+    self.holidayFirstView.hidden=true;
+    self.holidayDropView.hidden=false;
+    self.holidayWholeView.hidden=false;
+    
+    
+    self.holidayDailyLimitText.backgroundColor=[UIColor lightGrayColor];
+    self.holidayDailyLimitText.userInteractionEnabled=NO;
+    
+    self.holidayFirstText.backgroundColor=[UIColor lightGrayColor];
+    self.holidayFirstText.userInteractionEnabled=NO;
+    self.holidayPayOTText1.userInteractionEnabled=false;
+    self.holidayPayOTText1.backgroundColor=[UIColor lightGrayColor];
+    self.holidayAfterText1.userInteractionEnabled=false;
+    self.holidayAfterText1.backgroundColor=[UIColor lightGrayColor];
+    self.holidayPayOTText2.userInteractionEnabled=false;
+    self.holidayPayOTText2.backgroundColor=[UIColor lightGrayColor];
+    self.holidayAfterText2.userInteractionEnabled=false;
+    self.holidayAfterText2.backgroundColor=[UIColor lightGrayColor];
+    self.holidayPayOTText3.userInteractionEnabled=false;
+    self.holidayPayOTText3.backgroundColor=[UIColor lightGrayColor];
+    self.dropButton3.userInteractionEnabled=NO;
+}
+-(IBAction)weeklyCheckAction:(id)sender
+{
+    UIButton *button=(UIButton *)sender;
+    if (button.tag==1) {
+        if (p%2==0) {
+            [self.weeklyCheckButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            p++;
+        }
+        else
+        {
+            [self.weeklyCheckButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            p++;
+        }
+    }
+    if (button.tag==2) {
+        if (q%2==0) {
+            [self.weeklyCheckButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            q++;
+        }
+        else
+        {
+            [self.weeklyCheckButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            q++;
+        }
+    }
+
+    if (button.tag==3) {
+        if (r%2==0) {
+            [self.weeklyCheckButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            r++;
+        }
+        else
+        {
+            [self.weeklyCheckButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            r++;
+        }
+    }
+
+}
+
+-(IBAction)weeklyCheckAction1:(id)sender
+{
+    UIButton *button=(UIButton *)sender;
+    if (button.tag==1) {
+        if (i%2==0) {
+            [self.weeklyCheckButton4 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            i++;
+        }
+        else
+        {
+            [self.weeklyCheckButton4 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            i++;
+        }
+    }
+    if (button.tag==2) {
+        if (j%2==0) {
+            [self.weeklyCheckButton5 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            j++;
+        }
+        else
+        {
+            [self.weeklyCheckButton5 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            j++;
+        }
+    }
+    
+    if (button.tag==3) {
+        if (k%2==0) {
+            [self.weeklyCheckButton6 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            k++;
+        }
+        else
+        {
+            [self.weeklyCheckButton6 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            k++;
+        }
+    }
+    
+}
+
+-(IBAction)checkButtonAction:(id)sender
+{
+    UIButton *button=(UIButton *)sender;
+    if (button.tag==1) {
+        if (a%2==0) {
+            [self.checkButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            a++;
+        }
+        else
+        {
+            [self.checkButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            a++;
+        }
+    }
+    if (button.tag==2) {
+        if (b%2==0) {
+            [self.checkButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            b++;
+        }
+        else
+        {
+            [self.checkButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            b++;
+        }
+    }
+    
+    if (button.tag==3) {
+        if (c%2==0) {
+            [self.checkButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+            c++;
+        }
+        else
+        {
+            [self.checkButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+            c++;
+        }
+    }
+    
+}
+
+-(IBAction)timeAction:(id)sender
+{
+    NSDate *myDate = self.datePicker1.date;
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"hh:mm a"];
+    NSString *prettyVersion = [dateFormat stringFromDate:myDate];
+    if (timeFlag==1) {
+        self.specificFromTime1Text.text=prettyVersion;
+        self.specificFromTime1Text.text=prettyVersion;
+        self.specificToTime1Text.backgroundColor=[UIColor clearColor];
+        self.specificToTime1Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==2) {
+        self.specificToTime1Text.text=prettyVersion;
+        self.specificPayOT1Text.backgroundColor=[UIColor clearColor];
+        self.specificPayOT1Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==3) {
+        self.specificFromTime2Text.text=prettyVersion;
+        self.specificToTime2Text.backgroundColor=[UIColor clearColor];
+        self.specificToTime2Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==4) {
+        self.specificToTime2Text.text=prettyVersion;
+        self.specificPayOT2Text.backgroundColor=[UIColor clearColor];
+        self.specificPayOT2Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==5) {
+        self.specificFromTime3Text.text=prettyVersion;
+        self.specificToTime3Text.backgroundColor=[UIColor clearColor];
+        self.specificToTime3Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==6) {
+        self.specificToTime3Text.text=prettyVersion;
+        self.specificPayOT3Text.backgroundColor=[UIColor clearColor];
+        self.specificPayOT3Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==7) {
+        self.specificFromTime4Text.text=prettyVersion;
+        self.specificToTime4Text.backgroundColor=[UIColor clearColor];
+        self.specificToTime4Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==8) {
+        self.specificToTime4Text.text=prettyVersion;
+        self.specificPayOT4Text.backgroundColor=[UIColor clearColor];
+        self.specificPayOT4Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==9) {
+        self.specificFromTime5Text.text=prettyVersion;
+        self.specificToTime5Text.backgroundColor=[UIColor clearColor];
+        self.specificToTime5Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==10) {
+        self.specificToTime5Text.text=prettyVersion;
+        self.specificPayOT5Text.backgroundColor=[UIColor clearColor];
+        self.specificPayOT5Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==11) {
+        self.specificFromTime6Text.text=prettyVersion;
+        self.specificToTime6Text.backgroundColor=[UIColor clearColor];
+        self.specificToTime6Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==12) {
+        self.specificToTime6Text.text=prettyVersion;
+        self.specificPayOT6Text.backgroundColor=[UIColor clearColor];
+        self.specificPayOT6Text.userInteractionEnabled=YES;
+    }
+    
+    if (timeFlag==13) {
+        self.specificFromTime7Text.text=prettyVersion;
+        self.specificToTime7Text.backgroundColor=[UIColor clearColor];
+        self.specificToTime7Text.userInteractionEnabled=YES;
+    }
+    if (timeFlag==14) {
+        self.specificToTime7Text.text=prettyVersion;
+        self.specificPayOT7Text.backgroundColor=[UIColor clearColor];
+        self.specificPayOT7Text.userInteractionEnabled=YES;
+    }
+
+    self.datePicker1View.hidden=true;
+    
+}
+-(void)timeInitialSettings
+{
+
+    
+    NSMutableArray *timesArray=[[NSMutableArray alloc]init];
+    timesArray=[timeObj timeInitialSettings];
+    NSDate *startDate=[timesArray objectAtIndex:0];
+    NSDate *endDate=[timesArray objectAtIndex:1];
+    
+    [self.datePicker1 setDatePickerMode:UIDatePickerModeTime];
+    [self.datePicker1 setMinimumDate:startDate];
+    [self.datePicker1 setMaximumDate:endDate];
+    [self.datePicker1 setDate:startDate animated:YES];
+    [self.datePicker1 reloadInputViews];
+}
+-(void)timeMaxSettings:(NSString *)currentTime
+{
+    NSString *time=[timeObj timeMinimumValueSetting:currentTime];
+    NSArray *timeArray=[time componentsSeparatedByString:@"###"];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSIntegerMax fromDate:self.datePicker1.date];
+    [components setHour:[[timeArray objectAtIndex:0] integerValue]];
+    [components setMinute:[[timeArray objectAtIndex:1]integerValue]];
+    NSDate *date= [[NSCalendar currentCalendar] dateFromComponents:components];
+    self.datePicker1.minimumDate = date;
+}
+@end

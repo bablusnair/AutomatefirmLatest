@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Oxygen-Bold.ttf">
+            <string>Oxygen-Bold</string>
+        </mutableArray>
+        <mutableArray key="Oxygen-Regular.ttf">
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+            <string>Oxygen-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="107" id="5p6-q5-QVX" customClass="firstTableViewCellClass">
+            <rect key="frame" x="0.0" y="0.0" width="806" height="107"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5p6-q5-QVX" id="s6M-HC-ya9">
+                <rect key="frame" x="0.0" y="0.0" width="806" height="106"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="expense_table1.png" translatesAutoresizingMaskIntoConstraints="NO" id="93Z-2B-Xqo">
+                        <rect key="frame" x="0.0" y="0.0" width="806" height="98"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBp-wM-fa1">
+                        <rect key="frame" x="18" y="27" width="30" height="30"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Bold" family="Oxygen" pointSize="20"/>
+                        <color key="textColor" red="0.47843137254901963" green="0.51764705882352946" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Category" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bDx-41-cc4">
+                        <rect key="frame" x="68" y="24" width="104" height="21"/>
+                        <color key="textColor" red="0.47843137250000001" green="0.51764705879999995" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                        <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <action selector="categoryDropDown:" destination="-2" eventType="editingDidBegin" id="b0o-yP-Hm1"/>
+                            <outlet property="delegate" destination="5p6-q5-QVX" id="UcM-bS-JEf"/>
+                        </connections>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bxP-QL-Stg">
+                        <rect key="frame" x="182" y="24" width="246" height="21"/>
+                        <color key="textColor" red="0.47843137254901957" green="0.51764705882352935" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                        <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <action selector="descriptionBeginEditing:" destination="-2" eventType="editingDidBegin" id="EcE-ds-4ZO"/>
+                            <action selector="descriptionEndEditing:" destination="-2" eventType="editingDidEnd" id="lWj-CA-jEN"/>
+                            <outlet property="delegate" destination="5p6-q5-QVX" id="mAu-Yb-SkT"/>
+                        </connections>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="KWD" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vfd-S4-yVh">
+                        <rect key="frame" x="551" y="24" width="90" height="21"/>
+                        <color key="textColor" red="0.47843137250000001" green="0.51764705879999995" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        <connections>
+                            <action selector="rqstAmountBeginEditing:" destination="-2" eventType="editingDidBegin" id="SMP-ai-pbA"/>
+                            <action selector="rqstAmountEndEditing:" destination="-2" eventType="editingDidEnd" id="37Y-0X-HKJ"/>
+                            <outlet property="delegate" destination="5p6-q5-QVX" id="gIW-Cq-Tti"/>
+                        </connections>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Request Amt.:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8J-GN-pXa">
+                        <rect key="frame" x="551" y="2" width="100" height="21"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="KWD" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Se-DR-pNC">
+                        <rect key="frame" x="659" y="24" width="90" height="21"/>
+                        <color key="textColor" red="0.47843137250000001" green="0.51764705879999995" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        <connections>
+                            <action selector="apprvAmountBeginEditing:" destination="-2" eventType="editingDidBegin" id="RTH-JU-5P0"/>
+                            <action selector="apprvAmountEndEditing:" destination="-2" eventType="editingDidEnd" id="hjD-Pr-8Xs"/>
+                            <outlet property="delegate" destination="5p6-q5-QVX" id="OWt-KH-N1o"/>
+                        </connections>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Approved Amt.:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m64-qx-FDB">
+                        <rect key="frame" x="659" y="2" width="84" height="21"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="KWD" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kli-hm-O5q">
+                        <rect key="frame" x="444" y="24" width="90" height="21"/>
+                        <color key="textColor" red="0.47843137250000001" green="0.51764705879999995" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="13"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        <connections>
+                            <outlet property="delegate" destination="5p6-q5-QVX" id="st9-Xk-V4O"/>
+                        </connections>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Limit:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Om8-79-hXB">
+                        <rect key="frame" x="444" y="2" width="52" height="21"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7y-J7-MdJ">
+                        <rect key="frame" x="767" y="10" width="30" height="30"/>
+                        <state key="normal" image="expense_upload.png" backgroundImage="expense_upload.png"/>
+                        <connections>
+                            <action selector="uploadImage:" destination="-2" eventType="touchUpInside" id="5CG-D1-TxI"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Dk-uQ-w49">
+                        <rect key="frame" x="757" y="0.0" width="50" height="52"/>
+                    </imageView>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Remark:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kfF-Po-vGI">
+                        <rect key="frame" x="68" y="60" width="730" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <action selector="remarksBeginEditing:" destination="-2" eventType="editingDidBegin" id="0mV-tk-DS6"/>
+                            <action selector="remarksEndEditing:" destination="-2" eventType="editingDidEnd" id="YMn-eO-zyr"/>
+                            <outlet property="delegate" destination="5p6-q5-QVX" id="Nyd-qj-HSW"/>
+                        </connections>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Category:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLo-Tc-oKJ">
+                        <rect key="frame" x="68" y="2" width="52" height="21"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eww-kX-feF">
+                        <rect key="frame" x="182" y="2" width="65" height="21"/>
+                        <fontDescription key="fontDescription" name="Oxygen-Regular" family="Oxygen" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="Description" destination="bxP-QL-Stg" id="Kud-GD-imV"/>
+                <outlet property="approvedAmount" destination="6Se-DR-pNC" id="2sd-hk-tJP"/>
+                <outlet property="categoryText" destination="bDx-41-cc4" id="99d-bS-CeZ"/>
+                <outlet property="cellImage" destination="93Z-2B-Xqo" id="5NN-ES-IRY"/>
+                <outlet property="evidenceImageView" destination="8Dk-uQ-w49" id="2u9-EW-1ZJ"/>
+                <outlet property="limitText" destination="Kli-hm-O5q" id="V0E-pb-lPP"/>
+                <outlet property="numberLabel" destination="nBp-wM-fa1" id="DnR-ts-C6a"/>
+                <outlet property="remarkText" destination="kfF-Po-vGI" id="w5d-TE-tM2"/>
+                <outlet property="rqstAmount" destination="vfd-S4-yVh" id="lyD-ou-NxA"/>
+            </connections>
+            <point key="canvasLocation" x="249" y="176.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="expense_table1.png" width="818" height="68"/>
+        <image name="expense_upload.png" width="30" height="30"/>
+    </resources>
+</document>
