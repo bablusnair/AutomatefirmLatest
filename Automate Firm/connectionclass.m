@@ -790,17 +790,27 @@ NSString *const subdomainURL = @"http://192.168.1.35/af1.1/";
         
         else
         {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             NSLog(@"%@",mystring);
-            if ([mystring isEqualToString:@"\n1"]) {
+            if ([[json objectForKey:@"status"] isEqualToString:@"200"]) {
                 [self getviewalltimerules:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedofficeId"]];
             }
-            else if ([mystring isEqualToString:@"existed"])
+            else if ([[json objectForKey:@"status"] isEqualToString:@"1"])
             {
                 if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
                 {
                     
                     [self.mydelegate showalerviewcontroller:@"Rule Name Already Existed"];
+                    
+                }
+            }
+            else if ([[json objectForKey:@"status"] isEqualToString:@"2"])
+            {
+                if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate showalerviewcontroller:@"Abbreviation Already Existed"];
                     
                 }
             }
@@ -964,18 +974,29 @@ NSString *const subdomainURL = @"http://192.168.1.35/af1.1/";
         
         else
         {
+            
+            NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             NSLog(@"%@",mystring);
-            if([mystring isEqualToString:@"\n1"])
+            if([[json objectForKey:@"status"] isEqualToString:@"200"])
             {
                 [self getviewalltimerules:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedofficeId"]];
             }
-            else if ([mystring isEqualToString:@"existed"])
+            else if ([[json objectForKey:@"status"] isEqualToString:@"1"])
             {
                 if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
                 {
                     
                     [self.mydelegate showalerviewcontroller:@"Rule Name Already Existed"];
+                    
+                }
+            }
+            else if ([[json objectForKey:@"status"] isEqualToString:@"2"])
+            {
+                if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+                {
+                    
+                    [self.mydelegate showalerviewcontroller:@"Abbreviation Already Existed"];
                     
                 }
             }
