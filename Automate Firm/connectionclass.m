@@ -16,6 +16,8 @@
 
 //online-server
 //tgtyyhyy6huuu7hyy7yghyhuyu
+//c scsnsscnkcncnc lcnkckl lcnksxlcds cdsklcjdlcdckl cdscdcmdsl dslcmdck
+
 
 NSString *const subDomainMainURL = @"http://automatefirm.com/automate_new/";
 NSString *const subdomainURL = @"http://192.168.1.35/af1.1/";
