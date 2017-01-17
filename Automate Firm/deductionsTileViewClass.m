@@ -113,7 +113,10 @@
 //        obj.plusButton.hidden=FALSE;
         app.deductionConditionId=[app.deductionTileIdDict objectForKey:app.deductionTileIdString];
        // [[NSUserDefaults standardUserDefaults]setObject:@"update" forKey:@"deductionsAction"];
-        [self.myconnection individualDeductionTileConditionDetails:[app.deductionTileIdDict objectForKey:app.deductionTileIdString] ruleId:[[NSUserDefaults standardUserDefaults]objectForKey:@"deductionRuleID"]];
+        
+            [self.myconnection individualDeductionTileConditionDetails:[app.deductionTileIdDict objectForKey:app.deductionTileIdString] ruleId:app.deductionRuleId];
+        
+        
         
     }
     else{
@@ -798,7 +801,7 @@
         if ([string isEqualToString:@""]) {
             return YES;
         }
-        if (textField.text.length<=1) {
+        if (textField.text.length<=2) {
             NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
             unichar c = [string characterAtIndex:0];
             if ([myCharSet characterIsMember:c])
@@ -904,8 +907,8 @@
         p++;
     }
     else
-    {        self.deductionCheckString=@"0";
-
+    {
+        self.deductionCheckString=@"0";
         [self.checkButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
         p++;
     }
@@ -1000,8 +1003,8 @@
 
 -(void)createDeductResponse:(id)response
 {
-    [app.deductionTileIdDict setObject:[[response componentsSeparatedByString:@"###"]objectAtIndex:1]  forKey:app.deductionTileIdString];
-    app.deductionRuleId=[[response componentsSeparatedByString:@"###"]objectAtIndex:2];
+    [app.deductionTileIdDict setObject:[NSString stringWithFormat:@"%@",[response objectForKey:@"condition_id"]]  forKey:app.deductionTileIdString];
+    app.deductionRuleId=[NSString stringWithFormat:@"%@",[response objectForKey:@"rule_id"]];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"selectedDesignation"];
     if([[[NSUserDefaults standardUserDefaults]objectForKey:@"deductionsAction"]isEqualToString:@"create"])
     {
@@ -1081,24 +1084,36 @@
         }
         switch ([[[response objectAtIndex:0]objectForKey:@"d_taxed"] intValue]) {
             case 1:
-                [self earningsCheckBoxAction];
+                self.deductionCheckString=@"1";
+                [self.checkButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                p=1;
                 break;
-//            case 1:
-//                [self ontimeRadioButtonAction];
-//                break;
-//                
+            case 0:
+                self.deductionCheckString=@"0";
+                [self.checkButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                p=0;
+                break;
+                
                 
             default:
                 break;
         }
         switch ([[[response objectAtIndex:0]objectForKey:@"accumulate_payment"] intValue]) {
             case 1:
-                [self accumulateCheckBoxAction];
+                
+                self.accumalteCheckString=@"1";
+                
+                [self.checkButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                q=1;
                 break;
-                //            case 1:
-                //                [self ontimeRadioButtonAction];
-                //                break;
-                //
+            case 0:
+                //[self ontimeRadioButtonAction];
+                self.accumalteCheckString=@"0";
+                
+                [self.checkButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                q=0;
+                break;
+                
                 
             default:
                 break;

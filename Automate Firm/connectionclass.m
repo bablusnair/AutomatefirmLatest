@@ -51,11 +51,11 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 #define moveDesignationUrl @"settings/designations/change_desig"
 
 //-----------------------------------------Bank-----------------------------------------------
-#define createBankURL @"http://automatefirm.com/automate_new/index.php/banks/add?"
-#define viewAllBankUrl @"http://automatefirm.com/automate_new/index.php/banks/getdata?"
-#define viewIndividualBankUrl @"http://automatefirm.com/automate_new/index.php/banks/getdata?"
-#define updateBankURL @"http://automatefirm.com/automate_new/index.php/banks/edit?"
-#define deleteBankURL @"http://automatefirm.com/automate_new/index.php/banks/delete?"
+#define createBankURL @"settings/banks/add?"
+#define viewAllBankUrl @"settings/banks/getdata?"
+#define viewIndividualBankUrl @"settings/banks/getdata?"
+#define updateBankURL @"settings/banks/edit?"
+#define deleteBankURL @"settings/banks/delete?"
 
 //-----------------------------------------Office---------------------------------------------
 #define viewIndividualofficeUrl @"http://automatefirm.com/automate_new/index.php/office/get_office?"
@@ -191,51 +191,51 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 
 //---------------------------------------Leave Settings Url-------------------------------------
 
-#define viewAllLeavesUrl @"http://192.168.1.45/work/automate_new1/index.php/leave_rule/leave_view_all?"
+#define viewAllLeavesUrl @"settings/leave_rule/leave_view_all?"
 
-#define individualLeaveViewUrl @"http://automatefirm.com/automate_new/index.php/leave_rule/get_leave_data_by_id?"
+#define individualLeaveViewUrl @"settings/leave_rule/get_leave_data_by_id?"
 
-#define individualLeaveConditionViewUrl @"http://automatefirm.com/automate_new/index.php/leave_rule/get_conditions_by_id?"
+#define individualLeaveConditionViewUrl @"settings/leave_rule/get_conditions_by_id?"
 
-#define updateLeaveUrl @"http://automatefirm.com/automate_new/index.php/leave_rule/update_leave_condition"
-#define finalUpdateUrl @"http://automatefirm.com/automate_new/index.php/leave_rule/update_leave_details"
-#define deleteLeaveConditionUrl @"http://automatefirm.com/automate_new/index.php/leave_rule/del_leave_condition?"
-#define deleteLeaveRuleUrl @"http://automatefirm.com/automate_new/index.php/leave_rule/del_leave_rule?"
+#define updateLeaveUrl @"settings/leave_rule/update_leave_condition"
+#define finalUpdateUrl @"settings/leave_rule/update_leave_details"
+#define deleteLeaveConditionUrl @"settings/leave_rule/del_leave_condition?"
+#define deleteLeaveRuleUrl @"settings/leave_rule/del_leave_rule?"
 
-#define saveLeaveCondition @"http://automatefirm.com/automate_new/index.php/leave_rule/new_leave_rule_save"
+#define saveLeaveCondition @"settings/leave_rule/new_leave_rule_save"
 
 //-------------------------------------Borrowing-Fine----------------------------------------
 
 
-#define createNewFineRule @"http://automatefirm.com/automate_new/index.php/fine_rule/insert_data"
-#define viewAllfineUrl @"http://automatefirm.com/automate_new/index.php/fine_response/get?"
-#define individualFineViewUrl @"http://automatefirm.com/automate_new/index.php/fine_response/show_update_data?"
-#define updateFineRule @"http://automatefirm.com/automate_new/index.php/fine_rule/update_fine_rule"
-#define deleteFineRule @"http://automatefirm.com/automate_new/index.php/fine_rule/del_fine_rule?"
+#define createNewFineRule @"settings/fine_rule/insert_data"
+#define viewAllfineUrl @"settings/fine_response/get?"
+#define individualFineViewUrl @"settings/fine_response/show_update_data?"
+#define updateFineRule @"settings/fine_rule/update_fine_rule"
+#define deleteFineRule @"settings/fine_rule/del_fine_rule?"
 
-#define leaveAbbrivationurl @"http://automatefirm.com/automate_new/index.php/loan_response/get_leave_abbreviation?"
+#define leaveAbbrivationurl @"settings/loan_response/get_leave_abbreviation?"
 
 
 //---------------------------------------loan-service--------------------------------------
 
-#define creatingnewloanurl @"http://automatefirm.com/automate_new/index.php/loan_rule/insert_data"
+#define creatingnewloanurl @"settings/loan_rule/insert_data"
 
-#define secondtimecreatingnewloanurl @"http://automatefirm.com/automate_new/index.php/loan_rule/insert_condition"
+#define secondtimecreatingnewloanurl @"settings/loan_rule/insert_condition"
 
-#define loanmaindonebuttonserviceurl @"http://automatefirm.com/automate_new/index.php/loan_rule/update_final_data"
+#define loanmaindonebuttonserviceurl @"settings/loan_rule/update_final_data"
 
-#define viewAlloanlistUrl @"http://automatefirm.com/automate_new/index.php/loan_response/get?"
+#define viewAlloanlistUrl @"settings/loan_response/get?"
 
-#define deleteloanTileurl @"http://automatefirm.com/automate_new/index.php/loan_rule/del_individual_loan_rule?"
+#define deleteloanTileurl @"settings/loan_rule/del_individual_loan_rule?"
 
 
-#define updationofindividualloanrules @"http://automatefirm.com/automate_new/index.php/loan_response/show_loan_rule?"
+#define updationofindividualloanrules @"settings/loan_response/show_loan_rule?"
 
-#define updationofloanrulesurl @"http://automatefirm.com/automate_new/index.php/loan_rule/insert_condition_for_updation"
+#define updationofloanrulesurl @"settings/loan_rule/insert_condition_for_updation"
 
-#define deleteloanRulesurl @"http://automatefirm.com/automate_new/index.php/loan_rule/del_loan_rule?"
+#define deleteloanRulesurl @"settings/loan_rule/del_loan_rule?"
 
-#define individualtileruleurl @"http://automatefirm.com/automate_new/index.php/loan_rule/get_existing_data?"
+#define individualtileruleurl @"settings/loan_rule/get_existing_data?"
 
 
 
@@ -244,20 +244,20 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 
 //online
 
-#define viewAdvanceViewUrl @"http://automatefirm.com/automate_new/index.php/advance_rule/advance_view/?"
-#define viewTilesUrl @"http://automatefirm.com/automate_new/index.php/advance_rule/advance_condition_list/?"
-#define individualAdvanceUrl @"http://automatefirm.com/automate_new/index.php/advance_rule/advance_condition_by_id/?"
-#define  updateAdvanceCondition @"http://automatefirm.com/automate_new/index.php/advance_rule/update_advance_condition/"
-#define createadvance @"http://automatefirm.com/automate_new/index.php/advance_rule/new_advance_condition_save"
-#define deleteadvanceCondtion @"http://automatefirm.com/automate_new/index.php/advance_rule/del_advance_condition/?"
+#define viewAdvanceViewUrl @"settings/advance_rule/advance_view/?"
+#define viewTilesUrl @"settings/advance_rule/advance_condition_list/?"
+#define individualAdvanceUrl @"settings/advance_rule/advance_condition_by_id/?"
+#define  updateAdvanceCondition @"settings/advance_rule/update_advance_condition/"
+#define createadvance @"settings/advance_rule/new_advance_condition_save"
+#define deleteadvanceCondtion @"settings/advance_rule/del_advance_condition/?"
 
 //------------------------------------------payrule-------------------------------------------
  //online pay url
-#define viewAllPay @"http://automatefirm.com/automate_new/index.php/payroll/payrol_list?"
-#define createNewPay @"http://automatefirm.com/automate_new/index.php/payroll/insert_payroll_rule"
-#define deletepay @"http://automatefirm.com/automate_new/index.php/payroll/del_payroll?"
-#define individualDisplay @"http://automatefirm.com/automate_new/index.php/payroll/view_details?"
-#define updatepay @"http://automatefirm.com/automate_new/index.php/payroll/update_pay_roll"
+#define viewAllPay @"settings/payroll/payrol_list?"
+#define createNewPay @"settings/payroll/insert_payroll_rule"
+#define deletepay @"settings/payroll/del_payroll?"
+#define individualDisplay @"settings/payroll/view_details?"
+#define updatepay @"settings/payroll/update_pay_roll"
 
 //------------------------------------------Documents----------------------------------------
 
@@ -270,35 +270,35 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 
 //<<-----------------------------------Expense Reimbursement-------------------------------->>
 
-#define ViewAllExpenseUrl @"http://192.168.1.45/work/automate_new1/index.php/re_imbursement/re_imbursment_all_list?"
-#define individualExpenseViewUrl @"http://192.168.1.45/work/automate_new1/index.php/re_imbursement/get_re_imbursment_by_id?"
-#define expenseCreateUrl @"http://192.168.1.45/work/automate_new1/index.php/re_imbursement/re_imbursement_save"
-#define saveExpenseConditionUrl @"http://192.168.1.45/work/automate_new1/index.php/re_imbursement/condition_save"
-#define expenseConditionViewUrl @"http://192.168.1.45/work/automate_new1/index.php/re_imbursement/get_condition_details?"
-#define deleteExpenseConditionUrl @"http://192.168.1.45/work/automate_new1/index.php/re_imbursement/condition_del?"
-#define deleteExpenseRuleUrl @"http://192.168.1.45/work/automate_new1/index.php/re_imbursement/expen_del?"
+#define ViewAllExpenseUrl @"settings/re_imbursement/re_imbursment_all_list?"
+#define individualExpenseViewUrl @"settings/re_imbursement/get_re_imbursment_by_id?"
+#define expenseCreateUrl @"settings/re_imbursement/re_imbursement_save"
+#define saveExpenseConditionUrl @"settings/re_imbursement/condition_save"
+#define expenseConditionViewUrl @"settings/re_imbursement/get_condition_details?"
+#define deleteExpenseConditionUrl @"settings/re_imbursement/condition_del?"
+#define deleteExpenseRuleUrl @"settings/re_imbursement/expen_del?"
 
 
 //<<---------------------------------------Overtime Urls---------------------------------->>
 
-#define viewAllOvertimeUrl @"http://automatefirm.com/automate_new/index.php/overtime/view_overtime_list/"
-#define createOvertimeRuleUrl @"http://automatefirm.com/automate_new/index.php/overtime/insert_overtime"
-#define individualOvertimeViewUrl @"http://automatefirm.com/automate_new/index.php/overtime/get_overtime_details"
-#define updateOvertimeUrl @"http://automatefirm.com/automate_new/index.php/overtime/update_overtime"
-#define deleteOvertimeUrl @"http://automatefirm.com/automate_new/index.php/overtime/del_overtime/"
+#define viewAllOvertimeUrl @"settings/overtime/view_overtime_list/"
+#define createOvertimeRuleUrl @"settings/overtime/insert_overtime"
+#define individualOvertimeViewUrl @"settings/overtime/get_overtime_details"
+#define updateOvertimeUrl @"settings/overtime/update_overtime"
+#define deleteOvertimeUrl @"settings/overtime/del_overtime/"
 
 //-----------------------------------------Income tax-------------------------------------
 
-#define createtaxUrl @"http://automatefirm.com/automate_new/index.php/income_tax/update"
+#define createtaxUrl @"settings/income_tax/update"
 
-#define displayincomtaxUrl @"http://automatefirm.com/automate_new/index.php/income_tax/get_incometax_details/"
+#define displayincomtaxUrl @"settings/income_tax/get_incometax_details/"
 
 //------------------------------------Earnings Rule...Online---------------------------------
 #define createerningrule @"settings/earnings/earnings_save/"
 #define updateErningUrl @"settings/earnings/insert_condition"
 #define viewall @"settings/earnings/earnings_all_list/"
 
-#define individaualEarningrule @"settings/earnings/get_earnings_by_id?"
+#define individaualEarningrule @"settings/earnings/get_earnings_by_id/"
 #define conditionDetailsUrl @"settings/earnings/get_earnings_condition_by_id/"
 #define deleteEarningRuleUrl @"settings/earnings/earnings_del/"
 
@@ -315,8 +315,8 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 #define finaldeductionDone @"settings/Deduction/update_final_data"
 #define viewdeductionRuleCondition @"settings/deduction/deduction_edit_details/"
 #define individualConditionViewUrl @"settings/Deduction/get_existing_data/"
-#define deleteDeductionRuleUrl @"settings/Deduction/del_deduction?"
-#define deleteDeductiontileUrl @"settings/Deduction/del_individual_deduction_rule?"
+#define deleteDeductionRuleUrl @"settings/Deduction/del_deduction"
+#define deleteDeductiontileUrl @"settings/Deduction/del_individual_deduction_rule"
 
 
 //------------------------------------------AUTOCODING------------------------------------------
@@ -1180,7 +1180,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@",createNewShiftUrl];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,createNewShiftUrl];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -1268,7 +1268,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 -(void)getViewAllShiftRules:(NSString *)officeID
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@office_id=%@",getAllShiftRules,officeID];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@office_id=%@",subdomainURL,getAllShiftRules,officeID];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -1310,7 +1310,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 -(void)displaySelectedShiftRule:(NSString *)officeID :(NSString *)ruleid
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@office_id=%@&&shift_id=%@",getSelectedShiftRule,officeID,ruleid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@office_id=%@&&shift_id=%@",subdomainURL,getSelectedShiftRule,officeID,ruleid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -1354,7 +1354,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@shift_id=%@",updateShiftRuleUrl,id];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@shift_id=%@",subdomainURL,updateShiftRuleUrl,id];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -1436,7 +1436,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 -(void)deleteShiftRule:(NSString *)officeID :(NSString *)rid
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@shift_id=%@",deleteShiftRuleUrl,rid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@shift_id=%@",subdomainURL,deleteShiftRuleUrl,rid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -1835,7 +1835,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@req=ios",createBankURL];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@req=ios",subdomainURL,createBankURL];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -1911,7 +1911,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 -(void)viewAllBank
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@req=ios",viewAllBankUrl];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@req=ios",subdomainURL,viewAllBankUrl];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -1951,7 +1951,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 -(void)individualBankView:(NSString *)bank_id
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&bank_id=%@",viewIndividualBankUrl,bank_id];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@req=ios&bank_id=%@",subdomainURL,viewIndividualBankUrl,bank_id];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -1997,7 +1997,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&bank_id=%@",updateBankURL,bankID];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@req=ios&bank_id=%@",subdomainURL,updateBankURL,bankID];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -2078,7 +2078,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 -(void)deleteBank:(NSString *)bankID
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@req=ios&bank_id=%@",deleteBankURL,bankID];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@req=ios&bank_id=%@",subdomainURL,deleteBankURL,bankID];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         if (data==Nil) {
@@ -4819,7 +4819,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 -(void)viewAllLeaves:(NSString *)officeId
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@office_id=%@",viewAllLeavesUrl,officeId];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@office_id=%@",subdomainURL,viewAllLeavesUrl,officeId];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -4861,7 +4861,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 {
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@leave_id=%@",individualLeaveViewUrl,leaveID];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@leave_id=%@",subdomainURL,individualLeaveViewUrl,leaveID];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -4902,7 +4902,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 -(void)individualLeaveConditionView:(NSString *)conditionID
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@condition_id=%@",individualLeaveConditionViewUrl,conditionID];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@condition_id=%@",subdomainURL,individualLeaveConditionViewUrl,conditionID];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -8392,11 +8392,11 @@ NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:u
     NSString *urlString;
     if([idFlag isEqualToString:@"1"])
     {
-        urlString=[NSString stringWithFormat:@"%@id=%@",deleteDeductionRuleUrl,delId];
+        urlString=[NSString stringWithFormat:@"%@%@/%@",subdomainURL,deleteDeductionRuleUrl,delId];
     }
     if([idFlag isEqualToString:@"2"])
     {
-        urlString=[NSString stringWithFormat:@"%@id=%@",deleteDeductiontileUrl,delId];
+        urlString=[NSString stringWithFormat:@"%@%@/%@",subdomainURL,deleteDeductiontileUrl,delId];
     }
 
     
@@ -8419,13 +8419,14 @@ NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:u
         
         else
         {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             NSLog(@"%@",mystring);
             
             if ([self.mydelegate respondsToSelector:@selector(deleteAllTileResponse:flag:)]&&(self.mydelegate!=NULL))
             {
                 
-                [self.mydelegate deleteAllTileResponse:mystring flag:@"1"];
+                [self.mydelegate deleteAllTileResponse:json flag:@"1"];
                 
             }
         }
@@ -10261,5 +10262,45 @@ NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:u
     [postDataTask resume];
     
 }
-
+-(void)mytestcase
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urls=@"http://192.168.1.20/af1.1/rest/office_api";
+    NSString *urlString=[NSString stringWithFormat:@"%@",urls];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (data==Nil) {
+            
+            if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
+            {
+                
+                
+                [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
+                
+                
+            }
+            
+        }
+        
+        else
+        {
+            id json  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSLog(@"%@",json);
+            id mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
+            
+            //status code
+            
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+            NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
+            
+            
+            //get all headers
+            
+            NSDictionary* headers = [(NSHTTPURLResponse *)response allHeaderFields];
+            NSLog(@"%@",headers);
+        }
+    }];
+    [dataTask resume];
+}
 @end

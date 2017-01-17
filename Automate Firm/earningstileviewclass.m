@@ -1387,18 +1387,22 @@
         
     }
     if ([self.accumalateFlag isEqualToString:@"1"]) {
+        q=1;
         [self.checkButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
     }
     else{
         [self.checkButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+        q=0;
 
         
     }
     if ([self.earningflag isEqualToString:@"1"]) {
         [self.checkButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+        p=1;
     }
     else{
         [self.checkButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+        p=0;
         
         
     }
