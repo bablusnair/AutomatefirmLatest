@@ -16,12 +16,17 @@
 }
 @property(nonatomic,retain)connectionclass * myconnection;
 @property(nonatomic,retain)IBOutlet UITextField *eligibilityText1;
+@property(nonatomic,retain)NSString *eligibilityString1;
 @property(nonatomic,retain)IBOutlet UITextField *eligibilityText2;
 @property(nonatomic,retain)IBOutlet UITextField *eligibilityText3;
+@property(nonatomic,retain)NSString *eligibilityString3;
 @property(nonatomic,retain)IBOutlet UITextField *eligibilityText4;
+@property(nonatomic,retain)NSString *eligibilityString4;
 @property(nonatomic,retain)IBOutlet UITextField *eligibilityText5;
 @property(nonatomic,retain)IBOutlet UITextField *conditionsText1;
+@property(nonatomic,retain)NSString *conditionString1;
 @property(nonatomic,retain)IBOutlet UITextField *conditionsText2;
+@property(nonatomic,retain)NSString *conditionString3;
 @property(nonatomic,retain)IBOutlet UITextField *conditionsText3;
 @property(nonatomic,retain)IBOutlet UITextField *checkBoxText1;
 @property(nonatomic,retain)IBOutlet UITextField *checkBoxText2;
@@ -63,11 +68,7 @@
 @property(nonatomic,retain)NSString *radioString2;
 @property(nonatomic,retain)NSString *radioString3;
 @property(nonatomic,retain)NSString *strId;
-@property(nonatomic,retain)NSString *text1;
-@property(nonatomic,retain)NSString *text2;
-@property(nonatomic,retain)NSString *text3;
-@property(nonatomic,retain)NSString *text4;
-@property(nonatomic,retain)NSString *text5;
+
 @property(nonatomic,retain)NSString *text6;
 @property(nonatomic,retain)NSString *enableStaus;
 @property(nonatomic,retain)NSString *selectedDesignation;

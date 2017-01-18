@@ -179,14 +179,72 @@
     
     
 }
-
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField==self.loantype) {
+        if ([string isEqualToString:@""]) {
+            return YES;
+        }
+        if (textField.text.length<=44) {
+            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789"];
+            unichar c = [string characterAtIndex:0];
+            if ([myCharSet characterIsMember:c])
+            {
+                return YES;
+            }
+            else
+                return NO;
+        }
+        else
+            return  NO;
+    }
+    else if (textField==self.abbrevation)
+    {
+        if ([string isEqualToString:@""]) {
+            return YES;
+        }
+        if (textField.text.length<=4) {
+            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+            unichar c = [string characterAtIndex:0];
+            if ([myCharSet characterIsMember:c])
+            {
+                return YES;
+            }
+            else
+                return NO;
+        }
+        else
+            return  NO;
+    }
+    else if (textField==self.descriptiontext)
+    {
+        if ([string isEqualToString:@""]) {
+            return YES;
+        }
+        if (textField.text.length<=89) {
+            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789"];
+            unichar c = [string characterAtIndex:0];
+            if ([myCharSet characterIsMember:c])
+            {
+                return YES;
+            }
+            else
+                return NO;
+        }
+        else
+            return  NO;
+    }
+    else
+    {
+        return YES;
+    }
+}
 
 -(void)donesavedGotresponse:(NSString *)responsestring
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loantype"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"abbrevation"];
-    
-     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Loan_ruleId"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Loan_ruleId"];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"enableCollectionView" object:Nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"enabletable" object:Nil];

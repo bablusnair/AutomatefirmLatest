@@ -107,7 +107,7 @@
 -(void)OfficeStoreView:(NSString *)officeid;
 -(void)StoreViewDetails:(NSString *)storeid;
 -(void)addNewEmployeeOfficeDisplayDetails:(NSString *)officeId;
--(void)generateEmployeeCode;
+//-(void)generateEmployeeCode;
 -(void)uploadEmpImage:(UIImage *)image :(NSString *)empID ;
 -(void)addNewEmployeeSave:(NSMutableDictionary *)personaleDetailsDict;
 -(void)getLocalCity:(NSString *)emp_id;

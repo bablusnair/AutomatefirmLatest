@@ -208,10 +208,10 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
 
 
 #define createNewFineRule @"settings/fine_rule/insert_data"
-#define viewAllfineUrl @"settings/fine_response/get?"
-#define individualFineViewUrl @"settings/fine_response/show_update_data?"
+#define viewAllfineUrl @"settings/fine_rule/fine_rule_list/"
+#define individualFineViewUrl @"settings/fine_rule/show_update_data/"
 #define updateFineRule @"settings/fine_rule/update_fine_rule"
-#define deleteFineRule @"settings/fine_rule/del_fine_rule?"
+#define deleteFineRule @"settings/fine_rule/del_fine_rule/"
 
 #define leaveAbbrivationurl @"settings/loan_response/get_leave_abbreviation?"
 
@@ -1562,6 +1562,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
         {
             NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
             
             if ([self.mydelegate respondsToSelector:@selector(designationsGotresponse:)]&&(self.mydelegate!=NULL))
             {
@@ -1605,6 +1606,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
         {
             id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",mystring);
             if ([self.mydelegate respondsToSelector:@selector(updateruleviewresponse:)]&&(self.mydelegate!=NULL))
             {
                 
@@ -1645,7 +1647,7 @@ NSString *const subdomainURL = @"http://192.168.1.22/af1.1/";
         {
             id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSLog(@"%@",json);
+            NSLog(@"%@",mystring);
             //            if ([self.mydelegate respondsToSelector:@selector(updateruleviewresponse:)]&&(self.mydelegate!=NULL))
             //            {
             //
@@ -3065,7 +3067,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 
 -(void)uploadEmpImage:(UIImage *)image :(NSString *)empID
 {
-    NSError *error;
+    //NSError *error;
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
@@ -3554,7 +3556,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 //Update Profile Pic
 -(void)updateProfilePic:(UIImage *)image :(NSString *)EmpID
 {
-    NSError *error;
+   // NSError *error;
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
@@ -4946,7 +4948,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@",updateLeaveUrl];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,updateLeaveUrl];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -5026,7 +5028,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@",saveLeaveCondition];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,saveLeaveCondition];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -5103,7 +5105,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@",finalUpdateUrl];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,finalUpdateUrl];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -5174,7 +5176,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 -(void)deleteLeaveCondition:(NSString *)conditionID : (NSString *)rule_id
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@condition_id=%@&rule_id=%@",deleteLeaveConditionUrl,conditionID,rule_id];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@condition_id=%@&rule_id=%@",subdomainURL,deleteLeaveConditionUrl,conditionID,rule_id];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -5211,7 +5213,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 -(void)deleteLeave:(NSString *)leaveID
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@leave_id=%@",deleteLeaveRuleUrl,leaveID];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@leave_id=%@",subdomainURL,deleteLeaveRuleUrl,leaveID];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -5258,7 +5260,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@",createNewFineRule];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,createNewFineRule];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -5293,12 +5295,13 @@ dispatch_async(dispatch_get_main_queue(), ^{
         }
         else
         {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             NSLog(@"%@",mystring);
-            if ([mystring isEqualToString:@"1"]) {
+            if ([[json objectForKey:@"status"] isEqualToString:@"200"]) {
                 [self viewAllFineRules:officeId];
             }
-            else if ([mystring isEqualToString:@"duplicate data"])
+            else if ([[json objectForKey:@"status"] isEqualToString:@"1"])
             {
                 if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
                 {
@@ -5315,75 +5318,43 @@ dispatch_async(dispatch_get_main_queue(), ^{
                     [self.mydelegate showalerviewcontroller:@"Failed to Create  Holiday Rule"];
                     
                 }
-                
             }
-            
-            
-            
         }
-        
-        
-        
     }];
-    
-    
     [postDataTask resume];
-    
-    
-    
-
 }
 
-//..........View All Holidays.........
+//..........View All Fine.........
 
 -(void)viewAllFineRules:(NSString *)officeid
 {
-    
-    
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@o_id=%@",viewAllfineUrl,officeid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@%@",subdomainURL,viewAllfineUrl,officeid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        
-        
         if (data==Nil) {
-            
-            
             if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
             {
-                
                 [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
-                
             }
-            
-            
         }
-        
         else
         {
             NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             if ([self.mydelegate respondsToSelector:@selector(viewAllFineResponse:)]&&(self.mydelegate!=NULL))
             {
-                
                 [self.mydelegate viewAllFineResponse:json];
-                
             }
-            
         }
-        
-        
     }];
     
     [dataTask resume];
-    
-
-    
 }
 -(void)individualFineruleDisplay:(NSString *)officeId ruled:(NSString *)ruleId
 {
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@o_id=%@&&id=%@",individualFineViewUrl,officeId,ruleId];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@%@/%@",subdomainURL,individualFineViewUrl,officeId,ruleId];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -5427,7 +5398,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@",updateFineRule];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,updateFineRule];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -5462,12 +5433,14 @@ dispatch_async(dispatch_get_main_queue(), ^{
         }
         else
         {
+            id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSString *mystring=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             NSLog(@"%@",mystring);
-            if ([mystring isEqualToString:@"1"]) {
+            
+            if ([[json objectForKey:@"status"] isEqualToString:@"200"]) {
                 [self viewAllFineRules:officeId];
             }
-            else if ([mystring isEqualToString:@"duplicate data"])
+            else if ([[json objectForKey:@"status"] isEqualToString:@"1"])
             {
                 if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
                 {
@@ -5480,30 +5453,17 @@ dispatch_async(dispatch_get_main_queue(), ^{
             {
                 if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
                 {
-                    
                     [self.mydelegate showalerviewcontroller:@"Failed to Create  Holiday Rule"];
-                    
                 }
-                
             }
-            
-            
-            
         }
-        
-        
-        
     }];
-    
-    
     [postDataTask resume];
-    
-  
 }
 -(void)deleteFineSetingRule:(NSString *)ruleid;
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@id=%@",deleteFineRule,ruleid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@%@",subdomainURL,deleteFineRule,ruleid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -5549,7 +5509,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 -(void)leaveabbrivationservice:(NSString *)officeid
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@o_id=%@",leaveAbbrivationurl,officeid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@o_id=%@",subdomainURL,leaveAbbrivationurl,officeid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -5598,7 +5558,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
        
        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-       NSString *urlString=[NSString stringWithFormat:@"%@",creatingnewloanurl];
+       NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,creatingnewloanurl];
        NSURL *url = [NSURL URLWithString:urlString];
        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                               cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -5701,12 +5661,11 @@ dispatch_async(dispatch_get_main_queue(), ^{
 -(void)secondtimecreateloanTile:(NSString *)loantype abbrevation:(NSString *)abbrev description:(NSString *)description annualinterestrate:(NSString *)annualinterestrate maxduration:(NSString *)maxduration maximumlimit:(NSString *)maximumlimit pendingloanamount:(NSString *)pendingloanamount loanmonth:(NSString *)loanmonth lastworkingday:(NSString *)lastworkingday visaduration:(NSString *)visaduration numberofleavedays:(NSString *)numberofleavedays exceptforleave:(NSString *)exceptforleave allowbuttonstring1:(NSString *)allowbuttonstring1 allowbuttonstring2:(NSString *)allowbuttonstring2 allowbuttonstring3:(NSString *)allowbuttonstring3 swichvalue:(NSString *)swichvalue loanruleid:(NSString *)loanruleid loantileid:(NSString *)loantileid officeid:(NSString *)officeid selecteddesignationstring:(NSString *)selecteddesignationstring maindesignationdictionary:(NSMutableDictionary *)maindesignationdictionary
 {
     
-    
     NSError *error;
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@",secondtimecreatingnewloanurl];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,secondtimecreatingnewloanurl];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -5815,7 +5774,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@",loanmaindonebuttonserviceurl];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,loanmaindonebuttonserviceurl];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -5902,7 +5861,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 {
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@o_id=%@",viewAlloanlistUrl,officeid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@o_id=%@",subdomainURL,viewAlloanlistUrl,officeid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -5945,7 +5904,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 -(void)deleteloanTileid:(NSString *)tileid officeid:(NSString *)officeid loanruleid:(NSString *)loanruleid
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@id=%@&&rule_id=%@&&o_id=%@",deleteloanTileurl,tileid,loanruleid,officeid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@id=%@&&rule_id=%@&&o_id=%@",subdomainURL,deleteloanTileurl,tileid,loanruleid,officeid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         if (data==Nil) {
@@ -6079,7 +6038,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 -(void)updationofloanIndividualrules:(NSString *)officeid loanruleid:(NSString *)loanruleid
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@o_id=%@&&id=%@",updationofindividualloanrules,officeid,loanruleid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@o_id=%@&&id=%@",subdomainURL,updationofindividualloanrules,officeid,loanruleid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         if (data==Nil) {
@@ -6124,7 +6083,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
        
        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-       NSString *urlString=[NSString stringWithFormat:@"%@",updationofloanrulesurl];
+       NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,updationofloanrulesurl];
        NSURL *url = [NSURL URLWithString:urlString];
        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                               cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -6254,7 +6213,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 {
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@id=%@",deleteloanRulesurl,loanid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@id=%@",subdomainURL,deleteloanRulesurl,loanid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -6299,7 +6258,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
     
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@loan_id=%@&&tile_id=%@",individualtileruleurl,loanid,tileid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@loan_id=%@&&tile_id=%@",subdomainURL,individualtileruleurl,loanid,tileid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         //NSLog(@"%@",data);
@@ -6352,7 +6311,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@",createadvance];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,createadvance];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -6452,7 +6411,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSString *urlString=[NSString stringWithFormat:@"%@",updateAdvanceCondition];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@",subdomainURL,updateAdvanceCondition];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -6563,7 +6522,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 {
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@office_id=%@",viewAdvanceViewUrl,officeid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@office_id=%@",subdomainURL,viewAdvanceViewUrl,officeid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -6573,14 +6532,9 @@ dispatch_async(dispatch_get_main_queue(), ^{
             
             if ([self.mydelegate respondsToSelector:@selector(showalerviewcontroller:)]&&(self.mydelegate!=NULL))
             {
-                
                 [self.mydelegate showalerviewcontroller:@"No Internet Connection"];
-                
             }
-            
-            
         }
-        
         else
         {
             id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -6588,14 +6542,9 @@ dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"%@",mystring);
             if ([self.mydelegate respondsToSelector:@selector(viewAllAdvanceResponse:)]&&(self.mydelegate!=NULL))
             {
-                
                 [self.mydelegate viewAllAdvanceResponse:json];
-                
             }
-            
         }
-        
-        
     }];
     
     [dataTask resume];
@@ -6609,7 +6558,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 {
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@advance_id=%@",viewTilesUrl,ruleid];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@advance_id=%@",subdomainURL,viewTilesUrl,ruleid];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -6654,7 +6603,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 -(void)viewIndividualAdvanceRuleTileDetails:(NSString *)condtionId
 {
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@condition_id=%@",individualAdvanceUrl,condtionId];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@condition_id=%@",subdomainURL,individualAdvanceUrl,condtionId];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         
@@ -6700,7 +6649,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 {
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString=[NSString stringWithFormat:@"%@condition_id=%@",deleteadvanceCondtion,tileId];
+    NSString *urlString=[NSString stringWithFormat:@"%@%@condition_id=%@",subdomainURL,deleteadvanceCondtion,tileId];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         if (data==Nil) {

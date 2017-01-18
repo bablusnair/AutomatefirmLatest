@@ -11,6 +11,7 @@
 
 @interface loanConditionsMainViewClass : UIView<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,headerprotocol>
 @property(nonatomic,retain)IBOutlet UITextField *annualInterestText;
+@property(nonatomic,retain)NSString *interestString;
 @property(nonatomic,retain)IBOutlet UITextField *maxDurationText;
 @property(nonatomic,retain)IBOutlet UITextField *maxLoanAmount;
 @property(nonatomic,retain)IBOutlet UITextField *pendingLoanAmount;

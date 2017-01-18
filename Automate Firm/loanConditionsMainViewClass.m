@@ -30,13 +30,7 @@
     
     
     
-    self.maxLoanAmount.text=@"";
-    self.pendingLoanAmount.text=@"";
-    self.exceptleavestring=@"";
-    self.service_eligiblemonthtext=@"";
-    self.service_lastworkingdaytext=@"";
-    self.service_nextapprovedtext=@"";
-    self.service_visaexpirationtext=@"";
+    self.maxLoanAmount.text=self.pendingLoanAmount.text=self.exceptleavestring=self.service_eligiblemonthtext=self.service_lastworkingdaytext= self.service_nextapprovedtext=self.service_visaexpirationtext=self.interestString=@"";
     
      AppDelegate *myappde =(AppDelegate *)[[UIApplication sharedApplication]delegate];
     
@@ -95,20 +89,15 @@
    
     myappde.warningflag=0;
     
-    
-    
     [self.myconnection leaveabbrivationservice:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"]];
 
     self.clickincludedesignationforupdation=0;
     
-    
-    
 }
 
-
+#pragma mark Functions and Notifications
 -(void)loanfirstlookaction
 {
-    
     self.annualInterestText.text=@"";
     self.maxDurationText.text=@"";
     self.maxLoanAmount.text=@"";
@@ -143,11 +132,8 @@
     [self.exceptLeaveTableView reloadData];
     [self.mycollectionview reloadData];
     
-    
    // AppDelegate *myappde =(AppDelegate *)[[UIApplication sharedApplication]delegate];
    // myappde.warningflag=0;
-    
-    
 }
 
 
@@ -505,9 +491,113 @@
    // [self.mycollectionview reloadData];
 }
 
+- (void) keyboardDidShow:(NSNotification *)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    kbRect = [self convertRect:kbRect fromView:nil];
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbRect.size.height-40, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    
+    CGRect aRect = self.frame;
+    aRect.size.height -= kbRect.size.height;
+    
+    if (!CGRectContainsPoint(aRect, self.activeField.frame.origin)) {
+        
+        [self.scrollView scrollRectToVisible:self.activeField.frame animated:YES];
+        AppDelegate *myappde =(AppDelegate *)[[UIApplication sharedApplication]delegate];
+        
+        NSLog(@"%@",myappde.designation_tile);
+        
+        
+    }
+    
+}
+- (void) keyboardWillBeHidden:(NSNotification *)notification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    loanTileClass *ob = (loanTileClass *)self.superview.superview;
+    [ob.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+-(void)enableall
+{
+    
+    for (UIView *myview in self.scrollView.subviews) {
+        myview.userInteractionEnabled=YES;
+    }
+    
+    self.switchButton.userInteractionEnabled=TRUE;
+    self.saveButton.userInteractionEnabled=TRUE;
+    
+    loansettingsviewclass *objj = (loansettingsviewclass *)self.superview.superview.superview;
+    objj.cancelbutton.userInteractionEnabled=TRUE;
+    
+    loanTileClass *obhh = (loanTileClass *)self.superview.superview;
+    [obhh enabledfunction];
+    
+}
 
 
+-(void)collectionViewReload:(NSMutableArray *)desigArray
+{
+    self.mycollectionview.hidden=false;
+    [self.grouparray removeAllObjects];
+    [self.grouparray addObjectsFromArray:desigArray];
+    [self.mycollectionview reloadData];
+}
+#pragma mark Switch Action
 
+-(IBAction)switchButtonAction:(id)sender
+{
+    if (self.s1%2==0) {
+        
+        [self.switchButton setImage:[UIImage imageNamed:@"button_1 (1).png"] forState:UIControlStateNormal];
+        
+        //        self.switchButton.imageView.animationImages =
+        //        [NSArray arrayWithObjects:[UIImage imageNamed:@"button_1 (1).png"],[UIImage imageNamed:@"button_1 (1).png"],
+        //         nil];
+        //
+        //        self.switchButton.imageView.animationDuration = 0.5; //whatever you want (in seconds)
+        //      [self.switchButton.imageView startAnimating];
+        //
+        
+        //  [self.switchButton setImage:[UIImage animatedImageNamed:@"button_1 (1).png" duration:0.8] forState:UIControlStateNormal];
+        for (UIView *myview in self.scrollView.subviews) {
+            myview.userInteractionEnabled=NO;
+        }
+        self.s1++;
+        [self.scrollView setAlpha:0.6];//off
+        self.switchButtonstring=@"0";
+        
+    }
+    else
+    {
+        [self.switchButton setImage:[UIImage imageNamed:@"button_2 (1).png"] forState:UIControlStateNormal];
+        //        self.switchButton.imageView.animationImages =
+        //        [NSArray arrayWithObjects:
+        //         [UIImage imageNamed:@"button_2 (1).png"],[UIImage imageNamed:@"button_2 (1).png"],
+        //         nil];
+        //        self.switchButton.imageView.animationDuration = 0.5; //whatever you want (in seconds)
+        //        [self.switchButton.imageView startAnimating];
+        //
+        
+        // [self.switchButton setImage:[UIImage animatedImageNamed:@"button_2 (1).png" duration:0.5] forState:UIControlStateNormal];
+        
+        for (UIView *myview in self.scrollView.subviews) {
+            myview.userInteractionEnabled=YES;
+        }
+        self.s1++;
+        [self.scrollView setAlpha:1.0];
+        
+        self.switchButtonstring=@"1";
+        
+    }
+    
+}
 -(void)slideToRightWithGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer{
     
     //AppDelegate *myappde =(AppDelegate *)[[UIApplication sharedApplication]delegate];
@@ -536,7 +626,7 @@
     [self.scrollView setAlpha:0.6];
     
 }
-
+#pragma mark collectionView Delegates
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     return [self.grouparray count];
@@ -558,7 +648,7 @@
     
 }
 
-
+#pragma mark tableView Delegates
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView==self.maxDurationTC) {
@@ -640,37 +730,7 @@
     }
 }
 
-
--(IBAction)leaveDoneButtonAction:(id)sender
-{
-    if (self.selectedArray.count==0) {
-        
-        self.exceptLeaveText.text=@"";
-        self.exceptleavestring=@"";
-        self.leaveView.hidden=true;
-    }
-    else
-    {
-        if (self.selectedArray.count>1) {
-            if (self.selectedArray.count==self.leaveArray.count) {
-                
-                self.exceptLeaveText.text=@"All";
-            }
-            else
-                 self.exceptLeaveText.text=@"Multiple";
-        }
-        else
-        {
-            //NSIndexPath *inPath=[self.selectedArray objectAtIndex:0];
-            self.exceptLeaveText.text=[self.selectedArray objectAtIndex:0];//[self.leaveArray objectAtIndex:inPath.row];
-        }
-        self.leaveView.hidden=true;
-    }
-    
-    
-    
-
-}
+#pragma mark textField Delegates
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     loanTileClass *obhh = (loanTileClass *)self.superview.superview;
@@ -759,9 +819,6 @@
 }
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    
-  
-    
     if (textField==self.annualInterestText) {
         if (![self.annualInterestText.text isEqualToString:@""]) {
             if (([self.annualInterestText.text integerValue] > 0) && ([self.annualInterestText.text integerValue] < 101)) {
@@ -774,9 +831,13 @@
                 self.saveButton.enabled=NO;
             }
             if (!(self.annualInterestText.text.length > 3)) {
-                NSString *symbolString=@"%";
-                NSString *finalText=[NSString stringWithFormat:@"%@ %@ ",self.annualInterestText.text,symbolString];
-                self.annualInterestText.text=finalText;
+                if ([self.annualInterestText.text rangeOfString:@"%"].location == NSNotFound)
+                {
+                    self.interestString=self.annualInterestText.text;
+                    NSString *finalText=[NSString stringWithFormat:@"%@%%",self.annualInterestText.text];
+                    self.annualInterestText.text=finalText;
+                }
+                
             }
             
         }
@@ -786,10 +847,13 @@
         if (![self.loanEligibilityText.text isEqualToString:@""]) {
             if (!(self.loanEligibilityText.text.length > 3)) {
                 
-                self.service_eligiblemonthtext = self.loanEligibilityText.text;
-                
-                NSString *finalString=[NSString stringWithFormat:@"%@ Months",self.loanEligibilityText.text];
-                self.loanEligibilityText.text=finalString;
+                //Checks whether textfield contains no Character
+                if ([_loanEligibilityText.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location == NSNotFound)
+                {
+                    self.service_eligiblemonthtext = self.loanEligibilityText.text;
+                                        NSString *finalString=[NSString stringWithFormat:@"%@ Days",self.loanEligibilityText.text];
+                    self.loanEligibilityText.text=finalString;
+                }
             }
         }
     }
@@ -797,26 +861,28 @@
     {
         if (![self.visaExpirationText.text isEqualToString:@""]) {
             if (!(self.visaExpirationText.text.length > 3)) {
-                
-                 self.service_visaexpirationtext = self.visaExpirationText.text;
-                
-                NSString *finalString=[NSString stringWithFormat:@"%@ Months",self.visaExpirationText.text];
-                self.visaExpirationText.text=finalString;
+                if ([_visaExpirationText.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location == NSNotFound)
+                {
+                    self.service_visaexpirationtext = self.visaExpirationText.text;
+                    NSString *finalString=[NSString stringWithFormat:@"%@ Days",self.visaExpirationText.text];
+                    self.visaExpirationText.text=finalString;
+                }
             }
         }
     }
     else if (textField==self.nextApproveLeaveDaysText)
     {
         if (![self.nextApproveLeaveDaysText.text isEqualToString:@""]) {
-            if (!(self.nextApproveLeaveDaysText.text.length > 3)) {
-                self.exceptLeaveText.userInteractionEnabled=YES;
-                self.exceptLeaveText.backgroundColor=[UIColor whiteColor];
-                
-                
-                 self.service_nextapprovedtext = self.nextApproveLeaveDaysText.text;
-                
-                NSString *finalString=[NSString stringWithFormat:@"%@ Days",self.nextApproveLeaveDaysText.text];
-                self.nextApproveLeaveDaysText.text=finalString;
+            self.exceptLeaveText.userInteractionEnabled=YES;
+            self.exceptLeaveText.backgroundColor=[UIColor whiteColor];
+            if (!(self.nextApproveLeaveDaysText.text.length > 3))
+            {
+                if ([_nextApproveLeaveDaysText.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location == NSNotFound)
+                {
+                    self.service_nextapprovedtext = self.nextApproveLeaveDaysText.text;
+                    NSString *finalString=[NSString stringWithFormat:@"%@ Days",self.nextApproveLeaveDaysText.text];
+                    self.nextApproveLeaveDaysText.text=finalString;
+                }
             }
         }
         else
@@ -830,11 +896,12 @@
     {
         if (![self.lastWorkingText.text isEqualToString:@""]) {
             if (!(self.lastWorkingText.text.length > 3)) {
-                
-                 self.service_lastworkingdaytext = self.lastWorkingText.text;
-                
-                NSString *finalString=[NSString stringWithFormat:@"%@ Days",self.lastWorkingText.text];
-                self.lastWorkingText.text=finalString;
+                if ([_lastWorkingText.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location == NSNotFound)
+                {
+                    self.service_lastworkingdaytext = self.lastWorkingText.text;
+                    NSString *finalString=[NSString stringWithFormat:@"%@ Days",self.lastWorkingText.text];
+                    self.lastWorkingText.text=finalString;
+                }
             }
         }
     }
@@ -843,7 +910,7 @@
 }
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if ((textField==self.annualInterestText) || (textField==self.nextApproveLeaveDaysText) || (textField==self.lastWorkingText))
+    if ((textField==self.annualInterestText) || (textField==self.nextApproveLeaveDaysText) || (textField==self.lastWorkingText)||(textField==self.loanEligibilityText) || (textField==self.visaExpirationText))
     {
         if ([string isEqualToString:@""]) {
             return YES;
@@ -868,26 +935,7 @@
             return YES;
         }
         if (textField.text.length<=8) {
-            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-            unichar c = [string characterAtIndex:0];
-            if ([myCharSet characterIsMember:c])
-            {
-                return YES;
-            }
-            else{
-                return NO;
-            }
-            return YES;
-        }
-        return  NO;
-    }
-    else if ((textField==self.loanEligibilityText) || (textField==self.visaExpirationText))
-    {
-        if ([string isEqualToString:@""]) {
-            return YES;
-        }
-        if (textField.text.length<=1) {
-            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+            NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@".0123456789"];
             unichar c = [string characterAtIndex:0];
             if ([myCharSet characterIsMember:c])
             {
@@ -906,6 +954,33 @@
     }
     return false;
 }
+#pragma mark Button Actions
+-(IBAction)leaveDoneButtonAction:(id)sender
+{
+    if (self.selectedArray.count==0) {
+        
+        self.exceptLeaveText.text=@"";
+        self.exceptleavestring=@"";
+        self.leaveView.hidden=true;
+    }
+    else
+    {
+        if (self.selectedArray.count>1) {
+            if (self.selectedArray.count==self.leaveArray.count) {
+                
+                self.exceptLeaveText.text=@"All";
+            }
+            else
+                self.exceptLeaveText.text=@"Multiple";
+        }
+        else
+        {
+            //NSIndexPath *inPath=[self.selectedArray objectAtIndex:0];
+            self.exceptLeaveText.text=[self.selectedArray objectAtIndex:0];//[self.leaveArray objectAtIndex:inPath.row];
+        }
+        self.leaveView.hidden=true;
+    }
+}
 -(IBAction)checkBoxAction1:(id)sender
 {
     AppDelegate *myappde =(AppDelegate *)[[UIApplication sharedApplication]delegate];
@@ -917,7 +992,6 @@
         self.checkbuttonstring1=@"0";
          self.checkbuttonstring2=@"0";
         self.x++;
-        
     }
     else
     {
@@ -947,15 +1021,12 @@
                  self.checkbuttonstring2=@"0";
             self.y++;
         }
-        
     }
     else
     {   self.checkbuttonstring2=@"0";
         self.checkBoxButton2.userInteractionEnabled=false;
     }
 }
-
-
 
 -(IBAction)checkBoxAction3:(id)sender
 {
@@ -974,57 +1045,8 @@
     }
 }
 
-
--(IBAction)switchButtonAction:(id)sender
-{
-    if (self.s1%2==0) {
-        
-        [self.switchButton setImage:[UIImage imageNamed:@"button_1 (1).png"] forState:UIControlStateNormal];
-        
-//        self.switchButton.imageView.animationImages =
-//        [NSArray arrayWithObjects:[UIImage imageNamed:@"button_1 (1).png"],[UIImage imageNamed:@"button_1 (1).png"],
-//         nil];
-//
-//        self.switchButton.imageView.animationDuration = 0.5; //whatever you want (in seconds)
-//      [self.switchButton.imageView startAnimating];
-//        
-     
-  //  [self.switchButton setImage:[UIImage animatedImageNamed:@"button_1 (1).png" duration:0.8] forState:UIControlStateNormal];
-        for (UIView *myview in self.scrollView.subviews) {
-            myview.userInteractionEnabled=NO;
-        }
-        self.s1++;
-        [self.scrollView setAlpha:0.6];//off
-        self.switchButtonstring=@"0";
-        
-    }
-    else
-    {
-        [self.switchButton setImage:[UIImage imageNamed:@"button_2 (1).png"] forState:UIControlStateNormal];
-//        self.switchButton.imageView.animationImages =
-//        [NSArray arrayWithObjects:
-//         [UIImage imageNamed:@"button_2 (1).png"],[UIImage imageNamed:@"button_2 (1).png"],
-//         nil];
-//        self.switchButton.imageView.animationDuration = 0.5; //whatever you want (in seconds)
-//        [self.switchButton.imageView startAnimating];
-//       
-        
-      // [self.switchButton setImage:[UIImage animatedImageNamed:@"button_2 (1).png" duration:0.5] forState:UIControlStateNormal];
-         
-        for (UIView *myview in self.scrollView.subviews) {
-            myview.userInteractionEnabled=YES;
-        }
-        self.s1++;
-        [self.scrollView setAlpha:1.0];
-        
-        self.switchButtonstring=@"1";
-        
-    }
-
-}
 -(IBAction)saveButtonAction:(id)sender
 {
-       
     NSString *loanstring = [[NSUserDefaults standardUserDefaults] objectForKey:@"loantype"];
     NSString *abbrevstring = [[NSUserDefaults standardUserDefaults] objectForKey:@"abbrevation"];
     
@@ -1042,207 +1064,137 @@
     
     
     
-  if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"loanAction"]isEqualToString:@"create"]) {
+    if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"loanAction"]isEqualToString:@"create"]) {
     
 
-    if (loanstring.length>0 && abbrevstring.length>0 && self.annualInterestText.text.length>0 && self.maxDurationText.text.length>0) {
+        if (loanstring.length>0 && abbrevstring.length>0 && self.annualInterestText.text.length>0 && self.maxDurationText.text.length>0) {
         
-        
-        
-        if ([myappde.loan_idstring isEqualToString:@"0"]) {
+            if ([myappde.loan_idstring isEqualToString:@"0"]) {
             
-            self.tile_idstring=@"0";
-            
-            
-            
-            NSMutableDictionary *senddict=[[NSMutableDictionary alloc] init];
-            
-            if (myappde.includedesignationflag==0) {
-                
-                [senddict removeAllObjects];
-                senddict=[myappde.appde_localdict objectForKey:[NSString stringWithFormat:@"%d",myappde.myselectedTag]];
-                
-            }
-            else
-            {
-                
-                if (self.grouparray.count>0) {
-                    
-                    [senddict removeAllObjects];
-                    senddict=[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedDesignation"];
-                    
-                }
-                
-                
-            }
-            
-            
-            [self.myconnection createingloanTile:[[NSUserDefaults standardUserDefaults] objectForKey:@"loantype"] abbrevation:[[NSUserDefaults standardUserDefaults] objectForKey:@"abbrevation"] description:[[NSUserDefaults standardUserDefaults] objectForKey:@"description"] annualinterestrate:self.annualInterestText.text maxduration:self.service_maxdurationtext maximumlimit:self.maxLoanAmount.text pendingloanamount:self.pendingLoanAmount.text loanmonth:self.service_eligiblemonthtext lastworkingday:self.service_lastworkingdaytext visaduration:self.service_visaexpirationtext numberofleavedays:self.service_nextapprovedtext exceptforleave:self.exceptleavestring allowbuttonstring1:self.checkbuttonstring1 allowbuttonstring2:self.checkbuttonstring2 allowbuttonstring3:self.checkbuttonstring3 swichvalue:self.switchButtonstring loanruleid:myappde.loan_idstring loantileid:self.tile_idstring officeid:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"] selecteddesignationstring:designationList maindesignationdictionary:senddict];
-            
-            
-            
-        }
-        else
-        {
-            // AppDelegate *myappde =(AppDelegate *)[[UIApplication sharedApplication]delegate];
-            
-            NSLog(@"%i",myappde.myselectedTag);
-            
-            if ([myappde.loantileid_array count]>myappde.myselectedTag) {
-                
-                self.tile_idstring = [myappde.loantileid_array objectAtIndex:myappde.myselectedTag];
-            }
-            else
-            {
-                
                 self.tile_idstring=@"0";
+            
+                NSMutableDictionary *senddict=[[NSMutableDictionary alloc] init];
+            
+                if (myappde.includedesignationflag==0) {
+                    
+                    [senddict removeAllObjects];
+                    senddict=[myappde.appde_localdict objectForKey:[NSString stringWithFormat:@"%d",myappde.myselectedTag]];
+                
+                }
+                else
+                {
+                    if (self.grouparray.count>0) {
+                    
+                        [senddict removeAllObjects];
+                        senddict=[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedDesignation"];
+                }
             }
             
+            [self.myconnection createingloanTile:[[NSUserDefaults standardUserDefaults] objectForKey:@"loantype"] abbrevation:[[NSUserDefaults standardUserDefaults] objectForKey:@"abbrevation"] description:[[NSUserDefaults standardUserDefaults] objectForKey:@"description"] annualinterestrate:self.interestString maxduration:self.service_maxdurationtext maximumlimit:self.maxLoanAmount.text pendingloanamount:self.pendingLoanAmount.text loanmonth:self.service_eligiblemonthtext lastworkingday:self.service_lastworkingdaytext visaduration:self.service_visaexpirationtext numberofleavedays:self.service_nextapprovedtext exceptforleave:self.exceptleavestring allowbuttonstring1:self.checkbuttonstring1 allowbuttonstring2:self.checkbuttonstring2 allowbuttonstring3:self.checkbuttonstring3 swichvalue:self.switchButtonstring loanruleid:myappde.loan_idstring loantileid:self.tile_idstring officeid:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"] selecteddesignationstring:designationList maindesignationdictionary:senddict];
             
             
             
-            NSMutableDictionary *senddict=[[NSMutableDictionary alloc] init];
-            
-            if (myappde.includedesignationflag==0) {
-                
-                [senddict removeAllObjects];
-                senddict=[myappde.appde_localdict objectForKey:[NSString stringWithFormat:@"%d",myappde.myselectedTag]];
-                
             }
             else
             {
-                if (self.grouparray.count>0) {
-                    
-                    [senddict removeAllObjects];
-                    senddict=[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedDesignation"];
-                    
+                // AppDelegate *myappde =(AppDelegate *)[[UIApplication sharedApplication]delegate];
+            
+                NSLog(@"%i",myappde.myselectedTag);
+            
+                if ([myappde.loantileid_array count]>myappde.myselectedTag) {
+                
+                    self.tile_idstring = [myappde.loantileid_array objectAtIndex:myappde.myselectedTag];
                 }
+                else
+                {
+                
+                    self.tile_idstring=@"0";
+                }
+            
+                NSMutableDictionary *senddict=[[NSMutableDictionary alloc] init];
+            
+                if (myappde.includedesignationflag==0) {
+                
+                    [senddict removeAllObjects];
+                    senddict=[myappde.appde_localdict objectForKey:[NSString stringWithFormat:@"%d",myappde.myselectedTag]];
+                }
+                else
+                {
+                    if (self.grouparray.count>0) {
+                    
+                        [senddict removeAllObjects];
+                        senddict=[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedDesignation"];
+                    
+                    }
                 
                 
+                }
+            
+            
+            [self.myconnection secondtimecreateloanTile:[[NSUserDefaults standardUserDefaults] objectForKey:@"loantype"] abbrevation:[[NSUserDefaults standardUserDefaults] objectForKey:@"abbrevation"] description:[[NSUserDefaults standardUserDefaults] objectForKey:@"description"] annualinterestrate:self.interestString maxduration:self.service_maxdurationtext maximumlimit:self.maxLoanAmount.text pendingloanamount:self.pendingLoanAmount.text loanmonth:self.service_eligiblemonthtext lastworkingday:self.service_lastworkingdaytext visaduration:self.service_visaexpirationtext numberofleavedays:self.service_nextapprovedtext exceptforleave:self.exceptleavestring allowbuttonstring1:self.checkbuttonstring1 allowbuttonstring2:self.checkbuttonstring2 allowbuttonstring3:self.checkbuttonstring3 swichvalue:self.switchButtonstring loanruleid:myappde.loan_idstring loantileid:self.tile_idstring officeid:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"] selecteddesignationstring:designationList maindesignationdictionary:senddict];
+            
+            
             }
-            
-            
-//            NSLog(@"%@",self.checkbuttonstring1);
-//            NSLog(@"%@",self.checkbuttonstring2);
-//            NSLog(@"%@",self.checkbuttonstring3);
-            
-            
-            
-            
-            
-            [self.myconnection secondtimecreateloanTile:[[NSUserDefaults standardUserDefaults] objectForKey:@"loantype"] abbrevation:[[NSUserDefaults standardUserDefaults] objectForKey:@"abbrevation"] description:[[NSUserDefaults standardUserDefaults] objectForKey:@"description"] annualinterestrate:self.annualInterestText.text maxduration:self.service_maxdurationtext maximumlimit:self.maxLoanAmount.text pendingloanamount:self.pendingLoanAmount.text loanmonth:self.service_eligiblemonthtext lastworkingday:self.service_lastworkingdaytext visaduration:self.service_visaexpirationtext numberofleavedays:self.service_nextapprovedtext exceptforleave:self.exceptleavestring allowbuttonstring1:self.checkbuttonstring1 allowbuttonstring2:self.checkbuttonstring2 allowbuttonstring3:self.checkbuttonstring3 swichvalue:self.switchButtonstring loanruleid:myappde.loan_idstring loantileid:self.tile_idstring officeid:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"] selecteddesignationstring:designationList maindesignationdictionary:senddict];
-            
-            
-        }
-        
-        
         
         myappde.includedesignationflag=0;
     
-    }
+        }
     
-    else
-    {
+        else
+        {
         
-        UIAlertController *alert= [UIAlertController
+            UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Mandatory"
                                    message:[NSString stringWithFormat:@"Please Enter The Mandatory Fields, Loan Name and Abbreviation are also Mandatory"]
                                    preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+            UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action){
                                                        //Do Some action here
                                                    }];
-        [alert addAction:ok];
+            [alert addAction:ok];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
             
-            [(settingsViewController *)[self.superview.superview.superview.superview.superview.superview.superview nextResponder] presentViewController:alert animated:YES completion:nil];
-        });
+                [(settingsViewController *)[self.superview.superview.superview.superview.superview.superview.superview nextResponder] presentViewController:alert animated:YES completion:nil];
+            });
         
         
+        }
+      
+      
     }
-      
-      
-  }
     
-else
-{
-    if (loanstring.length>0 && abbrevstring.length>0 && self.annualInterestText.text.length>0 && self.maxDurationText.text.length>0) {
-        
-
-        
-         [self.myconnection updationofloanTile:[[NSUserDefaults standardUserDefaults] objectForKey:@"loantype"] abbrevation:[[NSUserDefaults standardUserDefaults] objectForKey:@"abbrevation"] description:[[NSUserDefaults standardUserDefaults] objectForKey:@"description"] annualinterestrate:self.annualInterestText.text maxduration:self.service_maxdurationtext maximumlimit:self.maxLoanAmount.text pendingloanamount:self.pendingLoanAmount.text loanmonth:self.service_eligiblemonthtext lastworkingday:self.service_lastworkingdaytext visaduration:self.service_visaexpirationtext numberofleavedays:self.service_nextapprovedtext exceptforleave:self.exceptleavestring allowbuttonstring1:self.checkbuttonstring1 allowbuttonstring2:self.checkbuttonstring2 allowbuttonstring3:self.checkbuttonstring3 swichvalue:self.switchButtonstring loanruleid:myappde.loan_idstring loantileid:myappde.designation_tile officeid:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"] selecteddesignationstring:designationList maindesignationdictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedDesignation"] clickdesignationflag:self.clickincludedesignationforupdation];
-        
-        
-        
-    }
     else
     {
+        if (loanstring.length>0 && abbrevstring.length>0 && self.annualInterestText.text.length>0 && self.maxDurationText.text.length>0) {
+        
+            [self.myconnection updationofloanTile:[[NSUserDefaults standardUserDefaults] objectForKey:@"loantype"] abbrevation:[[NSUserDefaults standardUserDefaults] objectForKey:@"abbrevation"] description:[[NSUserDefaults standardUserDefaults] objectForKey:@"description"] annualinterestrate:self.interestString maxduration:self.service_maxdurationtext maximumlimit:self.maxLoanAmount.text pendingloanamount:self.pendingLoanAmount.text loanmonth:self.service_eligiblemonthtext lastworkingday:self.service_lastworkingdaytext visaduration:self.service_visaexpirationtext numberofleavedays:self.service_nextapprovedtext exceptforleave:self.exceptleavestring allowbuttonstring1:self.checkbuttonstring1 allowbuttonstring2:self.checkbuttonstring2 allowbuttonstring3:self.checkbuttonstring3 swichvalue:self.switchButtonstring loanruleid:myappde.loan_idstring loantileid:myappde.designation_tile officeid:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"] selecteddesignationstring:designationList maindesignationdictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedDesignation"] clickdesignationflag:self.clickincludedesignationforupdation];
+        
+        }
+        else
+        {
         
         
-        UIAlertController *alert= [UIAlertController
+            UIAlertController *alert= [UIAlertController
                                    alertControllerWithTitle:@"Mandatory"
                                    message:[NSString stringWithFormat:@"%@",@"Please Enter The Mandatory Fields"]
                                    preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+            UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action){
                                                        //Do Some action here
                                                    }];
-        [alert addAction:ok];
+            [alert addAction:ok];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
             
-            [(settingsViewController *)[self.superview.superview.superview.superview.superview.superview.superview nextResponder] presentViewController:alert animated:YES completion:nil];
-        });
-        
-        
+                [(settingsViewController *)[self.superview.superview.superview.superview.superview.superview.superview nextResponder] presentViewController:alert animated:YES completion:nil];
+            });
+        }
     }
-   
-        
 }
-    
 
-}
-    
-    
-
-  // written in  service response action
-    
-
-- (void) keyboardDidShow:(NSNotification *)notification
-{
-    NSDictionary* info = [notification userInfo];
-    CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-    kbRect = [self convertRect:kbRect fromView:nil];
-    
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbRect.size.height-40, 0.0);
-    self.scrollView.contentInset = contentInsets;
-    self.scrollView.scrollIndicatorInsets = contentInsets;
-    
-    CGRect aRect = self.frame;
-    aRect.size.height -= kbRect.size.height;
-    
-    if (!CGRectContainsPoint(aRect, self.activeField.frame.origin)) {
-        
-        [self.scrollView scrollRectToVisible:self.activeField.frame animated:YES];
-        AppDelegate *myappde =(AppDelegate *)[[UIApplication sharedApplication]delegate];
-
-        NSLog(@"%@",myappde.designation_tile);
-              
-        
-    }
-    
-}
-- (void) keyboardWillBeHidden:(NSNotification *)notification
-{
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-    self.scrollView.contentInset = contentInsets;
-    self.scrollView.scrollIndicatorInsets = contentInsets;
-    loanTileClass *ob = (loanTileClass *)self.superview.superview;
-    [ob.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-}
 -(IBAction)valueChanged:(id)sender
 {
     if ((![self.annualInterestText.text isEqualToString:@""]) || (![self.maxLoanAmount.text isEqualToString:@""]) || (![self.pendingLoanAmount.text isEqualToString:@""]) || (![self.loanEligibilityText.text isEqualToString:@""]) || (![self.lastWorkingText.text isEqualToString:@""]) || (![self.visaExpirationText.text isEqualToString:@""]) || (![self.nextApproveLeaveDaysText.text isEqualToString:@""])) {
@@ -1282,45 +1234,7 @@ else
      objj.cancelbutton.userInteractionEnabled=FALSE;
 }
 
-
-
--(void)enableall
-{
-    
-    for (UIView *myview in self.scrollView.subviews) {
-        myview.userInteractionEnabled=YES;
-    }
-    
-    self.switchButton.userInteractionEnabled=TRUE;
-    self.saveButton.userInteractionEnabled=TRUE;
-
-    loansettingsviewclass *objj = (loansettingsviewclass *)self.superview.superview.superview;
-    objj.cancelbutton.userInteractionEnabled=TRUE;
-
-    loanTileClass *obhh = (loanTileClass *)self.superview.superview;
-    [obhh enabledfunction];
-    
-}
-
-
--(void)collectionViewReload:(NSMutableArray *)desigArray
-{
-    self.mycollectionview.hidden=false;
-    [self.grouparray removeAllObjects];
-    [self.grouparray addObjectsFromArray:desigArray];
-    [self.mycollectionview reloadData];
-}
-
-
--(IBAction)removegroupfromcollectionview:(id)sender
-{
-    groupcollceioncellclass *clickedCell = (groupcollceioncellclass *)[[sender superview] superview];
-    self.indexpath = [self.mycollectionview indexPathForCell:clickedCell];
-    [self.grouparray removeObjectAtIndex:self.indexpath.row];
-    [self.mycollectionview reloadData];
-}
-
-
+#pragma mark Service Response
 -(void)leaveAbbrivationlist:(NSMutableArray *)responseList
 {
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -1517,285 +1431,203 @@ else
         
         if (responsedata.count>0) {
             
-                NSMutableDictionary *mydict=[responsedata objectAtIndex:0];
+            NSMutableDictionary *mydict=[responsedata objectAtIndex:0];
+            
+            self.interestString=[mydict objectForKey:@"annual_interest_rate"];
+            if (self.interestString.length>0) {
+                self.annualInterestText.text=[NSString stringWithFormat:@"%@%%",[mydict objectForKey:@"annual_interest_rate"]];
+            }
+            self.service_maxdurationtext=[mydict objectForKey:@"max_duration"];
+            if (self.service_maxdurationtext.length>0)
+            {
+                self.maxDurationText.text=[NSString stringWithFormat:@"%@ years",[mydict objectForKey:@"max_duration"]];
                 
-                NSString *symbolString=@"%";
-                self.annualInterestText.text=[NSString stringWithFormat:@"%@ %@",[mydict objectForKey:@"annual_interest_rate"],symbolString];
-                
+            }
+//            else{
+//                    
+//                self.service_maxdurationtext=@"";
+//                self.maxDurationText.text=@"";
+//            }
+            
+            self.maxLoanAmount.text=[mydict objectForKey:@"max_unit"];
+            
+            self.pendingLoanAmount.text=[mydict objectForKey:@"pending_loan"];
             
                 
-                NSString *str1=[mydict objectForKey:@"max_duration"];
-                
-                if (str1.length>0) {
-                    
-                    self.maxDurationText.text=[NSString stringWithFormat:@"%@ years",[mydict objectForKey:@"max_duration"]];
-                    self.service_maxdurationtext=[mydict objectForKey:@"max_duration"];
-                }
-                else{
-                    
-                    self.service_maxdurationtext=@"";
-                    self.maxDurationText.text=@"";
-                }
+            self.service_eligiblemonthtext=[mydict objectForKey:@"complete_amount"];
+            if (self.service_eligiblemonthtext.length>0)
+            {
+                self.loanEligibilityText.text=[NSString stringWithFormat:@"%@ Days",[mydict objectForKey:@"complete_amount"]];
+            }
+//            else
+//            {
+//                self.service_eligiblemonthtext=@"";
+//                self.loanEligibilityText.text=@"";
+//            }
             
+            self.service_lastworkingdaytext=[mydict objectForKey:@"last_working_day"];
+            if (self.service_lastworkingdaytext.length>0)
+            {
+                self.lastWorkingText.text= [NSString stringWithFormat:@"%@ Days",[mydict objectForKey:@"last_working_day"]];
+            }
+//                else{
+//                    
+//                    self.service_lastworkingdaytext=@"";
+//                    self.lastWorkingText.text=@"";
+//                }
             
-              NSString *str22=[mydict objectForKey:@"max_unit"];
+            self.service_visaexpirationtext=[mydict objectForKey:@"visa_expiration"];
+            if (self.service_visaexpirationtext.length>0)
+            {
+                self.visaExpirationText.text=[NSString stringWithFormat:@"%@ Days",[mydict objectForKey:@"visa_expiration"]];
+            }
+//                else{
+//                    
+//                    self.visaExpirationText.text=@"";
+//                    self.service_visaexpirationtext=@"";
+//                }
             
-             if (str22.length>0) {
+            self.service_nextapprovedtext=[mydict objectForKey:@"next_approved_leave"];
+            if (self.service_nextapprovedtext.length>0)
+            {
+                self.exceptLeaveText.userInteractionEnabled=YES;
+                self.exceptLeaveText.backgroundColor=[UIColor whiteColor];
+                self.nextApproveLeaveDaysText.text= [NSString stringWithFormat:@"%@ Days",[mydict objectForKey:@"next_approved_leave"]];
+            }
+            else
+            {
+                self.exceptLeaveText.userInteractionEnabled=NO;
+                self.exceptLeaveText.backgroundColor=[UIColor lightGrayColor];
+                self.nextApproveLeaveDaysText.text=@"";
+                self.service_nextapprovedtext=@"";
+            }
                 
-                 self.maxLoanAmount.text=[mydict objectForKey:@"max_unit"];
-              
-             }
-            
-             else
-             {
-                self.maxLoanAmount.text=@"";
-                
-             }
-            
-                NSString *str2=[mydict objectForKey:@"pending_loan"];
-                
-                if (str2.length>0) {
-                    
-                    self.pendingLoanAmount.text=[mydict objectForKey:@"pending_loan"];
-                }
-                else{
-                    
-                    self.pendingLoanAmount.text=@"";
-                }
-                
-                NSString *str3=[mydict objectForKey:@"complete_amount"];
-                
-                if (str3.length>0) {
-                    
-                    self.loanEligibilityText.text=[NSString stringWithFormat:@"%@ Months",[mydict objectForKey:@"complete_amount"]];
-                    self.service_eligiblemonthtext=[mydict objectForKey:@"complete_amount"];
-                }
-                else{
-                    
-                    self.service_eligiblemonthtext=@"";
-                    self.loanEligibilityText.text=@"";
-                }
-                
-                NSString *str4=[mydict objectForKey:@"last_working_day"];
-                
-                if (str4.length>0) {
-                    
-                    
-                    self.lastWorkingText.text= [NSString stringWithFormat:@"%@ Days",[mydict objectForKey:@"last_working_day"]];
-                    
-                    self.service_lastworkingdaytext=[mydict objectForKey:@"last_working_day"];
-                    
-                }
-                else{
-                    
-                    self.service_lastworkingdaytext=@"";
-                    self.lastWorkingText.text=@"";
-                }
-                
-                
-                NSString *str5=[mydict objectForKey:@"visa_expiration"];
-                
-                if (str5.length>0) {
-                    
-                   self.visaExpirationText.text=[NSString stringWithFormat:@"%@ Months",[mydict objectForKey:@"visa_expiration"]];
-                    self.service_visaexpirationtext=[mydict objectForKey:@"visa_expiration"];
-                }
-                else{
-                    
-                    self.visaExpirationText.text=@"";
-                    self.service_visaexpirationtext=@"";
-                }
-                
-                
-                NSString *str7=[mydict objectForKey:@"next_approved_leave"];
-                
-                if (str7.length>0) {
-                    
-                    self.exceptLeaveText.userInteractionEnabled=YES;
-                    self.exceptLeaveText.backgroundColor=[UIColor whiteColor];
-                    
-                    self.nextApproveLeaveDaysText.text= [NSString stringWithFormat:@"%@ Days",[mydict objectForKey:@"next_approved_leave"]];
-                    self.service_nextapprovedtext=[mydict objectForKey:@"next_approved_leave"];
-                }
-                else{
-                    
-                    self.exceptLeaveText.userInteractionEnabled=NO;
-                    self.exceptLeaveText.backgroundColor=[UIColor lightGrayColor];
-                    
-                    self.nextApproveLeaveDaysText.text=@"";
-                    self.service_nextapprovedtext=@"";
-                }
-                
-                NSString *str8=[mydict objectForKey:@"except_for_leaves"];
-                
-                if (str8.length>0) {
-                    
-                    self.exceptleavestring=[mydict objectForKey:@"except_for_leaves"];
-                    
-                    NSRange range = [ self.exceptleavestring rangeOfString:@"#"];
-                    if (range.location != NSNotFound)
-                    {
+            NSString *str8=[mydict objectForKey:@"except_for_leaves"];
+            if (str8.length>0) {
+                self.exceptleavestring=[mydict objectForKey:@"except_for_leaves"];
+                NSRange range = [ self.exceptleavestring rangeOfString:@"#"];
+                if (range.location != NSNotFound)
+                {
+                    NSArray *myarray = [self.exceptleavestring componentsSeparatedByString:@"###"];
                         
-                        
-                        NSArray *myarray = [self.exceptleavestring componentsSeparatedByString:@"###"];
-                        
-                        [self.selectedArray removeAllObjects];
-                        [self.selectedArray addObjectsFromArray:myarray];
-                        [self.exceptLeaveTableView reloadData];
-                        
-                    }
-                    else
-                    {
-                        
-                        
-                        [self.selectedArray removeAllObjects];
-                        [self.selectedArray addObject:self.exceptleavestring];
-                        [self.exceptLeaveTableView reloadData];
-                        
-                        
-                    }
-                }
-                
-                else{
-                    
-                    self.exceptleavestring=@"";
                     [self.selectedArray removeAllObjects];
+                    [self.selectedArray addObjectsFromArray:myarray];
                     [self.exceptLeaveTableView reloadData];
-                }
-                
-                
-                if (self.selectedArray.count==0) {
-                    self.exceptLeaveText.text=@"";
-                    self.exceptleavestring=@"";
-                    //self.leaveView.hidden=true;
-                    
+                        
                 }
                 else
                 {
-                    if (self.selectedArray.count>1) {
+                    [self.selectedArray removeAllObjects];
+                    [self.selectedArray addObject:self.exceptleavestring];
+                    [self.exceptLeaveTableView reloadData];
+                    }
+                }
+            else
+            {
+                self.exceptleavestring=@"";
+                [self.selectedArray removeAllObjects];
+                [self.exceptLeaveTableView reloadData];
+            }
+            
+            if (self.selectedArray.count==0) {
+                self.exceptLeaveText.text=@"";
+                self.exceptleavestring=@"";
+                    //self.leaveView.hidden=true;
+            }
+            else
+            {
+                if (self.selectedArray.count>1) {
                         
-                        if (self.selectedArray.count==self.leaveArray.count) {
-                            self.exceptLeaveText.text=@"All";
-                        }
-                        else
-                            self.exceptLeaveText.text=@"Multiple";
+                    if (self.selectedArray.count==self.leaveArray.count) {
+                        self.exceptLeaveText.text=@"All";
                     }
                     else
-                    {
-                        //NSIndexPath *inPath=[self.selectedArray objectAtIndex:0];
-                        self.exceptLeaveText.text=[self.selectedArray objectAtIndex:0];//[self.leaveArray objectAtIndex:inPath.row];
-                    }
+                        self.exceptLeaveText.text=@"Multiple";
+                }
+                else
+                {
+                    //NSIndexPath *inPath=[self.selectedArray objectAtIndex:0];
+                    self.exceptLeaveText.text=[self.selectedArray objectAtIndex:0];//[self.leaveArray objectAtIndex:inPath.row];
+                }
                     //self.leaveView.hidden=true;
+            }
+                
+            NSString *str9=[mydict objectForKey:@"request_online"];
+            if ([str9 isEqualToString:@"1"]) {
+                [self.checkBoxButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
                     
+                self.checkbuttonstring1=@"1";
+            }
+            else
+            {
+                [self.checkBoxButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
                     
+                self.checkbuttonstring1=@"0";
+                self.checkbuttonstring2=@"0";
+                    
+            }
+            
+            NSString *str10=[mydict objectForKey:@"request_forward"];
+                
+            if ([str10 isEqualToString:@"1"]) {
+                    
+                [self.checkBoxButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    
+                self.checkbuttonstring1=@"1";
+                self.checkbuttonstring2=@"1";
+            }
+            else
+            {
+                [self.checkBoxButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    
+                self.checkbuttonstring2=@"0";
+                    
+            }
+                
+            NSString *str11=[mydict objectForKey:@"request_approve"];
+            if ([str11 isEqualToString:@"1"]) {
+                [self.checkBoxButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.checkbuttonstring3=@"1";
+            }
+            else
+            {
+                [self.checkBoxButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.checkbuttonstring3=@"0";
+            }
+            NSString *str12=[mydict objectForKey:@"checkbox_enable"];
+            if ([str12 isEqualToString:@"1"]) {
+                [self.switchButton setImage:[UIImage imageNamed:@"button_2 (1).png"] forState:UIControlStateNormal];
+                for (UIView *myview in self.scrollView.subviews) {
+                    myview.userInteractionEnabled=YES;
                 }
-                
-                
-                NSString *str9=[mydict objectForKey:@"request_online"];
-                
-                if ([str9 isEqualToString:@"1"]) {
-                    
-                    [self.checkBoxButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                    
-                    self.checkbuttonstring1=@"1";
+                [self.scrollView setAlpha:1.0];
+                self.switchButtonstring=@"1";
+            }
+            else
+            {
+                [self.switchButton setImage:[UIImage imageNamed:@"button_1 (1).png"] forState:UIControlStateNormal];
+                for (UIView *myview in self.scrollView.subviews) {
+                    myview.userInteractionEnabled=NO;
                 }
-                else
-                {
-                    [self.checkBoxButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                    
-                    self.checkbuttonstring1=@"0";
-                    self.checkbuttonstring2=@"0";
-                    
-                }
-                
-                
-                NSString *str10=[mydict objectForKey:@"request_forward"];
-                
-                if ([str10 isEqualToString:@"1"]) {
-                    
-                    [self.checkBoxButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                    
-                    self.checkbuttonstring1=@"1";
-                    self.checkbuttonstring2=@"1";
-                }
-                else
-                {
-                    [self.checkBoxButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                    
-                    self.checkbuttonstring2=@"0";
-                    
-                }
-                
-                NSString *str11=[mydict objectForKey:@"request_approve"];
-                
-                if ([str11 isEqualToString:@"1"]) {
-                    
-                    [self.checkBoxButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                    
-                    self.checkbuttonstring3=@"1";
-                    
-                }
-                else
-                {
-                    [self.checkBoxButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                    
-                    self.checkbuttonstring3=@"0";
-                    
-                }
-                
-                
-                NSString *str12=[mydict objectForKey:@"checkbox_enable"];
-                
-                if ([str12 isEqualToString:@"1"]) {
-                    
-                    [self.switchButton setImage:[UIImage imageNamed:@"button_2 (1).png"] forState:UIControlStateNormal];
-                    
-                    for (UIView *myview in self.scrollView.subviews) {
-                        
-                        myview.userInteractionEnabled=YES;
-                    }
-                    
-                    [self.scrollView setAlpha:1.0];
-                    
-                    self.switchButtonstring=@"1";
-                    
-                }
-                else
-                {
-                    [self.switchButton setImage:[UIImage imageNamed:@"button_1 (1).png"] forState:UIControlStateNormal];
-                    for (UIView *myview in self.scrollView.subviews) {
-                        myview.userInteractionEnabled=NO;
-                    }
-                    [self.scrollView setAlpha:0.6];//off
-                    self.switchButtonstring=@"0";
-                    
-                    
-                }
-                
-                
-                NSString *groupstring=[mydict objectForKey:@"designationstring"];
-                if (groupstring.length>0) {
-                    
-                    NSArray *array=[groupstring componentsSeparatedByString:@"###"];
-                    [self.grouparray removeAllObjects];
-                    [self.grouparray addObjectsFromArray:array];
-                    [self.mycollectionview reloadData];
-                    
-                }
-                else
-                {
-                    
-                    [self.grouparray removeAllObjects];
-                    [self.mycollectionview reloadData];
-                    
-                }
-       
+                [self.scrollView setAlpha:0.6];//off
+                self.switchButtonstring=@"0";
+            }
+            
+            NSString *groupstring=[mydict objectForKey:@"designationstring"];
+            if (groupstring.length>0)
+            {
+                NSArray *array=[groupstring componentsSeparatedByString:@"###"];
+                [self.grouparray removeAllObjects];
+                [self.grouparray addObjectsFromArray:array];
+                [self.mycollectionview reloadData];
+            }
+            else
+            {
+                [self.grouparray removeAllObjects];
+                [self.mycollectionview reloadData];
+            }
         }
-        
-        
     });
-
-    
 }
 
 @end
