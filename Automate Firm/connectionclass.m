@@ -5340,6 +5340,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
         }
         else
         {
+            //vfgfgfgfg
             NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             if ([self.mydelegate respondsToSelector:@selector(viewAllFineResponse:)]&&(self.mydelegate!=NULL))
             {
