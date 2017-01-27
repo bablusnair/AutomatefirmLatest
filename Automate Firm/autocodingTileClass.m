@@ -98,10 +98,10 @@
     //    self.myconnection=[[connectionclass alloc] init];
     //    self.myconnection.mydelegate=self;
     //
-    if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"loanAction"]isEqualToString:@"create"]) {
-        
-        [self addaccordianview];
-    }
+//    if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"loanAction"]isEqualToString:@"create"]) {
+//        
+//        [self addaccordianview];
+//    }
     
     
     

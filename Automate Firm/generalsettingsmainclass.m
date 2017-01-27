@@ -74,6 +74,8 @@
 -(void)enablecollcetionview
 {
     [self.generalsettingcollectionview setUserInteractionEnabled:TRUE];
+    [self.myconnection displaymodifiedDateFunction:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"]];
+    [self.generalsettingstableview reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -628,14 +630,14 @@
 -(void)deleteResponse:(id)response
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([[response objectForKey:@"status"] isEqualToString:@"200"]) {
+        if ([response isEqualToString:@"200"]) {
             
             [self.generaldesignationarray removeObjectAtIndex:self.inPath.row];
             [self.generalDesignationIDArray removeObjectAtIndex:self.inPath.row];
             [self.generalsettingstableview reloadData];
             
         }
-        else if([[response objectForKey:@"status"]isEqualToString:@"1"])
+        else if([response isEqualToString:@"1"])
         {
             [self.dummyDesignationIDArray addObjectsFromArray:self.generalDesignationIDArray];
             [self.dummyDesignationArray addObjectsFromArray:self.generaldesignationarray];
@@ -645,10 +647,7 @@
             [self.popupTableView reloadData];
             self.designationDeletionPopup.hidden=false;
         }
-        else
-        {
-            [self showalerviewcontroller:@"Failed to Delete the Designation"];
-        }
+        
         
     });
 }
@@ -656,7 +655,7 @@
 -(void)serviceGotResponse:(id)responseData
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([[responseData objectForKey:@"status"] isEqualToString:@"200"]) {
+        if ([responseData isEqualToString:@"200"]) {
             [self.generaldesignationarray removeObjectAtIndex:self.inPath.row];
             [self.generalDesignationIDArray removeObjectAtIndex:self.inPath.row];
             [self.generalsettingstableview reloadData];

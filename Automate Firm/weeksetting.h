@@ -152,8 +152,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *donebutton;
 
-@property (retain, nonatomic)NSString *breakdurationString;
-@property (retain, nonatomic)NSString *partialDurationString;
+//@property (retain, nonatomic)NSString *breakdurationString;
+//@property (retain, nonatomic)NSString *partialDurationString;
 
 
 @property(nonatomic,retain)NSString *offdayfirstString;

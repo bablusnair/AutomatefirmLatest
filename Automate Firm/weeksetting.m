@@ -169,8 +169,6 @@
     self.offdaythirdString=@"";
     self.offdayfourthString=@"";
     
-    self.partialDurationString=@"";
-    self.breakdurationString=@"";
     
     self.breaktypestring=@"0";
     myflag=0;
@@ -2802,7 +2800,7 @@
     NSString *prettyVersion = [dateFormat stringFromDate:myDate];
     NSArray *timeArray=[prettyVersion componentsSeparatedByString:@":"];
     NSString *selectedTime=[NSString stringWithFormat:@"%@Hrs %@ Mins",[timeArray objectAtIndex:0],[timeArray objectAtIndex:1]];
-    self.breakdurationString = [NSString stringWithFormat:@"%@:%@ ",[[timeArray objectAtIndex:0] stringByTrimmingCharactersInSet:                                                                    [NSCharacterSet whitespaceCharacterSet]],[timeArray objectAtIndex:1]];
+    //self.breakdurationString = [NSString stringWithFormat:@"%@:%@ ",[[timeArray objectAtIndex:0] stringByTrimmingCharactersInSet:                                                                    [NSCharacterSet whitespaceCharacterSet]],[timeArray objectAtIndex:1]];
     self.breakDurationText.text=selectedTime;
     
     self.donebutton.enabled=YES;
@@ -2874,13 +2872,7 @@
         
         NSLog(@"%f",hours);
         NSLog(@"%f",remainder);
-        if (remainder<10) {
-            self.partialDurationString=[NSString stringWithFormat:@"0%.f:0%.f ",hours,remainder];
-        }
-        else
-        {
-            self.partialDurationString=[NSString stringWithFormat:@"0%.f:%.f ",hours,remainder];
-        }       
+        
         if (hours>1) {
             self.durationText.text=[NSString stringWithFormat:@"%.f Hrs %.f Mins",hours,remainder];
           
@@ -2915,13 +2907,13 @@
         remainder=remainder/60;
         NSLog(@"%f",hours);
         NSLog(@"%f",remainder);
-        if (remainder<10) {
-             self.breakdurationString=[NSString stringWithFormat:@"0%.f:0%.f ",hours,remainder];
-        }
-        else
-        {
-        self.breakdurationString=[NSString stringWithFormat:@"0%.f:%.f ",hours,remainder];
-        }
+//        if (remainder<10) {
+//             self.breakdurationString=[NSString stringWithFormat:@"0%.f:0%.f ",hours,remainder];
+//        }
+//        else
+//        {
+//        self.breakdurationString=[NSString stringWithFormat:@"0%.f:%.f ",hours,remainder];
+//        }
         if (hours>1) {
             self.breakDurationText.text=[NSString stringWithFormat:@"%.f Hrs %.f Mins",hours,remainder];
           
@@ -3193,7 +3185,7 @@ replacementString:(NSString *)string
     if([idString isEqualToString:@"create"]) {
         
         
-        [self.myconnection createNewweekRule:self.weekRuleNameText.text abbrev:self.abbrbText.text description:self.descriptionTextView.text weekStarton:self.weekStartsOnText.text offday1:self.offdayfirstString offday2:self.offdaysecondString offday3:self.offdaythirdString partialday:self.offdayfourthString beginningTime:self.beginningTime.text  endingTime:self.endingTime.text duration:self.partialDurationString breaktype:self.BreakTypeText.text breakstart:self.breakBeginningTime.text breakend:self.breakEndingTime.text  breakduration:self.breakdurationString  offficeid:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId" ] : desig : [[NSUserDefaults standardUserDefaults]objectForKey:@"selectedDesignation"]];
+        [self.myconnection createNewweekRule:self.weekRuleNameText.text abbrev:self.abbrbText.text description:self.descriptionTextView.text weekStarton:self.weekStartsOnText.text offday1:self.offdayfirstString offday2:self.offdaysecondString offday3:self.offdaythirdString partialday:self.offdayfourthString beginningTime:self.beginningTime.text  endingTime:self.endingTime.text duration:self.durationText.text breaktype:self.BreakTypeText.text breakstart:self.breakBeginningTime.text breakend:self.breakEndingTime.text  breakduration:self.breakDurationText.text  offficeid:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId" ] : desig : [[NSUserDefaults standardUserDefaults]objectForKey:@"selectedDesignation"]];
       
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"selectedDesignation"];
         
@@ -3201,7 +3193,7 @@ replacementString:(NSString *)string
     }
     else{
        
-        [self.myconnection updateNewweekRule:self.weekRuleNameText.text abbrev:self.abbrbText.text description:self.descriptionTextView.text weekStarton:self.weekStartsOnText.text offday1:self.offdayfirstString offday2:self.offdaysecondString offday3:self.offdaythirdString partialday:self.offdayfourthString beginningTime:self.beginningTime.text endingTime:self.endingTime.text duration:self.partialDurationString breaktype:self.BreakTypeText.text breakstart:self.breakBeginningTime.text breakend:self.breakEndingTime.text breakduration:self.breakdurationString offficeid:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"] ruleid:[[NSUserDefaults standardUserDefaults]objectForKey:@"weekRuleId"] : desig : [[NSUserDefaults standardUserDefaults]objectForKey:@"selectedDesignation"]] ;
+        [self.myconnection updateNewweekRule:self.weekRuleNameText.text abbrev:self.abbrbText.text description:self.descriptionTextView.text weekStarton:self.weekStartsOnText.text offday1:self.offdayfirstString offday2:self.offdaysecondString offday3:self.offdaythirdString partialday:self.offdayfourthString beginningTime:self.beginningTime.text endingTime:self.endingTime.text duration:self.durationText.text breaktype:self.BreakTypeText.text breakstart:self.breakBeginningTime.text breakend:self.breakEndingTime.text breakduration:self.breakDurationText.text offficeid:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"] ruleid:[[NSUserDefaults standardUserDefaults]objectForKey:@"weekRuleId"] : desig : [[NSUserDefaults standardUserDefaults]objectForKey:@"selectedDesignation"]] ;
         
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"selectedDesignation"];
         
@@ -3361,9 +3353,7 @@ replacementString:(NSString *)string
     }
     if ([[weekRuleList objectAtIndex:0]objectForKey:@"partial_duration"]!=(id)[NSNull null])
     {
-        NSArray *prtialStringAray=[[[weekRuleList objectAtIndex:0]objectForKey:@"partial_duration"]componentsSeparatedByString:@":"];
-        self.durationText.text=[NSString stringWithFormat:@"%@ Hr %@ Mins",[prtialStringAray objectAtIndex:0],[prtialStringAray objectAtIndex:1]];
-        self.partialDurationString=[[weekRuleList objectAtIndex:0]objectForKey:@"partial_duration"];
+        self.durationText.text=[[weekRuleList objectAtIndex:0]objectForKey:@"partial_duration"];
     }
     
     if ([[weekRuleList objectAtIndex:0]objectForKey:@"break_start"]!=(id)[NSNull null])
@@ -3380,9 +3370,8 @@ replacementString:(NSString *)string
     
     if ([[weekRuleList objectAtIndex:0]objectForKey:@"break_duration"]!=(id)[NSNull null])
     {
-        NSArray *breakStringAray=[[[weekRuleList objectAtIndex:0]objectForKey:@"break_duration"]componentsSeparatedByString:@":"];
-        self.breakDurationText.text=[NSString stringWithFormat:@"%@ Hr %@ Mins",[breakStringAray objectAtIndex:0],[breakStringAray objectAtIndex:1]];
-        self.breakdurationString=[[weekRuleList objectAtIndex:0]objectForKey:@"break_duration"];
+        
+        self.breakDurationText.text=[[weekRuleList objectAtIndex:0]objectForKey:@"break_duration"];
     }
 
     });

@@ -23,10 +23,10 @@
     self.flag=self.flag1=0;
     self.flagValue=self.checkinFlag=self.checkoutFlag=0;
     
-    self.checkinRounding=@"";
-    self.checkoutRounding=@"";
-    self.breakStart=@"";
-    self.breakEnd=@"";
+    self.checkinRounding=@"0";
+    self.checkoutRounding=@"0";
+    self.breakStart=@"0";
+    self.breakEnd=@"0";
     
     self.timeArray=[[NSMutableArray alloc] initWithObjects:@"05",@"10",@"15", nil];
     self.minuteTableView.hidden=true;

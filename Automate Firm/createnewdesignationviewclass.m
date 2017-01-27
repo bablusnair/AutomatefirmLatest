@@ -268,7 +268,7 @@
     [self.descriptiontextview resignFirstResponder];
     [self.jobdescriptiontextfield resignFirstResponder];
     
-    if (!([self.responsibilityText isEqualToString:@""])) {
+    if (self.responsibilityText.length > 0) {
         
         [self.jobdescriptionarray addObject:self.responsibilityText];
         [self.responsilityIDArray addObject:self.responsibilityID];

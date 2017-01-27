@@ -23,8 +23,8 @@
     self.app=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     self.app.warningflag=0;
     
-    self.iconsarray=[[NSMutableArray alloc]initWithObjects:@"top_office_normal.png",@"top_office_normal.png",@"top_office_normal.png",  nil];
-    self.iconnamesarray=[[NSMutableArray alloc]initWithObjects:@"Office 1",@"Office 2",@"Office 3", nil];
+    self.iconsarray=[[NSMutableArray alloc]initWithObjects:@"top_office_normal.png",  nil];
+    self.iconnamesarray=[[NSMutableArray alloc]initWithObjects:@"Office 1", nil];
     
     self.workingPremiseArray=[[NSMutableArray alloc]init];
     self.workingPremiseIDArray=[[NSMutableArray alloc]init];
@@ -561,13 +561,10 @@
 }
 -(void)createResponse:(id)Response
 {
-    if ([[Response objectForKey:@"status"] isEqualToString:@"200"]) {
+    if ([Response isEqualToString:@"200"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [self alertShow:@"Successfully Saved"];
-//            [self.workingPremiseTC reloadData];
-//            [self.departmentTC reloadData];
-//            [self.categoryTC reloadData];
             
             autocodingTileClass *ob = (autocodingTileClass *)self.superview.superview;
             [ob closeTile];

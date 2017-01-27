@@ -11,6 +11,7 @@
 @implementation autocodingViewClass
 -(void)awakeFromNib
 {
+    self.myconnection=[[connectionclass alloc]init];
     accordion = [[autocodingTileClass alloc] initWithFrame:CGRectMake(10, 60, 625, 445)];
     [self addSubview:accordion];
     self.doneButton.enabled=NO;
@@ -20,6 +21,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"enabletable" object:Nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"enableGeneralSettings" object:Nil];
     [self removeFromSuperview];
+    [self.myconnection displaymodifiedDateFunction:[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"]];
 }
 -(IBAction)cancel:(id)sender
 {

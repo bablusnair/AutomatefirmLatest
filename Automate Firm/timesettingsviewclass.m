@@ -81,8 +81,8 @@
     self.penaltysecondcheckbuttonvalue=@"1";
     self.penaltythirdcheckbuttonvalue=@"1";
     self.gracetimecheckbuttonvalue=@"0";
-    self.graceTimeValue=@"";
-    self.workingDetailsValue=@"";
+    //self.graceTimeValue=@"";
+   // self.workingDetailsValue=@"";
     self.graceManadtory.hidden=true;
     self.workingHourMandatory.hidden=true;
     self.latearrivalWeekText.enabled=NO;
@@ -193,7 +193,7 @@
         self.graceTimeText.tag=1;
         self.x++;
         self.gracetimecheckbuttonvalue=@"0";
-        self.graceTimeValue=@"";
+        //self.graceTimeValue=@"";
         self.graceManadtory.hidden=true;
         self.datePickerView.hidden=TRUE;
 
@@ -220,7 +220,7 @@
             self.y++;
             self.workingText1.backgroundColor=[UIColor lightGrayColor];
             self.workingdetailsfirstcheckbuttonvalue=@"0";
-            self.workingDetailsValue=@"";
+            //self.workingDetailsValue=@"";
             self.workingHourMandatory.hidden=true;
             self.datePickerView.hidden=TRUE;
         }
@@ -318,7 +318,7 @@
             self.graceTimeText.tag=1;
             self.x++;
             self.gracetimecheckbuttonvalue=@"0";
-            self.graceTimeValue=@"";
+            //self.graceTimeValue=@"";
             self.graceManadtory.hidden=true;
             self.datePickerView.hidden=TRUE;
         }
@@ -395,7 +395,7 @@
             self.y++;
             self.workingText1.backgroundColor=[UIColor lightGrayColor];
             self.workingdetailsfirstcheckbuttonvalue=@"0";
-            self.workingDetailsValue=@"";
+            //self.workingDetailsValue=@"";
             self.workingHourMandatory.hidden=true;
             self.datePickerView.hidden=TRUE;
         }
@@ -597,14 +597,14 @@
     [dateFormat setDateFormat:@"HH:mm"];
     NSString *prettyVersion = [dateFormat stringFromDate:myDate];
     NSArray *timeArray=[prettyVersion componentsSeparatedByString:@":"];
-    NSString *selectedTime=[NSString stringWithFormat:@"%@Hrs %@Mins",[timeArray objectAtIndex:0],[timeArray objectAtIndex:1]];
+    NSString *selectedTime=[NSString stringWithFormat:@"%@ Hrs %@ Mins",[timeArray objectAtIndex:0],[timeArray objectAtIndex:1]];
     if (self.flag==1) {
-        self.graceTimeValue=prettyVersion;
+        //self.graceTimeValue=prettyVersion;
         self.graceTimeText.text=selectedTime;
     }
     if (self.flag==2) {
         self.workingText1.text=selectedTime;
-        self.workingDetailsValue=prettyVersion;
+        //self.workingDetailsValue=prettyVersion;
     }
     self.datePickerView.hidden=TRUE;
 }
@@ -968,13 +968,14 @@ replacementString:(NSString *)string
     
     if ([action isEqualToString:@"create"]) {
         
-        [self.myconnection createnewTimerule:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedofficeId"]:self.timeruletextfield.text abbrv:self.abbrbText.text descripton:self.descriptiontextview.text checkgracetime:self.gracetimecheckbuttonvalue checkgracetimetextvalue:self.graceTimeValue workfirstdetails:self.workingdetailsfirstcheckbuttonvalue workfirstdetailstextvalue:self.workingDetailsValue worksecondetails:self.workingdetailssecondcheckbuttonvalue workthirddetails:self.workingdetailsthirdcheckbuttonvalue latearrivaloption:self.latearrivalvalueoption latearrivalvalue1:self.latearrivalHoursText.text latearrivalvalue2:self.latearrivalWeekText.text latearrivalvalue3:self.latearrivalhalfdayText.text latearrivalvalue4:self.latearrivalDayText.text firstpenalty:self.penaltyfirstcheckbuttonvalue secondpenalty:self.penaltysecondcheckbuttonvalue  thirdpenalty:self.penaltythirdcheckbuttonvalue workhoursfirst:self.workhoursfirstcheckbuttonvalue workhourssecond:self.workhoursecondcheckbuttonvalue workhoursthird:self.workhoursthirdcheckbuttonvalue workhoursfourth:self.workhoursfourthcheckbuttonvalue workhoursfifth:self.workhoursfifthcheckbuttonvalue timestatusflag:@"C" createdby:@"Bablu" :designationList : [[NSUserDefaults standardUserDefaults]objectForKey:@"selectedDesignation"]];
+        [self.myconnection createnewTimerule:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedofficeId"]:self.timeruletextfield.text abbrv:self.abbrbText.text descripton:self.descriptiontextview.text checkgracetime:self.gracetimecheckbuttonvalue checkgracetimetextvalue:self.graceTimeText.text workfirstdetails:self.workingdetailsfirstcheckbuttonvalue workfirstdetailstextvalue:self.workingText1.text worksecondetails:self.workingdetailssecondcheckbuttonvalue workthirddetails:self.workingdetailsthirdcheckbuttonvalue latearrivaloption:self.latearrivalvalueoption latearrivalvalue1:self.latearrivalHoursText.text latearrivalvalue2:self.latearrivalWeekText.text latearrivalvalue3:self.latearrivalhalfdayText.text latearrivalvalue4:self.latearrivalDayText.text firstpenalty:self.penaltyfirstcheckbuttonvalue secondpenalty:self.penaltysecondcheckbuttonvalue  thirdpenalty:self.penaltythirdcheckbuttonvalue workhoursfirst:self.workhoursfirstcheckbuttonvalue workhourssecond:self.workhoursecondcheckbuttonvalue workhoursthird:self.workhoursthirdcheckbuttonvalue workhoursfourth:self.workhoursfourthcheckbuttonvalue workhoursfifth:self.workhoursfifthcheckbuttonvalue timestatusflag:@"C" createdby:@"Bablu" :designationList : [[NSUserDefaults standardUserDefaults]objectForKey:@"selectedDesignation"]];
         
+       // workfirstdetailstextvalue
         
     }
     else
     {
-        [self.myconnection updateTimerule:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedofficeId"]:[[NSUserDefaults standardUserDefaults]objectForKey:@"timeruleid"] rulename:self.timeruletextfield.text abbrv:self.abbrbText.text descripton:self.descriptiontextview.text checkgracetime:self.gracetimecheckbuttonvalue checkgracetimetextvalue:self.graceTimeValue workfirstdetails:self.workingdetailsfirstcheckbuttonvalue workfirstdetailstextvalue:self.workingDetailsValue worksecondetails:self.workingdetailssecondcheckbuttonvalue workthirddetails:self.workingdetailsthirdcheckbuttonvalue latearrivaloption:self.latearrivalvalueoption latearrivalvalue1:self.latearrivalHoursText.text latearrivalvalue2:self.latearrivalWeekText.text latearrivalvalue3:self.latearrivalhalfdayText.text latearrivalvalue4:self.latearrivalDayText.text firstpenalty:self.penaltyfirstcheckbuttonvalue secondpenalty:self.penaltysecondcheckbuttonvalue  thirdpenalty:self.penaltythirdcheckbuttonvalue workhoursfirst:self.workhoursfirstcheckbuttonvalue workhourssecond:self.workhoursecondcheckbuttonvalue workhoursthird:self.workhoursthirdcheckbuttonvalue workhoursfourth:self.workhoursfourthcheckbuttonvalue workhoursfifth:self.workhoursfifthcheckbuttonvalue timestatusflag:@"C" createdby:@"Bablu" :designationList : [[NSUserDefaults standardUserDefaults]objectForKey:@"selectedDesignation"]];
+        [self.myconnection updateTimerule:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedofficeId"]:[[NSUserDefaults standardUserDefaults]objectForKey:@"timeruleid"] rulename:self.timeruletextfield.text abbrv:self.abbrbText.text descripton:self.descriptiontextview.text checkgracetime:self.gracetimecheckbuttonvalue checkgracetimetextvalue:self.graceTimeText.text workfirstdetails:self.workingdetailsfirstcheckbuttonvalue workfirstdetailstextvalue:self.workingText1.text worksecondetails:self.workingdetailssecondcheckbuttonvalue workthirddetails:self.workingdetailsthirdcheckbuttonvalue latearrivaloption:self.latearrivalvalueoption latearrivalvalue1:self.latearrivalHoursText.text latearrivalvalue2:self.latearrivalWeekText.text latearrivalvalue3:self.latearrivalhalfdayText.text latearrivalvalue4:self.latearrivalDayText.text firstpenalty:self.penaltyfirstcheckbuttonvalue secondpenalty:self.penaltysecondcheckbuttonvalue  thirdpenalty:self.penaltythirdcheckbuttonvalue workhoursfirst:self.workhoursfirstcheckbuttonvalue workhourssecond:self.workhoursecondcheckbuttonvalue workhoursthird:self.workhoursthirdcheckbuttonvalue workhoursfourth:self.workhoursfourthcheckbuttonvalue workhoursfifth:self.workhoursfifthcheckbuttonvalue timestatusflag:@"C" createdby:@"Bablu" :designationList : [[NSUserDefaults standardUserDefaults]objectForKey:@"selectedDesignation"]];
     }
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"selectedDesignation"];
 
@@ -1052,223 +1053,272 @@ replacementString:(NSString *)string
     dispatch_sync(dispatch_get_main_queue(), ^{
         
         NSMutableDictionary *selectedRuleDict=[updateruleArray objectAtIndex:0];
-        self.timeruletextfield.text=[selectedRuleDict objectForKey:@"time_rule_name"];
-        self.abbrbText.text=[selectedRuleDict objectForKey:@"time_abbr"];
-        self.descriptiontextview.text=[selectedRuleDict objectForKey:@"description"];
+        if ([selectedRuleDict objectForKey:@"time_rule_name"]!=(id)[NSNull null]) {
+            self.timeruletextfield.text=[selectedRuleDict objectForKey:@"time_rule_name"];
+        }
+        if ([selectedRuleDict objectForKey:@"time_abbr"]!=(id)[NSNull null]) {
+            self.abbrbText.text=[selectedRuleDict objectForKey:@"time_abbr"];
+        }
+        if ([selectedRuleDict objectForKey:@"description"]!=(id)[NSNull null]) {
+            self.descriptiontextview.text=[selectedRuleDict objectForKey:@"description"];
+        }
+        if ([selectedRuleDict objectForKey:@"grace_time"]!=(id)[NSNull null]) {
+            self.graceTimeText.text=[selectedRuleDict objectForKey:@"grace_time"];
+        }
         
-        self.graceTimeValue=[selectedRuleDict objectForKey:@"grace_time"];
-        if (!([self.graceTimeValue isEqualToString:@""])) {
-            NSArray *graceArray=[self.graceTimeValue componentsSeparatedByString:@":"];
-            self.graceTimeText.text=[NSString stringWithFormat:@"%@Hrs %@Mins",[graceArray objectAtIndex:0],[graceArray objectAtIndex:1]];
-        }
-        else
-        {
-            self.graceTimeText.text=@"";
-        }
+        
+//        if (!([self.graceTimeValue isEqualToString:@""])) {
+//            NSArray *graceArray=[self.graceTimeValue componentsSeparatedByString:@":"];
+//            =[NSString stringWithFormat:@"%@Hrs %@Mins",[graceArray objectAtIndex:0],[graceArray objectAtIndex:1]];
+//        }
+//        else
+//        {
+//            self.graceTimeText.text=@"";
+//        }
        
-        self.latearrivalHoursText.text=[selectedRuleDict objectForKey:@"hours"];
-        self.latearrivalWeekText.text=[selectedRuleDict objectForKey:@"week"];
-        self.latearrivalhalfdayText.text=[selectedRuleDict objectForKey:@"mark"];
-        self.latearrivalDayText.text=[selectedRuleDict objectForKey:@"day"];
-        self.workingDetailsValue=[selectedRuleDict objectForKey:@"calculate_absent_value"];
-        if (!([self.workingDetailsValue isEqualToString:@""])) {
-            NSArray *workingArray=[self.workingDetailsValue componentsSeparatedByString:@":"];
-            self.workingText1.text=[NSString stringWithFormat:@"%@Hrs %@Mins",[workingArray objectAtIndex:0],[workingArray objectAtIndex:1]];
-            self.gracetimecheckbuttonvalue=[selectedRuleDict objectForKey:@"grace_time_status"];
+        if ([selectedRuleDict objectForKey:@"hours"]!=(id)[NSNull null]) {
+            self.latearrivalHoursText.text=[selectedRuleDict objectForKey:@"hours"];
         }
-        else
-        {
-            self.workingText1.text=@"";
+        if ([selectedRuleDict objectForKey:@"week"]!=(id)[NSNull null]) {
+            self.latearrivalWeekText.text=[selectedRuleDict objectForKey:@"week"];
+        }
+        if ([selectedRuleDict objectForKey:@"mark"]!=(id)[NSNull null]) {
+            self.latearrivalhalfdayText.text=[selectedRuleDict objectForKey:@"mark"];
+        }
+        if ([selectedRuleDict objectForKey:@"day"]!=(id)[NSNull null]) {
+            self.latearrivalDayText.text=[selectedRuleDict objectForKey:@"day"];
+        }
+        if ([selectedRuleDict objectForKey:@"calculate_absent_value"]!=(id)[NSNull null]) {
+            self.workingText1.text=[selectedRuleDict objectForKey:@"calculate_absent_value"];
         }
         
-        if ([[selectedRuleDict objectForKey:@"grace_time_status"] isEqualToString:@"0"]) {
-            [self.timeallowedButton setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.x=0;
+
+        //        if (!([self.workingDetailsValue isEqualToString:@""])) {
+//            NSArray *workingArray=[self.workingDetailsValue componentsSeparatedByString:@":"];
+//            text=[NSString stringWithFormat:@"%@Hrs %@Mins",[workingArray objectAtIndex:0],[workingArray objectAtIndex:1]];
+//            self.gracetimecheckbuttonvalue=[selectedRuleDict objectForKey:@"grace_time_status"];
+//        }
+//        else
+//        {
+//            self.workingText1.text=@"";
+//        }
+        if ([selectedRuleDict objectForKey:@"grace_time_status"]!=(id)[NSNull null]) {
+            if ([[selectedRuleDict objectForKey:@"grace_time_status"] isEqualToString:@"0"]) {
+                [self.timeallowedButton setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.x=0;
+                
+            }
+            else
+            {
+                [self.timeallowedButton setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.graceTimeText.backgroundColor=[UIColor clearColor];
+                self.graceTimeText.tag=2;
+                self.x=1;
+            }
+        }
+        
+        if ([selectedRuleDict objectForKey:@"calculate_absent_status"]!=(id)[NSNull null]) {
+            self.workingdetailsfirstcheckbuttonvalue=[selectedRuleDict objectForKey:@"calculate_absent_status"];
+            if ([[selectedRuleDict objectForKey:@"calculate_absent_status"] isEqualToString:@"0"]) {
+                [self.workingCheckBox1Button setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.y=0;
+                
+            }
+            else
+            {
+                [self.workingCheckBox1Button setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.workingText1.tag=2;
+                self.workingText1.backgroundColor=[UIColor clearColor];
+                self.y=1;
+            }
+        }
+        
+        if ([selectedRuleDict objectForKey:@"ignore_checkout_status"]!=(id)[NSNull null]) {
+            self.workingdetailssecondcheckbuttonvalue=[selectedRuleDict objectForKey:@"ignore_checkout_status"];
             
-        }
-        else
-        {
-            [self.timeallowedButton setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.graceTimeText.backgroundColor=[UIColor clearColor];
-            self.graceTimeText.tag=2;
-            self.x=1;
+            if ([[selectedRuleDict objectForKey:@"ignore_checkout_status"] isEqualToString:@"0"]) {
+                [self.workingCheckBox2Button setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.z=0;
+            }
+            else
+            {
+                [self.workingCheckBox2Button setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.z=1;
+            }
         }
         
-        self.workingdetailsfirstcheckbuttonvalue=[selectedRuleDict objectForKey:@"calculate_absent_status"];
-        
-        if ([[selectedRuleDict objectForKey:@"calculate_absent_status"] isEqualToString:@"0"]) {
-            [self.workingCheckBox1Button setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.y=0;
+        if ([selectedRuleDict objectForKey:@"adjust_late_overtime"]!=(id)[NSNull null]) {
+            self.workingdetailsthirdcheckbuttonvalue=[selectedRuleDict objectForKey:@"adjust_late_overtime"];
             
-        }
-        else
-        {
-            [self.workingCheckBox1Button setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.workingText1.tag=2;
-            self.workingText1.backgroundColor=[UIColor clearColor];
-            self.y=1;
-        }
-        
-        self.workingdetailssecondcheckbuttonvalue=[selectedRuleDict objectForKey:@"ignore_checkout_status"];
-        
-        if ([[selectedRuleDict objectForKey:@"ignore_checkout_status"] isEqualToString:@"0"]) {
-            [self.workingCheckBox2Button setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.z=0;
-        }
-        else
-        {
-            [self.workingCheckBox2Button setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.z=1;
+            if ([[selectedRuleDict objectForKey:@"adjust_late_overtime"] isEqualToString:@"0"]) {
+                [self.workingCheckBox3Button setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.f=0;
+            }
+            else
+            {
+                [self.workingCheckBox3Button setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.f=1;
+            }
         }
         
-        self.workingdetailsthirdcheckbuttonvalue=[selectedRuleDict objectForKey:@"adjust_late_overtime"];
-        
-        if ([[selectedRuleDict objectForKey:@"adjust_late_overtime"] isEqualToString:@"0"]) {
-            [self.workingCheckBox3Button setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.f=0;
-        }
-        else
-        {
-            [self.workingCheckBox3Button setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.f=1;
-        }
-        
-        self.latearrivalvalueoption=[selectedRuleDict objectForKey:@"late_arrival_option"];
-        
-        
-        if ([[selectedRuleDict objectForKey:@"late_arrival_option"] isEqualToString:@"1"]) {
-            [self.lateArrivalCheckBox3 setImage:[UIImage imageNamed:@"radio button on11.png"] forState:UIControlStateNormal];
-            [self.lateArrivalCheckBox1 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
-            [self.lateArrivalCheckBox2 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
-            
-            self.flagValue=2;
-            self.latearrivalHoursText.backgroundColor=[UIColor clearColor];
-            self.latearrivalHoursText.enabled=YES;
-            self.latearrivalWeekText.backgroundColor=[UIColor clearColor];
-            self.latearrivalWeekText.enabled=YES;
-            self.latearrivalhalfdayText.backgroundColor=[UIColor clearColor];
-            self.latearrivalhalfdayText.enabled=YES;
-            self.latearrivalDayText.backgroundColor=[UIColor clearColor];
-            self.latearrivalDayText.enabled=YES;
+        if ([selectedRuleDict objectForKey:@"late_arrival_option"]!=(id)[NSNull null]) {
+            self.latearrivalvalueoption=[selectedRuleDict objectForKey:@"late_arrival_option"];
             
             
+            if ([[selectedRuleDict objectForKey:@"late_arrival_option"] isEqualToString:@"1"]) {
+                [self.lateArrivalCheckBox3 setImage:[UIImage imageNamed:@"radio button on11.png"] forState:UIControlStateNormal];
+                [self.lateArrivalCheckBox1 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
+                [self.lateArrivalCheckBox2 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
+                
+                self.flagValue=2;
+                self.latearrivalHoursText.backgroundColor=[UIColor clearColor];
+                self.latearrivalHoursText.enabled=YES;
+                self.latearrivalWeekText.backgroundColor=[UIColor clearColor];
+                self.latearrivalWeekText.enabled=YES;
+                self.latearrivalhalfdayText.backgroundColor=[UIColor clearColor];
+                self.latearrivalhalfdayText.enabled=YES;
+                self.latearrivalDayText.backgroundColor=[UIColor clearColor];
+                self.latearrivalDayText.enabled=YES;
+                
+                
+            }
+            else if([[selectedRuleDict objectForKey:@"late_arrival_option"] isEqualToString:@"2"])
+            {
+                [self.lateArrivalCheckBox2 setImage:[UIImage imageNamed:@"radio button on11.png"] forState:UIControlStateNormal];
+                [self.lateArrivalCheckBox1 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
+                [self.lateArrivalCheckBox3 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
+            }
+            else
+            {
+                [self.lateArrivalCheckBox1 setImage:[UIImage imageNamed:@"radio button on11.png"] forState:UIControlStateNormal];
+                [self.lateArrivalCheckBox2 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
+                [self.lateArrivalCheckBox3 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
+                
+            }
         }
-        else if([[selectedRuleDict objectForKey:@"late_arrival_option"] isEqualToString:@"2"])
-        {
-            [self.lateArrivalCheckBox2 setImage:[UIImage imageNamed:@"radio button on11.png"] forState:UIControlStateNormal];
-            [self.lateArrivalCheckBox1 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
-            [self.lateArrivalCheckBox3 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
-        }
-        else
-        {
-            [self.lateArrivalCheckBox1 setImage:[UIImage imageNamed:@"radio button on11.png"] forState:UIControlStateNormal];
-            [self.lateArrivalCheckBox2 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
-            [self.lateArrivalCheckBox3 setImage:[UIImage imageNamed:@"radio button off11.png"] forState:UIControlStateNormal];
+        
+        if ([selectedRuleDict objectForKey:@"penalties_late_duration"]!=(id)[NSNull null]) {
+            self.penaltyfirstcheckbuttonvalue=[selectedRuleDict objectForKey:@"penalties_late_duration"];
             
+            if ([[selectedRuleDict objectForKey:@"penalties_late_duration"] isEqualToString:@"0"]) {
+                [self.penalityCheckButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.p=1;
+                
+            }
+            else
+            {
+                [self.penalityCheckButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.p=0;
+            }
         }
         
-        self.penaltyfirstcheckbuttonvalue=[selectedRuleDict objectForKey:@"penalties_late_duration"];
-        
-        if ([[selectedRuleDict objectForKey:@"penalties_late_duration"] isEqualToString:@"0"]) {
-            [self.penalityCheckButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.p=1;
+        if ([selectedRuleDict objectForKey:@"penalties_break_duration"]!=(id)[NSNull null]) {
+            self.penaltysecondcheckbuttonvalue=[selectedRuleDict objectForKey:@"penalties_break_duration"];
             
-        }
-        else
-        {
-            [self.penalityCheckButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.p=0;
+            if ([[selectedRuleDict objectForKey:@"penalties_break_duration"] isEqualToString:@"0"]) {
+                [self.penalityCheckButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.q=1;
+                
+            }
+            else
+            {
+                [self.penalityCheckButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.q=0;
+            }
         }
         
-        self.penaltysecondcheckbuttonvalue=[selectedRuleDict objectForKey:@"penalties_break_duration"];
         
-        if ([[selectedRuleDict objectForKey:@"penalties_break_duration"] isEqualToString:@"0"]) {
-            [self.penalityCheckButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.q=1;
+        if ([selectedRuleDict objectForKey:@"penalties_exit_duration"]!=(id)[NSNull null]) {
+            self.penaltythirdcheckbuttonvalue=[selectedRuleDict objectForKey:@"penalties_exit_duration"];
             
-        }
-        else
-        {
-            [self.penalityCheckButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.q=0;
+            if ([[selectedRuleDict objectForKey:@"penalties_exit_duration"] isEqualToString:@"0"]) {
+                [self.penalityCheckButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.r=1;
+                
+            }
+            else
+            {
+                [self.penalityCheckButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.r=0;
+            }
         }
         
-        self.penaltythirdcheckbuttonvalue=[selectedRuleDict objectForKey:@"penalties_exit_duration"];
-        
-        if ([[selectedRuleDict objectForKey:@"penalties_exit_duration"] isEqualToString:@"0"]) {
-            [self.penalityCheckButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.r=1;
+        if ([selectedRuleDict objectForKey:@"deduct_late_working_hours"]!=(id)[NSNull null]) {
+            self.workhoursfirstcheckbuttonvalue=[selectedRuleDict objectForKey:@"deduct_late_working_hours"];
             
-        }
-        else
-        {
-            [self.penalityCheckButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.r=0;
+            if ([[selectedRuleDict objectForKey:@"deduct_late_working_hours"] isEqualToString:@"0"]) {
+                [self.workingHourCheckButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.a=1;
+                
+            }
+            else
+            {
+                [self.workingHourCheckButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.a=0;
+            }
         }
         
-        self.workhoursfirstcheckbuttonvalue=[selectedRuleDict objectForKey:@"deduct_late_working_hours"];
-        
-        if ([[selectedRuleDict objectForKey:@"deduct_late_working_hours"] isEqualToString:@"0"]) {
-            [self.workingHourCheckButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.a=1;
+        if ([selectedRuleDict objectForKey:@"include_break_working"]!=(id)[NSNull null]) {
+            self.workhoursecondcheckbuttonvalue=[selectedRuleDict objectForKey:@"include_break_working"];
             
-        }
-        else
-        {
-            [self.workingHourCheckButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.a=0;
+            if ([[selectedRuleDict objectForKey:@"include_break_working"] isEqualToString:@"0"]) {
+                [self.workingHourCheckButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.b=1;
+                
+            }
+            else
+            {
+                [self.workingHourCheckButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.b=0;
+            }
         }
         
-        self.workhoursecondcheckbuttonvalue=[selectedRuleDict objectForKey:@"include_break_working"];
-        
-        if ([[selectedRuleDict objectForKey:@"include_break_working"] isEqualToString:@"0"]) {
-            [self.workingHourCheckButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.b=1;
+        if ([selectedRuleDict objectForKey:@"deduct_prolonged_working"]!=(id)[NSNull null]) {
+            self.workhoursthirdcheckbuttonvalue=[selectedRuleDict objectForKey:@"deduct_prolonged_working"];
             
-        }
-        else
-        {
-            [self.workingHourCheckButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.b=0;
+            if ([[selectedRuleDict objectForKey:@"deduct_prolonged_working"] isEqualToString:@"0"]) {
+                [self.workingHourCheckButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.c=1;
+                
+            }
+            else
+            {
+                [self.workingHourCheckButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.c=0;
+            }
         }
         
-        self.workhoursthirdcheckbuttonvalue=[selectedRuleDict objectForKey:@"deduct_prolonged_working"];
-        
-        if ([[selectedRuleDict objectForKey:@"deduct_prolonged_working"] isEqualToString:@"0"]) {
-            [self.workingHourCheckButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.c=1;
+        if ([selectedRuleDict objectForKey:@"deduct_early_exit_working"]!=(id)[NSNull null]) {
+            self.workhoursfourthcheckbuttonvalue=[selectedRuleDict objectForKey:@"deduct_early_exit_working"];
             
-        }
-        else
-        {
-            [self.workingHourCheckButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.c=0;
-        }
-        
-        self.workhoursfourthcheckbuttonvalue=[selectedRuleDict objectForKey:@"deduct_early_exit_working"];
-        
-        if ([[selectedRuleDict objectForKey:@"deduct_early_exit_working"] isEqualToString:@"0"]) {
-            [self.workingHourCheckButton4 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.d=1;
-        }
-        else
-        {
-            [self.workingHourCheckButton4 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.d=0;
+            if ([[selectedRuleDict objectForKey:@"deduct_early_exit_working"] isEqualToString:@"0"]) {
+                [self.workingHourCheckButton4 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.d=1;
+            }
+            else
+            {
+                [self.workingHourCheckButton4 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.d=0;
+            }
         }
         
-        self.workhoursfifthcheckbuttonvalue=[selectedRuleDict objectForKey:@"on_duty_working_hours"];
-        
-        if ([[selectedRuleDict objectForKey:@"on_duty_working_hours"] isEqualToString:@"0"]) {
-            [self.workingHourCheckButton5 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-            self.e=0;
+        if ([selectedRuleDict objectForKey:@"on_duty_working_hours"]!=(id)[NSNull null]) {
+            self.workhoursfifthcheckbuttonvalue=[selectedRuleDict objectForKey:@"on_duty_working_hours"];
             
+            if ([[selectedRuleDict objectForKey:@"on_duty_working_hours"] isEqualToString:@"0"]) {
+                [self.workingHourCheckButton5 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                self.e=0;
+                
+            }
+            else
+            {
+                [self.workingHourCheckButton5 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                self.e=1;
+            }
         }
-        else
-        {
-            [self.workingHourCheckButton5 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-            self.e=1;
-        }
+        
+        
+        
         
         
         

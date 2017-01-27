@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "autocodingTileClass.h"
+#import "connectionclass.h"
 @interface autocodingViewClass : UIView
 {
     autocodingTileClass *accordion;
 }
+@property(nonatomic,retain)connectionclass *myconnection;
 -(IBAction)done:(id)sender;
 -(IBAction)cancel:(id)sender;
 -(void)enable;

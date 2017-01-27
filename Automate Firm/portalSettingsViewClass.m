@@ -24,7 +24,7 @@
     x=y=0;
     check1=check10=check11=check12=check2=check3=check4=check5=check6=check7=check8=check9=0;
     
-    
+    self.portalID=@"0";
     self.pictureValue=self.personalValue=self.nomineeValue=self.homeAddressValue=self.educationValue=self.contactValue=self.localAddressValue=self.skillsValue=self.checkoutValue=self.workStatusValue=self.leadershipValue=self.payValue=self.overtimeValue=self.shiftValue=self.weekValue=self.leavesValues=1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -104,6 +104,10 @@
     [portalDetailsDict setObject:[NSString stringWithFormat:@"%d",self.shiftValue] forKey:@"shift"];
     [portalDetailsDict setObject:[NSString stringWithFormat:@"%d",self.weekValue] forKey:@"week"];
     [portalDetailsDict setObject:[NSString stringWithFormat:@"%d",self.leavesValues] forKey:@"leaves"];
+    
+    
+    [portalDetailsDict setObject:self.portalID forKey:@"id"];
+    
     
     NSMutableDictionary *mainPortalDict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:portalDetailsDict,@"portal_details",[[NSUserDefaults standardUserDefaults]objectForKey:@"selectedofficeId"],@"o_id", nil];
     
@@ -314,15 +318,11 @@
 -(void)createResponse:(id)Response
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([[Response objectForKey:@"status"] isEqualToString:@"200"]) {
+        if ([Response isEqualToString:@"200"]) {
             [self showalerviewcontroller:@"Successfully Created"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"enabletable" object:Nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"enableGeneralSettings" object:Nil];
             [self removeFromSuperview];
-        }
-        else
-        {
-            [self showalerviewcontroller:@"Failed to Create"];
         }
     });
 }
@@ -331,205 +331,209 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([responseData count]>0) {
             NSMutableArray *portalArray=[responseData objectForKey:@"portal_details"];
-            NSMutableDictionary *portalDict=[portalArray objectAtIndex:0];
-            
-            if([[portalDict objectForKey:@"picture"]isEqualToString:@"1"])
-            {
-                [self.profileButton setImage:[UIImage imageNamed:@"icon_profile.png"] forState:UIControlStateNormal];
-                self.canEditLabel.text=@"Can Edit Picture";
-                self.pictureValue=1;
-            }
-            else
-            {
-                [self.profileButton setImage:[UIImage imageNamed:@"icon_2.png"] forState:UIControlStateNormal];
-                self.canEditLabel.text=@"Can't Edit Picture";
-                self.pictureValue=0;
-                x++;
-            }
-            
-            if ([[portalDict objectForKey:@"personal"]isEqualToString:@"1"]) {
-                [self.checkButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.personalValue=1;
-            }
-            else
-            {
-                [self.checkButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.personalValue=0;
-                check1++;
-            }
-            
-            if ([[portalDict objectForKey:@"nominee"]isEqualToString:@"1"]) {
-                [self.checkButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.nomineeValue=1;
-            }
-            else
-            {
-                [self.checkButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.nomineeValue=0;
-                check2++;
-            }
-            
-            if ([[portalDict objectForKey:@"home_add"]isEqualToString:@"1"]) {
-                [self.checkButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.homeAddressValue=1;
-            }
-            else
-            {
-                [self.checkButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.homeAddressValue=0;
-                check3++;
-            }
-            
-            if ([[portalDict objectForKey:@"education"]isEqualToString:@"1"]) {
-                [self.checkButton4 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.educationValue=1;
-            }
-            else
-            {
-                [self.checkButton4 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.educationValue=0;
-                check4++;
-            }
-            
-            if ([[portalDict objectForKey:@"contact"]isEqualToString:@"1"]) {
-                [self.checkButton5 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.contactValue=1;
-            }
-            else
-            {
-                [self.checkButton5 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.contactValue=0;
-                check5++;
-            }
-            if ([[portalDict objectForKey:@"local_add"]isEqualToString:@"1"]) {
-                [self.checkButton6 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.localAddressValue=1;
-            }
-            else
-            {
-                [self.checkButton6 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.localAddressValue=0;
-                check6++;
-            }
-            
-            if ([[portalDict objectForKey:@"skills"]isEqualToString:@"1"]) {
-                [self.checkButton7 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.skillsValue=1;
-            }
-            else
-            {
-                [self.checkButton7 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.skillsValue=0;
-                check7++;
-            }
-            if ([[portalDict objectForKey:@"checkout"]isEqualToString:@"1"]) {
-                [self.checkoutButton setImage:[UIImage imageNamed:@"icon_location.png"] forState:UIControlStateNormal];
-                self.allowLabel.text=@"Allow Employee to checkout using portal";
-                self.checkoutValue=1;
-            }
-            else
-            {
-                [self.checkoutButton setImage:[UIImage imageNamed:@"icon_4.png"] forState:UIControlStateNormal];
-                self.allowLabel.text=@"Don't allow Employee to checkout using portal";
-                self.checkoutValue=0;
-                y++;
-            }
-            
-            if ([[portalDict objectForKey:@"work_status"]isEqualToString:@"1"]) {
-                self.workStatusText.text=[self.workStatusDropArray objectAtIndex:0];
-                self.workStatusValue=1;
-            }
-            else if ([[portalDict objectForKey:@"work_status"]isEqualToString:@"2"])
-            {
-                self.workStatusText.text=[self.workStatusDropArray objectAtIndex:1];
-                self.workStatusValue=2;
-            }
-            else
-            {
-                self.workStatusText.text=[self.workStatusDropArray objectAtIndex:2];
-                self.workStatusValue=3;
-            }
-            
-            switch ([[portalDict objectForKey:@"leadership_list"] integerValue]) {
-                case 1:
-                    self.leadershipText.text=[self.leadershipArray1 objectAtIndex:0];
-                    self.leadershipValue=1;
-                    break;
-                case 2:
-                    self.leadershipText.text=[self.leadershipArray1 objectAtIndex:1];
-                    self.leadershipValue=2;
-                    break;
-                case 3:
-                    self.leadershipText.text=[self.leadershipArray1 objectAtIndex:2];
-                    self.leadershipValue=3;
-                    break;
-                case 4:
-                    self.leadershipText.text=[self.leadershipArray1 objectAtIndex:3];
-                    self.leadershipValue=4;
-                    break;
-                case 5:
-                    self.leadershipText.text=[self.leadershipArray1 objectAtIndex:4];
-                    self.leadershipValue=5;
-                    break;
-                case 6:
-                    self.leadershipText.text=[self.leadershipArray1 objectAtIndex:5];
-                    self.leadershipValue=6;
-                    break;
-                    
-                default:
-                    break;
-            }
-            
-            if ([[portalDict objectForKey:@"pay"]isEqualToString:@"1"]) {
-                [self.checkButton8 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.payValue=1;
-            }
-            else
-            {
-                [self.checkButton8 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.payValue=0;
-                check8++;
-            }
-            
-            if ([[portalDict objectForKey:@"overtime"]isEqualToString:@"1"]) {
-                [self.checkButton9 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.overtimeValue=1;
-            }
-            else
-            {
-                [self.checkButton9 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.overtimeValue=0;
-                check9++;
-            }
-            if ([[portalDict objectForKey:@"shift"]isEqualToString:@"1"]) {
-                [self.checkButton10 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.shiftValue=1;
-            }
-            else
-            {
-                [self.checkButton10 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.shiftValue=0;
-                check10++;
-            }
-            if ([[portalDict objectForKey:@"week"]isEqualToString:@"1"]) {
-                [self.checkButton11 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.weekValue=1;
-            }
-            else
-            {
-                [self.checkButton11 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.weekValue=0;
-                check11++;
-            }
-            if ([[portalDict objectForKey:@"leaves"]isEqualToString:@"1"]) {
-                [self.checkButton12 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
-                self.leavesValues=1;
-            }
-            else
-            {
-                [self.checkButton12 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
-                self.leavesValues=0;
-                check12++;
+            if (portalArray.count > 0) {
+                NSMutableDictionary *portalDict=[portalArray objectAtIndex:0];
+                
+                self.portalID = [portalDict objectForKey:@"id"];
+                
+                if([[portalDict objectForKey:@"picture"]isEqualToString:@"1"])
+                {
+                    [self.profileButton setImage:[UIImage imageNamed:@"icon_profile.png"] forState:UIControlStateNormal];
+                    self.canEditLabel.text=@"Can Edit Picture";
+                    self.pictureValue=1;
+                }
+                else
+                {
+                    [self.profileButton setImage:[UIImage imageNamed:@"icon_2.png"] forState:UIControlStateNormal];
+                    self.canEditLabel.text=@"Can't Edit Picture";
+                    self.pictureValue=0;
+                    x++;
+                }
+                
+                if ([[portalDict objectForKey:@"personal"]isEqualToString:@"1"]) {
+                    [self.checkButton1 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.personalValue=1;
+                }
+                else
+                {
+                    [self.checkButton1 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.personalValue=0;
+                    check1++;
+                }
+                
+                if ([[portalDict objectForKey:@"nominee"]isEqualToString:@"1"]) {
+                    [self.checkButton2 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.nomineeValue=1;
+                }
+                else
+                {
+                    [self.checkButton2 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.nomineeValue=0;
+                    check2++;
+                }
+                
+                if ([[portalDict objectForKey:@"home_add"]isEqualToString:@"1"]) {
+                    [self.checkButton3 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.homeAddressValue=1;
+                }
+                else
+                {
+                    [self.checkButton3 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.homeAddressValue=0;
+                    check3++;
+                }
+                
+                if ([[portalDict objectForKey:@"education"]isEqualToString:@"1"]) {
+                    [self.checkButton4 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.educationValue=1;
+                }
+                else
+                {
+                    [self.checkButton4 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.educationValue=0;
+                    check4++;
+                }
+                
+                if ([[portalDict objectForKey:@"contact"]isEqualToString:@"1"]) {
+                    [self.checkButton5 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.contactValue=1;
+                }
+                else
+                {
+                    [self.checkButton5 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.contactValue=0;
+                    check5++;
+                }
+                if ([[portalDict objectForKey:@"local_add"]isEqualToString:@"1"]) {
+                    [self.checkButton6 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.localAddressValue=1;
+                }
+                else
+                {
+                    [self.checkButton6 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.localAddressValue=0;
+                    check6++;
+                }
+                
+                if ([[portalDict objectForKey:@"skills"]isEqualToString:@"1"]) {
+                    [self.checkButton7 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.skillsValue=1;
+                }
+                else
+                {
+                    [self.checkButton7 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.skillsValue=0;
+                    check7++;
+                }
+                if ([[portalDict objectForKey:@"checkout"]isEqualToString:@"1"]) {
+                    [self.checkoutButton setImage:[UIImage imageNamed:@"icon_location.png"] forState:UIControlStateNormal];
+                    self.allowLabel.text=@"Allow Employee to checkout using portal";
+                    self.checkoutValue=1;
+                }
+                else
+                {
+                    [self.checkoutButton setImage:[UIImage imageNamed:@"icon_4.png"] forState:UIControlStateNormal];
+                    self.allowLabel.text=@"Don't allow Employee to checkout using portal";
+                    self.checkoutValue=0;
+                    y++;
+                }
+                
+                if ([[portalDict objectForKey:@"work_status"]isEqualToString:@"1"]) {
+                    self.workStatusText.text=[self.workStatusDropArray objectAtIndex:0];
+                    self.workStatusValue=1;
+                }
+                else if ([[portalDict objectForKey:@"work_status"]isEqualToString:@"2"])
+                {
+                    self.workStatusText.text=[self.workStatusDropArray objectAtIndex:1];
+                    self.workStatusValue=2;
+                }
+                else
+                {
+                    self.workStatusText.text=[self.workStatusDropArray objectAtIndex:2];
+                    self.workStatusValue=3;
+                }
+                
+                switch ([[portalDict objectForKey:@"leadership_list"] integerValue]) {
+                    case 1:
+                        self.leadershipText.text=[self.leadershipArray1 objectAtIndex:0];
+                        self.leadershipValue=1;
+                        break;
+                    case 2:
+                        self.leadershipText.text=[self.leadershipArray1 objectAtIndex:1];
+                        self.leadershipValue=2;
+                        break;
+                    case 3:
+                        self.leadershipText.text=[self.leadershipArray1 objectAtIndex:2];
+                        self.leadershipValue=3;
+                        break;
+                    case 4:
+                        self.leadershipText.text=[self.leadershipArray1 objectAtIndex:3];
+                        self.leadershipValue=4;
+                        break;
+                    case 5:
+                        self.leadershipText.text=[self.leadershipArray1 objectAtIndex:4];
+                        self.leadershipValue=5;
+                        break;
+                    case 6:
+                        self.leadershipText.text=[self.leadershipArray1 objectAtIndex:5];
+                        self.leadershipValue=6;
+                        break;
+                        
+                    default:
+                        break;
+                }
+                
+                if ([[portalDict objectForKey:@"pay"]isEqualToString:@"1"]) {
+                    [self.checkButton8 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.payValue=1;
+                }
+                else
+                {
+                    [self.checkButton8 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.payValue=0;
+                    check8++;
+                }
+                
+                if ([[portalDict objectForKey:@"overtime"]isEqualToString:@"1"]) {
+                    [self.checkButton9 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.overtimeValue=1;
+                }
+                else
+                {
+                    [self.checkButton9 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.overtimeValue=0;
+                    check9++;
+                }
+                if ([[portalDict objectForKey:@"shift"]isEqualToString:@"1"]) {
+                    [self.checkButton10 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.shiftValue=1;
+                }
+                else
+                {
+                    [self.checkButton10 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.shiftValue=0;
+                    check10++;
+                }
+                if ([[portalDict objectForKey:@"week"]isEqualToString:@"1"]) {
+                    [self.checkButton11 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.weekValue=1;
+                }
+                else
+                {
+                    [self.checkButton11 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.weekValue=0;
+                    check11++;
+                }
+                if ([[portalDict objectForKey:@"leaves"]isEqualToString:@"1"]) {
+                    [self.checkButton12 setImage:[UIImage imageNamed:@"check_box.png32.png"] forState:UIControlStateNormal];
+                    self.leavesValues=1;
+                }
+                else
+                {
+                    [self.checkButton12 setImage:[UIImage imageNamed:@"checkbox1.png23.png"] forState:UIControlStateNormal];
+                    self.leavesValues=0;
+                    check12++;
+                }
             }
         }
     });

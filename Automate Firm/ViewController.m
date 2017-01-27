@@ -20,8 +20,8 @@
     self.myconnection=[[connectionclass alloc]init];
     self.myconnection.mydelegate=self;
     NSMutableDictionary *dict=[[NSMutableDictionary alloc]initWithObjectsAndKeys:@"vipin",@"Name",@"9400108486",@"Contact",@"vipin@leonine.in",@"Email", nil];
-    [self.myconnection testService:dict];
-    [self.myconnection officeListingService];
+   // [self.myconnection testService:dict];
+    //[self.myconnection officeListingService];
    
     self.officeListAray=[[NSMutableArray alloc ]init];
     self.officeListDictionary=[[NSMutableDictionary alloc ]init];
@@ -37,8 +37,6 @@
 
 -(IBAction)back:(UIStoryboardSegue *)sender
 {
-    
-    
     
 }
 
@@ -61,10 +59,9 @@
         NSString * userString = [self.userNameField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
         NSString * pwdstring = [self.paswrdText.text stringByReplacingOccurrencesOfString:@" " withString:@""];
         
-        [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"selectedofficeId"];
-       /// [self.myconnection LoginService:userString paswrd:pwdstring officeid:self.officeidString];
+        [self.myconnection LoginService:userString paswrd:pwdstring officeid:self.officeidString];
         
-        [self performSegueWithIdentifier:@"loggedUser" sender:nil];
+       // [self performSegueWithIdentifier:@"loggedUser" sender:nil];
     
     
 //    }
@@ -119,7 +116,7 @@
             //[[NSUserDefaults standardUserDefaults]setObject:@"Black" forKey:@"color"];
             
             
-        [self performSegueWithIdentifier:@"loggedUser" sender:nil];
+                [self performSegueWithIdentifier:@"loggedUser" sender:nil];
             });
     }
 
@@ -148,9 +145,9 @@
     
     self.officeidString=[[[self.officeListDictionary objectForKey:@"data"]objectAtIndex:indexPath.row]objectForKey:@"id"];
         
-   // [[NSUserDefaults standardUserDefaults]setObject:[[[self.officeListDictionary objectForKey:@"data"]objectAtIndex:indexPath.row]objectForKey:@"id"] forKey:@"selectedofficeId" ];
+    [[NSUserDefaults standardUserDefaults]setObject:[[[self.officeListDictionary objectForKey:@"data"]objectAtIndex:indexPath.row]objectForKey:@"id"] forKey:@"selectedofficeId" ];
     
-    [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"selectedofficeId"];
+    //[[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"selectedofficeId"];
     
     [[NSUserDefaults standardUserDefaults]setObject:[[[self.officeListDictionary objectForKey:@"data"]objectAtIndex:indexPath.row]objectForKey:@"abbreviation"] forKey:@"selectedofficeAbbrv" ];
         
@@ -183,6 +180,9 @@
 {
         // - (void)unlinkAll;
         //  - (void)unlinkUserId:(NSString *)userId;
+    
+    [self.myconnection logoutAction];
+    
     [[DBSession sharedSession] unlinkAll];
 
  }
@@ -191,5 +191,23 @@
         [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"forgetAction"];
         [self performSegueWithIdentifier:@"registerView" sender:nil];
 
+}
+-(void)showalerviewcontroller:(NSString *)errorMessage
+{
+    UIAlertController *alert= [UIAlertController
+                               alertControllerWithTitle:@"Error"
+                               message:[NSString stringWithFormat:@"%@",errorMessage]
+                               preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                               handler:^(UIAlertAction * action){
+                                                   //[app hudStop];
+                                               }];
+    [alert addAction:ok];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    });
 }
 @end

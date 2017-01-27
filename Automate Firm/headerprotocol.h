@@ -113,4 +113,10 @@
 -(void)registraionCmpleteResponse:(id)response;
 //documentationemployeefiltering
 -(void)documentationemployeefilteringdocumentResponse:(NSMutableDictionary *)filteringemployeedocumentsresponsedict;
+
+//signupservice..........
+
+-(void)signupmodulesectorResponse:(id)details;
+-(void)signupmoduleagentResponse:(id)details;
+-(void)signupAdminmoduleResponse:(id)details;
 @end

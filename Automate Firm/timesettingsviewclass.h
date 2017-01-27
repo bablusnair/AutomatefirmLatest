@@ -68,8 +68,8 @@
 @property(nonatomic,retain)NSString *workingdetailssecondcheckbuttonvalue;
 @property(nonatomic,retain)NSString *workingdetailsthirdcheckbuttonvalue;
 @property(nonatomic,retain)NSString *latearrivalvalueoption;
-@property(nonatomic,retain)NSString *graceTimeValue;
-@property(nonatomic,retain)NSString *workingDetailsValue;
+//@property(nonatomic,retain)NSString *graceTimeValue;
+//@property(nonatomic,retain)NSString *workingDetailsValue;
 
 @property(nonatomic,retain)IBOutlet UILabel *graceManadtory;
 @property(nonatomic,retain)IBOutlet UILabel *workingHourMandatory;

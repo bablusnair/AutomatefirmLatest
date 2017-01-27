@@ -134,11 +134,12 @@
 -(void)deleteWeekRule:(NSString *)ruleid;
 
 
-//-(void)getOfficeDesignation;
+//Login
 -(void)LoginService:(NSString *)username paswrd:(NSString *)pasword officeid:(NSString *)officeid ;
 -(void)officeListingService;
 -(void)includeDesignation:(NSString *)officeId :(NSString *)ruleType :(NSString *)ruleID;
-
+//Logout
+-(void)logoutAction;
 
 
 //...New Holiday setting Service....
@@ -415,4 +416,13 @@
 
 -(void)documentRenameprocessingFunctionality:(NSString *)doc_id renameVariable:(NSString *)rename;
 
+
+//forsignupservices.....................................
+
+
+-(void)signupAgentlistingservice;
+
+-(void)signupsectorlistingservice;
+
+-(void)signupserviceForAdminModule:(NSString *)urlstringdata username:(NSString *)username firmname:(NSString *)firmname sector:(NSString *)sector estdate:(NSString *)estdate sub:(NSString *)sub agent:(NSString *)agent firstname:(NSString *)firstname lastname:(NSString *)lastname dob:(NSString *)dob regcontact:(NSString *)regcontact regemail:(NSString *)regemail recoverymail:(NSString *)recoverymail livingin:(NSString *)livingin state:(NSString *)state city:(NSString *)city imagedata:(NSString *)imagedata status:(NSString *)status;
 @end

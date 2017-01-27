@@ -318,7 +318,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2995"
             endingLineNumber = "2995"
-            landmarkName = "-addNewEmployeeOfficeDisplayDetails:"
+            landmarkName = "-createNewBank::::::::::::"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -334,7 +334,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "6367"
             endingLineNumber = "6367"
-            landmarkName = "-createNewAdvanceRule:instalment:visaDuration:eligibleMonths:pendingLoanAmount:nextApprovedLeave:leavesTypeAbrvation:lastwrkingDay:radioButton1:radioButton2:radioButton3:ruleId:tileId:selecetdDesig:enableStatus:abbrevationText:designationList:officeId:"
+            landmarkName = "-individualLeaveConditionView:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -398,7 +398,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3086"
             endingLineNumber = "3086"
-            landmarkName = "-uploadEmpImage::"
+            landmarkName = "-updateBank:::::::::::::"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -414,7 +414,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3136"
             endingLineNumber = "3136"
-            landmarkName = "-addNewEmployeeSave:"
+            landmarkName = "-updateBank:::::::::::::"
             landmarkType = "7">
             <Locations>
                <Location
@@ -477,7 +477,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3163"
             endingLineNumber = "3163"
-            landmarkName = "-addNewEmployeeSave:"
+            landmarkName = "-updateBank:::::::::::::"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -493,7 +493,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2690"
             endingLineNumber = "2690"
-            landmarkName = "-moveEmployeesToAnotherCategory:"
+            landmarkName = "-updateDesignation:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -509,7 +509,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2719"
             endingLineNumber = "2719"
-            landmarkName = "-moveEmployeesToAnotherCategory:"
+            landmarkName = "-deleteDesignation:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -525,7 +525,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2761"
             endingLineNumber = "2761"
-            landmarkName = "-uploadNewImage::"
+            landmarkName = "-deleteDesignation:"
             landmarkType = "7">
             <Locations>
                <Location
@@ -588,7 +588,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2910"
             endingLineNumber = "2910"
-            landmarkName = "-updateStorefunction:officeId:storeid:outletType:abbrev:subtittle:sector:regid:currency:financialyear:emailid:telephonenumber:fax:website:building:block:street:country:state:city:postcode:landmark:bank_listarray:printer_listarray:otherdetails_array:"
+            landmarkName = "-moveEmployeesToDesignation:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -604,8 +604,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2578"
             endingLineNumber = "2578"
-            landmarkName = "-moveEmployeesToAnotherDepartment:"
-            landmarkType = "7">
+            landmarkName = "@implementation connectionclass"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -620,7 +620,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2531"
             endingLineNumber = "2531"
-            landmarkName = "-moveEmployeesToAnotherDepartment:"
+            landmarkName = "-deleteResponsibility:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -764,7 +764,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "9339"
             endingLineNumber = "9339"
-            landmarkName = "-listingCategoriesExpenseReimbursement:"
+            landmarkName = "-viewExpenseConditionView::"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -780,7 +780,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "9305"
             endingLineNumber = "9305"
-            landmarkName = "-listingExpenseReimbursementDetails::"
+            landmarkName = "-saveExpenseCondition:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -796,7 +796,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "9361"
             endingLineNumber = "9361"
-            landmarkName = "-listingAllEmployeesForFine:"
+            landmarkName = "-finalExpenseCreation:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -812,7 +812,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "9376"
             endingLineNumber = "9376"
-            landmarkName = "-listingAllEmployeesForFine:"
+            landmarkName = "-finalExpenseCreation:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -828,7 +828,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "9907"
             endingLineNumber = "9907"
-            landmarkName = "-testService:"
+            landmarkName = "-createcreateNewEarningRule:tileDetails:includeDesignation:officeId:idurl:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -844,7 +844,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "9867"
             endingLineNumber = "9867"
-            landmarkName = "-customfolderAddnewdocuments:documentsdict:"
+            landmarkName = "-createcreateNewEarningRule:tileDetails:includeDesignation:officeId:idurl:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -860,7 +860,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "9887"
             endingLineNumber = "9887"
-            landmarkName = "-testService:"
+            landmarkName = "-createcreateNewEarningRule:tileDetails:includeDesignation:officeId:idurl:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -876,7 +876,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "10077"
             endingLineNumber = "10077"
-            landmarkName = "-filteringEmployeeDocumentsInDocumentFrontscreen:storearray:departArray:catearray:designation:officeid:"
+            landmarkName = "-finalDoneFunction:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

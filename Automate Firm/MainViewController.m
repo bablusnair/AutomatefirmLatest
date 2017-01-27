@@ -20,6 +20,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    self.myconnection=[[connectionclass alloc]init];
+    self.myconnection.mydelegate=self;
+    
      self.x=0;
     
     
@@ -455,8 +458,9 @@
 }
 - (IBAction)cartBtnAction:(id)sender {
     [self performSegueWithIdentifier:@"cartView" sender:nil];
-    
-    
-    
+}
+-(IBAction)logoutAction:(id)sender
+{
+    [self.myconnection logoutAction];
 }
 @end

@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "ViewController.h"
+#import "connectionclass.h"
 
-@interface MainViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+@interface MainViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,headerprotocol>
+
+@property(nonatomic,retain)connectionclass *myconnection;
+
 @property(nonatomic,assign)NSInteger currentbuttontag;
 -(IBAction)staffing:(id)sender;
 
@@ -34,6 +38,8 @@
 @property(nonatomic,retain) IBOutlet UIButton *inventarybutton;
 
 -(IBAction)Mainnotificationbuttonaction:(id)sender;
+
+-(IBAction)logoutAction:(id)sender;
 
 @property(nonatomic,retain) IBOutlet UILabel *headinglabel;
 

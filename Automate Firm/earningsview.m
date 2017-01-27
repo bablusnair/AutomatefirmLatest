@@ -338,14 +338,14 @@
                 break;
         }
             
-        for (int i=0; i<[[responseData objectForKey:@"earnings_rule_condtions" ]count]; i++) {
-            [app.earningsTileIdDict setObject:[[[responseData objectForKey:@"earnings_rule_condtions"]objectAtIndex:i] objectForKey:@"id"] forKey:[NSString stringWithFormat:@"%d",i]];
+        for (int i=0; i<[[responseData objectForKey:@"earnings_rule_conditions" ]count]; i++) {
+            [app.earningsTileIdDict setObject:[[[responseData objectForKey:@"earnings_rule_conditions"]objectAtIndex:i] objectForKey:@"id"] forKey:[NSString stringWithFormat:@"%d",i]];
         }
         
         for (UIView *view in self.subviews) {
             if ([view isKindOfClass:[earningsAccordianview class]]) {
                 earningsAccordianview *myobj = (earningsAccordianview *)view;
-                [myobj CreationoftileforUpdation:[[responseData objectForKey:@"earnings_rule_condtions" ]count]];
+                [myobj CreationoftileforUpdation:[[responseData objectForKey:@"earnings_rule_conditions" ]count]];
             }
         }
         

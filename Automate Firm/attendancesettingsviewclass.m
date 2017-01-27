@@ -695,6 +695,7 @@
 -(void)individualWeekruleViewResponse:(NSMutableArray *)weekRuleList;
 
 {
+    
     [self.weekarray removeAllObjects];
     [self.WeekIdPassingAray removeAllObjects];
     NSMutableArray *weekname=[[NSMutableArray alloc]init];
@@ -851,10 +852,7 @@
 
 }
 
--(void)deleteSettingsRuleResponse:(NSString *)deleteRule
-{
-    
-}
+
 
 -(void)disablecollcetionview
 {

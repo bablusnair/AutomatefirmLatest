@@ -79,6 +79,7 @@
 @property(nonatomic,assign)int shiftValue;
 @property(nonatomic,assign)int weekValue;
 @property(nonatomic,assign)int leavesValues;
+@property(nonatomic,retain)NSString *portalID;
 
 
 @end
